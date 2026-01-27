@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Priya Taliyan – Portfolio</title>
+
+  <style>
+    :root {
+      --text-primary: #f3f4f6;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+
+      --surface-main: #0b0f14;
+      --surface-header: rgba(10,14,20,0.9);
+      --surface-card: #111827;
+
+      --accent-a: rgba(34,197,94,0.25);
+      --accent-b: rgba(99,102,241,0.25);
+      --accent-c: rgba(168,85,247,0.25);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--surface-main);
+      color: var(--text-primary);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--surface-header);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      z-index: 1000;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+  .plain-link {
+  color: inherit;          /* same color as normal text */
+  text-decoration: none;   /* remove underline */
+  cursor: pointer;
+ } 
+
+.plain-link:hover {
+  text-decoration: underline; /* optional, subtle affordance */
+}
+
+
+    nav strong { color: var(--text-primary); }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    nav a:hover { color: var(--text-primary); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background:
+        radial-gradient(600px at 20% 30%, var(--accent-a), transparent 60%),
+        radial-gradient(700px at 80% 40%, var(--accent-b), transparent 60%),
+        radial-gradient(800px at 50% 80%, var(--accent-c), transparent 60%),
+        linear-gradient(180deg, var(--surface-main), var(--surface-main));
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 4.5rem);
+      margin: 1rem 0;
+    }
+
+    .hero p { color: var(--text-secondary); }
+
+    .badges {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    .badges span {
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(168,85,247,0.35));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Sections */
+    section {
+      max-width: 1100px;
+      margin: 5rem auto;
+      padding: 3rem 2.5rem;
+      border-radius: 28px;
+      background: var(--surface-card);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+    }
+
+    h2 { margin-top: 0; }
+
+    .project {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .project p { color: var(--text-secondary); }
+
+    .tags {
+      display: flex;
+      gap: 0.6rem;
+      margin: 1.2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .tags span {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .app-btn, .secondary-btn {
+      padding: 0.6rem 1.3rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 900px) {
+      .project { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <strong>Priya Taliyan</strong>
+    <div>
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <div>
+    <p>Hello, I’m</p>
+    <h1>Priya</h1>
+    <p><strong>Aspiring Mobile Application Developer</strong></p>
+    <p>I build user-focused mobile applications with an emphasis on clarity, performance, and real-world usability.</p>
+
+    <div class="badges">
+      <span>Swift & SwiftUI</span>
+      <span>Kotlin & Jetpack Compose</span>
+      <span>React Native</span>
+      <span>Firebase</span>
+      <span>Typescript</span>
+    </div>
+
+    <a href="#projects" class="primary-btn">View My Work</a>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="project">
+    <div>
+      <h3>Happy Steps</h3>
+      <p>Child-focused routine management app designed to encourage positive daily habits.</p>
+      <div class="tags"><span>React Native</span><span>iOS</span><span>Android</span></div>
+      <div class="actions">
+        <a class="app-btn" href="https://apps.apple.com/se/app/happy-steps/id6755143766" target="_blank"> App Store</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div>
+      <h3>Pool Pals</h3>
+      <p>Location-based ride-sharing iOS application for nearby carpooling.</p>
+      <div class="tags"><span>Swift</span><span>SwiftUI</span><span>iOS</span></div>
+      <div class="actions"><span class="secondary-btn">Coming Soon</span></div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div>
+      <h3>Triple Treat</h3>
+      <p>Cloud kitchen management app focusing on orders, inventory, and kitchen workflows.</p>
+      <div class="tags"><span>React Native</span><span>Firebase</span></div>
+      <div class="actions"><span class="secondary-btn">Group Project</span></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <p>
+    Email:
+    <a href="mailto:chaudharypia94@gmail.com" class="plain-link">
+      chaudharypia94@gmail.com
+    </a>
+  </p>
+
+  <p>
+    <a href="https://www.linkedin.com/in/priya-taliyan-348667308/" 
+       target="_blank" 
+       class="plain-link">
+      LinkedIn
+    </a>
+    ·
+    <a href="https://github.com/Taliyangithub/" 
+       target="_blank" 
+       class="plain-link">
+      GitHub
+    </a>
+  </p>
+</footer>
+
+
+</body>
+</html>
