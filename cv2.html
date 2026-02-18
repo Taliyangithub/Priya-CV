@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Priya Taliyan – Portfolio</title>
+
+  <style>
+    :root {
+      --text-primary: #f3f4f6;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+
+      --surface-main: #0b0f14;
+      --surface-header: rgba(10,14,20,0.9);
+      --surface-card: #111827;
+
+      --accent-a: rgba(34,197,94,0.25);
+      --accent-b: rgba(99,102,241,0.25);
+      --accent-c: rgba(168,85,247,0.25);
+
+      --ring: rgba(255,255,255,0.16);
+      --glass: rgba(255,255,255,0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--surface-main);
+      color: var(--text-primary);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--surface-header);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      z-index: 1000;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .plain-link {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .plain-link:hover { text-decoration: underline; }
+
+    nav strong { color: var(--text-primary); }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    nav a:hover { color: var(--text-primary); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background:
+        radial-gradient(600px at 20% 30%, var(--accent-a), transparent 60%),
+        radial-gradient(700px at 80% 40%, var(--accent-b), transparent 60%),
+        radial-gradient(800px at 50% 80%, var(--accent-c), transparent 60%),
+        linear-gradient(180deg, var(--surface-main), var(--surface-main));
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 4.5rem);
+      margin: 1rem 0;
+    }
+
+    .hero p { color: var(--text-secondary); }
+
+    .badges {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    .badges span {
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(168,85,247,0.35));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+
+    /* Sections */
+    section {
+      max-width: 1100px;
+      margin: 5rem auto;
+      padding: 3rem 2.5rem;
+      border-radius: 28px;
+      background: var(--surface-card);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+    }
+
+    h2 { margin-top: 0; }
+
+    .project {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .project:first-of-type {
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .project p { color: var(--text-secondary); }
+
+    .tags {
+      display: flex;
+      gap: 0.6rem;
+      margin: 1.2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .tags span {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .app-btn, .secondary-btn {
+      padding: 0.6rem 1.3rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .app-btn:hover, .secondary-btn:hover {
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================
+       Carousel (Slideshow)
+       ========================= */
+    .carousel {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      background: radial-gradient(800px at 20% 20%, rgba(99,102,241,0.18), transparent 55%),
+                  radial-gradient(800px at 80% 60%, rgba(34,197,94,0.14), transparent 55%),
+                  rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.55);
+      isolation: isolate;
+    }
+
+    .carousel::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(120deg,
+        rgba(99,102,241,0.18),
+        rgba(168,85,247,0.14),
+        rgba(34,197,94,0.14));
+      opacity: 0.6;
+      filter: blur(20px);
+      z-index: 0;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 420ms ease;
+      will-change: transform;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slide {
+      min-width: 100%;
+      aspect-ratio: 16/10;
+      display: grid;
+      place-items: center;
+      background: rgba(0,0,0,0.35);
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    /* Glass overlay for readability */
+    .carousel-ui {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .carousel-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0.9rem;
+      gap: 0.75rem;
+    }
+
+    .carousel-badge {
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(10,14,20,0.55);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(10px);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+    }
+
+    .carousel-controls {
+      display: flex;
+      gap: 0.5rem;
+      pointer-events: auto;
+    }
+
+    .car-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(10,14,20,0.55);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      user-select: none;
+    }
+
+    .car-btn:hover { border-color: rgba(255,255,255,0.26); }
+
+    .carousel-bottombar {
+      padding: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .dots {
+      display: flex;
+      gap: 0.4rem;
+      pointer-events: auto;
+      flex-wrap: wrap;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.10);
+      cursor: pointer;
+    }
+
+    .dot[aria-current="true"] {
+      width: 26px;
+      background: rgba(255,255,255,0.30);
+      border-color: rgba(255,255,255,0.30);
+    }
+
+    .hint {
+      pointer-events: none;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(10,14,20,0.45);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      color: rgba(243,244,246,0.85);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    /* Make carousel focusable outline */
+    .carousel:focus-within {
+      outline: 2px solid rgba(99,102,241,0.55);
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .project { grid-template-columns: 1fr; }
+      section { padding: 2.2rem 1.3rem; }
+      .slide { aspect-ratio: 16/11; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <strong>Priya Taliyan</strong>
+    <div>
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <div>
+    <p>Hello, I’m</p>
+    <h1>Priya</h1>
+    <p><strong>Aspiring Mobile Application Developer</strong></p>
+    <p>I build user-focused mobile applications with an emphasis on clarity, performance, and real-world usability.</p>
+
+    <div class="badges">
+      <span>Swift & SwiftUI</span>
+      <span>Kotlin & Jetpack Compose</span>
+      <span>React Native</span>
+      <span>Firebase</span>
+      <span>Typescript</span>
+    </div>
+
+    <a href="#projects" class="primary-btn">View My Work</a>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+
+  <!-- Happy Steps -->
+  <div class="project">
+    <div>
+      <h3>Happy Steps</h3>
+      <p>Child-focused routine management app designed to encourage positive daily habits.</p>
+      <div class="tags"><span>React Native</span><span>iOS</span><span>Android</span></div>
+      <div class="actions">
+        <a class="app-btn" href="https://apps.apple.com/se/app/happy-steps/id6755143766" target="_blank" rel="noreferrer"> App Store</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="carousel" data-carousel data-title="Happy Steps" tabindex="0" aria-label="Happy Steps screenshots carousel">
+        <div class="carousel-track">
+          <div class="slide"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
+          <div class="slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
+          <div class="slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
+          <div class="slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
+        </div>
+
+        <div class="carousel-ui">
+          <div class="carousel-topbar">
+            <div class="carousel-badge">
+              <span aria-hidden="true">Screens</span>
+              <span class="counter" data-counter>1 / 4</span>
+            </div>
+            <div class="carousel-controls">
+              <button class="car-btn" type="button" data-prev aria-label="Previous slide">‹</button>
+              <button class="car-btn" type="button" data-next aria-label="Next slide">›</button>
+            </div>
+          </div>
+
+          <div class="carousel-bottombar">
+            <div class="dots" data-dots></div>
+            <div class="hint">Swipe / drag</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Commuvia -->
+  <div class="project">
+    <div>
+      <h3>Commuvia</h3>
+      <p>Location-based ride-sharing iOS application for nearby carpooling.</p>
+      <div class="tags"><span>Swift</span><span>SwiftUI</span><span>iOS</span></div>
+      <div class="actions">
+        <a class="app-btn" href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB" target="_blank" rel="noreferrer"> App Store</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="carousel" data-carousel data-title="Commuvia" tabindex="0" aria-label="Commuvia screenshots carousel">
+        <div class="carousel-track">
+          <div class="slide"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
+          <div class="slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
+          <div class="slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
+          <div class="slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
+        </div>
+
+        <div class="carousel-ui">
+          <div class="carousel-topbar">
+            <div class="carousel-badge">
+              <span aria-hidden="true">Screens</span>
+              <span class="counter" data-counter>1 / 4</span>
+            </div>
+            <div class="carousel-controls">
+              <button class="car-btn" type="button" data-prev aria-label="Previous slide">‹</button>
+              <button class="car-btn" type="button" data-next aria-label="Next slide">›</button>
+            </div>
+          </div>
+
+          <div class="carousel-bottombar">
+            <div class="dots" data-dots></div>
+            <div class="hint">Swipe / drag</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Triple Treat -->
+  <div class="project">
+    <div>
+      <h3>Triple Treat</h3>
+      <p>Cloud kitchen management app focusing on orders, inventory, and kitchen workflows.</p>
+      <div class="tags"><span>Swift</span><span>Firebase</span></div>
+      <div class="actions"><span class="secondary-btn">Group Project</span></div>
+    </div>
+
+    <div>
+      <div class="carousel" data-carousel data-title="Triple Treat" tabindex="0" aria-label="Triple Treat screenshots carousel">
+        <div class="carousel-track">
+          <div class="slide"><img src="images/teiple1.png" alt="Triple Treat screenshot 1" loading="lazy"></div>
+          <div class="slide"><img src="images/triple.png" alt="Triple Treat screenshot 2" loading="lazy"></div>
+          <div class="slide"><img src="images/triple111.png" alt="Triple Treat screenshot 3" loading="lazy"></div>
+          <div class="slide"><img src="images/triple3.png" alt="Triple Treat screenshot 4" loading="lazy"></div>
+          <div class="slide"><img src="images/triple4.png" alt="Triple Treat screenshot 5" loading="lazy"></div>
+        </div>
+
+        <div class="carousel-ui">
+          <div class="carousel-topbar">
+            <div class="carousel-badge">
+              <span aria-hidden="true">Screens</span>
+              <span class="counter" data-counter>1 / 5</span>
+            </div>
+            <div class="carousel-controls">
+              <button class="car-btn" type="button" data-prev aria-label="Previous slide">‹</button>
+              <button class="car-btn" type="button" data-next aria-label="Next slide">›</button>
+            </div>
+          </div>
+
+          <div class="carousel-bottombar">
+            <div class="dots" data-dots></div>
+            <div class="hint">Swipe / drag</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <p>
+    Email:
+    <a href="mailto:chaudharypia94@gmail.com" class="plain-link">
+      chaudharypia94@gmail.com
+    </a>
+  </p>
+
+  <p>
+    <a href="https://www.linkedin.com/in/priya-taliyan-348667308/"
+       target="_blank"
+       rel="noreferrer"
+       class="plain-link">
+      LinkedIn
+    </a>
+    ·
+    <a href="https://github.com/Taliyangithub/"
+       target="_blank"
+       rel="noreferrer"
+       class="plain-link">
+      GitHub
+    </a>
+  </p>
+</footer>
+
+<script>
+  (function () {
+    const carousels = document.querySelectorAll("[data-carousel]");
+
+    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+    carousels.forEach((root) => {
+      const track = root.querySelector(".carousel-track");
+      const slides = Array.from(root.querySelectorAll(".slide"));
+      const prevBtn = root.querySelector("[data-prev]");
+      const nextBtn = root.querySelector("[data-next]");
+      const dotsWrap = root.querySelector("[data-dots]");
+      const counterEl = root.querySelector("[data-counter]");
+
+      let index = 0;
+      let width = root.clientWidth;
+
+      // Build dots
+      const dots = slides.map((_, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "dot";
+        b.setAttribute("aria-label", "Go to slide " + (i + 1));
+        b.addEventListener("click", () => goTo(i, true));
+        dotsWrap.appendChild(b);
+        return b;
+      });
+
+      function updateUI() {
+        width = root.clientWidth;
+        track.style.transform = "translateX(" + (-index * width) + "px)";
+        dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
+        if (counterEl) counterEl.textContent = (index + 1) + " / " + slides.length;
+      }
+
+      function goTo(i, userAction) {
+        index = (i + slides.length) % slides.length;
+        updateUI();
+        if (userAction) restartAutoplay();
+      }
+
+      prevBtn.addEventListener("click", () => goTo(index - 1, true));
+      nextBtn.addEventListener("click", () => goTo(index + 1, true));
+
+      // Keyboard support when focused
+      root.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") goTo(index - 1, true);
+        if (e.key === "ArrowRight") goTo(index + 1, true);
+      });
+
+      // Autoplay (pause on hover/focus)
+      let timer = null;
+      const intervalMs = 4200;
+
+      function startAutoplay() {
+        stopAutoplay();
+        timer = window.setInterval(() => goTo(index + 1, false), intervalMs);
+      }
+      function stopAutoplay() {
+        if (timer) window.clearInterval(timer);
+        timer = null;
+      }
+      function restartAutoplay() {
+        startAutoplay();
+      }
+
+      root.addEventListener("mouseenter", stopAutoplay);
+      root.addEventListener("mouseleave", startAutoplay);
+      root.addEventListener("focusin", stopAutoplay);
+      root.addEventListener("focusout", startAutoplay);
+
+      // Drag / swipe
+      let isDown = false;
+      let startX = 0;
+      let startOffset = 0;
+      let moved = false;
+
+      function pointerDown(clientX) {
+        isDown = true;
+        moved = false;
+        startX = clientX;
+        startOffset = -index * width;
+        track.style.transition = "none";
+        stopAutoplay();
+      }
+
+      function pointerMove(clientX) {
+        if (!isDown) return;
+        const dx = clientX - startX;
+        if (Math.abs(dx) > 6) moved = true;
+        const offset = startOffset + dx;
+        track.style.transform = "translateX(" + offset + "px)";
+      }
+
+      function pointerUp(clientX) {
+        if (!isDown) return;
+        isDown = false;
+        track.style.transition = "transform 420ms ease";
+
+        const dx = clientX - startX;
+        const threshold = width * 0.18;
+
+        if (Math.abs(dx) > threshold) {
+          goTo(index + (dx < 0 ? 1 : -1), true);
+        } else {
+          updateUI();
+          startAutoplay();
+        }
+      }
+
+      // Mouse
+      root.addEventListener("mousedown", (e) => pointerDown(e.clientX));
+      window.addEventListener("mousemove", (e) => pointerMove(e.clientX));
+      window.addEventListener("mouseup", (e) => pointerUp(e.clientX));
+
+      // Touch
+      root.addEventListener("touchstart", (e) => {
+        if (e.touches && e.touches[0]) pointerDown(e.touches[0].clientX);
+      }, { passive: true });
+
+      root.addEventListener("touchmove", (e) => {
+        if (e.touches && e.touches[0]) pointerMove(e.touches[0].clientX);
+      }, { passive: true });
+
+      root.addEventListener("touchend", (e) => {
+        const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+        pointerUp(t ? t.clientX : startX);
+      });
+
+      // Resize handling
+      const ro = new ResizeObserver(() => updateUI());
+      ro.observe(root);
+
+      // Init
+      updateUI();
+      startAutoplay();
+    });
+  })();
+</script>
+
+</body>
+</html>
