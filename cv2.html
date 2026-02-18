@@ -18,9 +18,6 @@
       --accent-a: rgba(34,197,94,0.25);
       --accent-b: rgba(99,102,241,0.25);
       --accent-c: rgba(168,85,247,0.25);
-
-      --ring: rgba(255,255,255,0.16);
-      --glass: rgba(255,255,255,0.06);
     }
 
     * { box-sizing: border-box; }
@@ -135,11 +132,12 @@
 
     .project {
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 2.5rem;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.25rem;
       margin-top: 3rem;
       padding-top: 2.5rem;
       border-top: 1px solid rgba(255,255,255,0.08);
+      align-items: center;
     }
 
     .project:first-of-type {
@@ -196,166 +194,216 @@
       color: var(--text-muted);
     }
 
+    @media (max-width: 900px) {
+      section { padding: 2.2rem 1.3rem; }
+      .project { grid-template-columns: 1fr; }
+    }
+
     /* =========================
-       Carousel (Slideshow)
+       Classy Carousel (Phone frame + crossfade + progress)
        ========================= */
+
     .carousel {
       position: relative;
       border-radius: 22px;
-      overflow: hidden;
-      background: radial-gradient(800px at 20% 20%, rgba(99,102,241,0.18), transparent 55%),
-                  radial-gradient(800px at 80% 60%, rgba(34,197,94,0.14), transparent 55%),
-                  rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 28px 80px rgba(0,0,0,0.55);
-      isolation: isolate;
+      background:
+        radial-gradient(900px at 20% 10%, rgba(99,102,241,0.18), transparent 55%),
+        radial-gradient(800px at 85% 70%, rgba(34,197,94,0.14), transparent 55%),
+        rgba(255,255,255,0.03);
+      box-shadow: 0 26px 70px rgba(0,0,0,0.55);
+      overflow: hidden;
+      padding: 18px;
     }
 
-    .carousel::before {
+    .carousel-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      gap: 12px;
+    }
+
+    .phone-frame {
+      width: min(320px, 100%);
+      aspect-ratio: 9 / 19.5;
+      border-radius: 28px;
+      background: rgba(12,16,24,0.8);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow:
+        0 30px 90px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    .phone-frame::before {
       content: "";
       position: absolute;
-      inset: -1px;
-      background: linear-gradient(120deg,
-        rgba(99,102,241,0.18),
-        rgba(168,85,247,0.14),
-        rgba(34,197,94,0.14));
-      opacity: 0.6;
-      filter: blur(20px);
-      z-index: 0;
-    }
-
-    .carousel-track {
-      display: flex;
-      transition: transform 420ms ease;
-      will-change: transform;
-      position: relative;
+      inset: 0;
+      background:
+        radial-gradient(800px at 20% 15%, rgba(168,85,247,0.12), transparent 60%),
+        radial-gradient(800px at 80% 85%, rgba(99,102,241,0.10), transparent 60%);
+      pointer-events: none;
       z-index: 1;
     }
 
-    .slide {
-      min-width: 100%;
-      aspect-ratio: 16/10;
-      display: grid;
-      place-items: center;
-      background: rgba(0,0,0,0.35);
-      position: relative;
+    .phone-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38%;
+      height: 18px;
+      border-radius: 0 0 14px 14px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.06);
+      z-index: 4;
+      backdrop-filter: blur(10px);
     }
 
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.02);
-      filter: saturate(1.05) contrast(1.02);
-    }
-
-    /* Glass overlay for readability */
-    .carousel-ui {
+    .carousel-stage {
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      pointer-events: none;
       z-index: 2;
     }
 
-    .carousel-topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 0.9rem;
-      gap: 0.75rem;
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.02);
+      transition:
+        opacity 720ms cubic-bezier(.2,.8,.2,1),
+        transform 900ms cubic-bezier(.2,.8,.2,1);
     }
 
-    .carousel-badge {
+    .carousel-slide.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translateZ(0);
+      filter: saturate(1.05) contrast(1.03);
+    }
+
+    .carousel-gloss {
+      position: absolute;
+      inset: -40% -20%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.10), transparent 40%, rgba(255,255,255,0.06));
+      transform: translateX(-18%) rotate(12deg);
+      opacity: 0.55;
       pointer-events: none;
+      z-index: 3;
+    }
+
+    .carousel-meta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .meta-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.45rem 0.75rem;
+      gap: 10px;
+      padding: 10px 12px;
       border-radius: 999px;
       background: rgba(10,14,20,0.55);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      color: var(--text-secondary);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      color: rgba(243,244,246,0.9);
       font-size: 0.82rem;
     }
 
-    .carousel-controls {
-      display: flex;
-      gap: 0.5rem;
-      pointer-events: auto;
+    .progress {
+      width: 130px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
     }
 
-    .car-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.16);
+    .progress > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: rgba(255,255,255,0.28);
+      border-radius: 999px;
+      transform: translateZ(0);
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .cbtn {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
       background: rgba(10,14,20,0.55);
-      backdrop-filter: blur(10px);
-      color: var(--text-primary);
+      color: rgba(243,244,246,0.92);
       cursor: pointer;
       display: grid;
       place-items: center;
+      backdrop-filter: blur(12px);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
       user-select: none;
     }
 
-    .car-btn:hover { border-color: rgba(255,255,255,0.26); }
-
-    .carousel-bottombar {
-      padding: 0.9rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
+    .cbtn:hover {
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-1px);
     }
 
     .dots {
       display: flex;
-      gap: 0.4rem;
-      pointer-events: auto;
+      gap: 6px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .dot {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.20);
+      border: 1px solid rgba(255,255,255,0.18);
       background: rgba(255,255,255,0.10);
       cursor: pointer;
+      transition: width 220ms ease, background 220ms ease, border-color 220ms ease;
+      padding: 0;
     }
 
     .dot[aria-current="true"] {
-      width: 26px;
-      background: rgba(255,255,255,0.30);
-      border-color: rgba(255,255,255,0.30);
+      width: 22px;
+      background: rgba(255,255,255,0.28);
+      border-color: rgba(255,255,255,0.26);
     }
 
-    .hint {
-      pointer-events: none;
-      padding: 0.45rem 0.75rem;
-      border-radius: 999px;
-      background: rgba(10,14,20,0.45);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
-      color: rgba(243,244,246,0.85);
-      font-size: 0.78rem;
-      white-space: nowrap;
-    }
-
-    /* Make carousel focusable outline */
     .carousel:focus-within {
       outline: 2px solid rgba(99,102,241,0.55);
       outline-offset: 4px;
     }
 
     @media (max-width: 900px) {
-      .project { grid-template-columns: 1fr; }
-      section { padding: 2.2rem 1.3rem; }
-      .slide { aspect-ratio: 16/11; }
+      .carousel { padding: 16px; }
+      .phone-frame { width: min(340px, 100%); }
+      .progress { width: 110px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .carousel-slide, .cbtn, .dot { transition: none; }
     }
   </style>
 </head>
@@ -407,30 +455,32 @@
     </div>
 
     <div>
-      <div class="carousel" data-carousel data-title="Happy Steps" tabindex="0" aria-label="Happy Steps screenshots carousel">
-        <div class="carousel-track">
-          <div class="slide"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
-          <div class="slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
-          <div class="slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
-          <div class="slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
-        </div>
-
-        <div class="carousel-ui">
-          <div class="carousel-topbar">
-            <div class="carousel-badge">
-              <span aria-hidden="true">Screens</span>
-              <span class="counter" data-counter>1 / 4</span>
+      <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Happy Steps screenshots carousel" tabindex="0">
+        <div class="carousel-inner">
+          <div class="phone-frame" data-stage>
+            <div class="phone-notch"></div>
+            <div class="carousel-stage">
+              <div class="carousel-slide is-active"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
             </div>
-            <div class="carousel-controls">
-              <button class="car-btn" type="button" data-prev aria-label="Previous slide">‹</button>
-              <button class="car-btn" type="button" data-next aria-label="Next slide">›</button>
+            <div class="carousel-gloss"></div>
+          </div>
+
+          <div class="carousel-meta">
+            <div class="meta-pill">
+              <span data-counter>01 / 04</span>
+              <div class="progress" aria-hidden="true"><span data-progress></span></div>
+            </div>
+
+            <div class="controls">
+              <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
+              <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
             </div>
           </div>
 
-          <div class="carousel-bottombar">
-            <div class="dots" data-dots></div>
-            <div class="hint">Swipe / drag</div>
-          </div>
+          <div class="dots" data-dots></div>
         </div>
       </div>
     </div>
@@ -448,30 +498,32 @@
     </div>
 
     <div>
-      <div class="carousel" data-carousel data-title="Commuvia" tabindex="0" aria-label="Commuvia screenshots carousel">
-        <div class="carousel-track">
-          <div class="slide"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
-          <div class="slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
-          <div class="slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
-          <div class="slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
-        </div>
-
-        <div class="carousel-ui">
-          <div class="carousel-topbar">
-            <div class="carousel-badge">
-              <span aria-hidden="true">Screens</span>
-              <span class="counter" data-counter>1 / 4</span>
+      <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Commuvia screenshots carousel" tabindex="0">
+        <div class="carousel-inner">
+          <div class="phone-frame" data-stage>
+            <div class="phone-notch"></div>
+            <div class="carousel-stage">
+              <div class="carousel-slide is-active"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
             </div>
-            <div class="carousel-controls">
-              <button class="car-btn" type="button" data-prev aria-label="Previous slide">‹</button>
-              <button class="car-btn" type="button" data-next aria-label="Next slide">›</button>
+            <div class="carousel-gloss"></div>
+          </div>
+
+          <div class="carousel-meta">
+            <div class="meta-pill">
+              <span data-counter>01 / 04</span>
+              <div class="progress" aria-hidden="true"><span data-progress></span></div>
+            </div>
+
+            <div class="controls">
+              <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
+              <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
             </div>
           </div>
 
-          <div class="carousel-bottombar">
-            <div class="dots" data-dots></div>
-            <div class="hint">Swipe / drag</div>
-          </div>
+          <div class="dots" data-dots></div>
         </div>
       </div>
     </div>
@@ -487,31 +539,33 @@
     </div>
 
     <div>
-      <div class="carousel" data-carousel data-title="Triple Treat" tabindex="0" aria-label="Triple Treat screenshots carousel">
-        <div class="carousel-track">
-          <div class="slide"><img src="images/teiple1.png" alt="Triple Treat screenshot 1" loading="lazy"></div>
-          <div class="slide"><img src="images/triple.png" alt="Triple Treat screenshot 2" loading="lazy"></div>
-          <div class="slide"><img src="images/triple111.png" alt="Triple Treat screenshot 3" loading="lazy"></div>
-          <div class="slide"><img src="images/triple3.png" alt="Triple Treat screenshot 4" loading="lazy"></div>
-          <div class="slide"><img src="images/triple4.png" alt="Triple Treat screenshot 5" loading="lazy"></div>
-        </div>
-
-        <div class="carousel-ui">
-          <div class="carousel-topbar">
-            <div class="carousel-badge">
-              <span aria-hidden="true">Screens</span>
-              <span class="counter" data-counter>1 / 5</span>
+      <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Triple Treat screenshots carousel" tabindex="0">
+        <div class="carousel-inner">
+          <div class="phone-frame" data-stage>
+            <div class="phone-notch"></div>
+            <div class="carousel-stage">
+              <div class="carousel-slide is-active"><img src="images/teiple1.png" alt="Triple Treat screenshot 1" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/triple.png" alt="Triple Treat screenshot 2" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/triple111.png" alt="Triple Treat screenshot 3" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/triple3.png" alt="Triple Treat screenshot 4" loading="lazy"></div>
+              <div class="carousel-slide"><img src="images/triple4.png" alt="Triple Treat screenshot 5" loading="lazy"></div>
             </div>
-            <div class="carousel-controls">
-              <button class="car-btn" type="button" data-prev aria-label="Previous slide">‹</button>
-              <button class="car-btn" type="button" data-next aria-label="Next slide">›</button>
+            <div class="carousel-gloss"></div>
+          </div>
+
+          <div class="carousel-meta">
+            <div class="meta-pill">
+              <span data-counter>01 / 05</span>
+              <div class="progress" aria-hidden="true"><span data-progress></span></div>
+            </div>
+
+            <div class="controls">
+              <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
+              <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
             </div>
           </div>
 
-          <div class="carousel-bottombar">
-            <div class="dots" data-dots></div>
-            <div class="hint">Swipe / drag</div>
-          </div>
+          <div class="dots" data-dots></div>
         </div>
       </div>
     </div>
@@ -545,141 +599,151 @@
 
 <script>
   (function () {
-    const carousels = document.querySelectorAll("[data-carousel]");
+    const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+    function pad2(n) {
+      const s = String(n);
+      return s.length === 1 ? "0" + s : s;
+    }
 
-    carousels.forEach((root) => {
-      const track = root.querySelector(".carousel-track");
-      const slides = Array.from(root.querySelectorAll(".slide"));
+    function initCarousel(root) {
+      const slides = Array.from(root.querySelectorAll(".carousel-slide"));
       const prevBtn = root.querySelector("[data-prev]");
       const nextBtn = root.querySelector("[data-next]");
       const dotsWrap = root.querySelector("[data-dots]");
       const counterEl = root.querySelector("[data-counter]");
+      const progressEl = root.querySelector("[data-progress]");
 
       let index = 0;
-      let width = root.clientWidth;
 
-      // Build dots
-      const dots = slides.map((_, i) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "dot";
-        b.setAttribute("aria-label", "Go to slide " + (i + 1));
-        b.addEventListener("click", () => goTo(i, true));
-        dotsWrap.appendChild(b);
-        return b;
-      });
+      const autoplay = root.getAttribute("data-autoplay") === "true" && !prefersReduced;
+      const interval = Number(root.getAttribute("data-interval") || 5200);
+      let timer = null;
+      let progressTimer = null;
 
-      function updateUI() {
-        width = root.clientWidth;
-        track.style.transform = "translateX(" + (-index * width) + "px)";
-        dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
-        if (counterEl) counterEl.textContent = (index + 1) + " / " + slides.length;
-      }
-
-      function goTo(i, userAction) {
+      function setActive(i, userAction) {
         index = (i + slides.length) % slides.length;
-        updateUI();
+
+        slides.forEach((s, idx) => {
+          if (idx === index) s.classList.add("is-active");
+          else s.classList.remove("is-active");
+        });
+
+        const total = slides.length;
+        if (counterEl) counterEl.textContent = pad2(index + 1) + " / " + pad2(total);
+
+        if (dotsWrap) {
+          const dots = Array.from(dotsWrap.querySelectorAll(".dot"));
+          dots.forEach((d, idx) => d.setAttribute("aria-current", idx === index ? "true" : "false"));
+        }
+
         if (userAction) restartAutoplay();
       }
 
-      prevBtn.addEventListener("click", () => goTo(index - 1, true));
-      nextBtn.addEventListener("click", () => goTo(index + 1, true));
-
-      // Keyboard support when focused
-      root.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") goTo(index - 1, true);
-        if (e.key === "ArrowRight") goTo(index + 1, true);
-      });
-
-      // Autoplay (pause on hover/focus)
-      let timer = null;
-      const intervalMs = 4200;
-
-      function startAutoplay() {
-        stopAutoplay();
-        timer = window.setInterval(() => goTo(index + 1, false), intervalMs);
+      function buildDots() {
+        if (!dotsWrap) return;
+        dotsWrap.innerHTML = "";
+        slides.forEach((_, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "dot";
+          b.setAttribute("aria-label", "Go to slide " + (i + 1));
+          b.addEventListener("click", () => setActive(i, true));
+          dotsWrap.appendChild(b);
+        });
       }
+
       function stopAutoplay() {
         if (timer) window.clearInterval(timer);
+        if (progressTimer) window.clearInterval(progressTimer);
         timer = null;
+        progressTimer = null;
+
+        if (progressEl) {
+          progressEl.style.width = "0%";
+          progressEl.style.transition = "none";
+        }
       }
+
+      function startProgress() {
+        if (!progressEl) return;
+        progressEl.style.transition = "none";
+        progressEl.style.width = "0%";
+
+        void progressEl.offsetWidth;
+
+        progressEl.style.transition = "width " + interval + "ms linear";
+        progressEl.style.width = "100%";
+      }
+
+      function startAutoplay() {
+        if (!autoplay) return;
+        stopAutoplay();
+        startProgress();
+        timer = window.setInterval(() => {
+          setActive(index + 1, false);
+          startProgress();
+        }, interval);
+      }
+
       function restartAutoplay() {
+        if (!autoplay) return;
         startAutoplay();
       }
+
+      prevBtn && prevBtn.addEventListener("click", () => setActive(index - 1, true));
+      nextBtn && nextBtn.addEventListener("click", () => setActive(index + 1, true));
+
+      root.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") setActive(index - 1, true);
+        if (e.key === "ArrowRight") setActive(index + 1, true);
+      });
 
       root.addEventListener("mouseenter", stopAutoplay);
       root.addEventListener("mouseleave", startAutoplay);
       root.addEventListener("focusin", stopAutoplay);
       root.addEventListener("focusout", startAutoplay);
 
-      // Drag / swipe
       let isDown = false;
       let startX = 0;
-      let startOffset = 0;
-      let moved = false;
 
-      function pointerDown(clientX) {
+      function down(x) {
         isDown = true;
-        moved = false;
-        startX = clientX;
-        startOffset = -index * width;
-        track.style.transition = "none";
+        startX = x;
         stopAutoplay();
       }
 
-      function pointerMove(clientX) {
-        if (!isDown) return;
-        const dx = clientX - startX;
-        if (Math.abs(dx) > 6) moved = true;
-        const offset = startOffset + dx;
-        track.style.transform = "translateX(" + offset + "px)";
-      }
-
-      function pointerUp(clientX) {
+      function up(x) {
         if (!isDown) return;
         isDown = false;
-        track.style.transition = "transform 420ms ease";
-
-        const dx = clientX - startX;
-        const threshold = width * 0.18;
+        const dx = x - startX;
+        const threshold = 42;
 
         if (Math.abs(dx) > threshold) {
-          goTo(index + (dx < 0 ? 1 : -1), true);
+          setActive(index + (dx < 0 ? 1 : -1), true);
         } else {
-          updateUI();
           startAutoplay();
         }
       }
 
-      // Mouse
-      root.addEventListener("mousedown", (e) => pointerDown(e.clientX));
-      window.addEventListener("mousemove", (e) => pointerMove(e.clientX));
-      window.addEventListener("mouseup", (e) => pointerUp(e.clientX));
+      root.addEventListener("mousedown", (e) => down(e.clientX));
+      window.addEventListener("mouseup", (e) => up(e.clientX));
 
-      // Touch
       root.addEventListener("touchstart", (e) => {
-        if (e.touches && e.touches[0]) pointerDown(e.touches[0].clientX);
-      }, { passive: true });
-
-      root.addEventListener("touchmove", (e) => {
-        if (e.touches && e.touches[0]) pointerMove(e.touches[0].clientX);
+        if (e.touches && e.touches[0]) down(e.touches[0].clientX);
       }, { passive: true });
 
       root.addEventListener("touchend", (e) => {
         const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
-        pointerUp(t ? t.clientX : startX);
+        up(t ? t.clientX : startX);
       });
 
-      // Resize handling
-      const ro = new ResizeObserver(() => updateUI());
-      ro.observe(root);
-
-      // Init
-      updateUI();
+      buildDots();
+      setActive(0, false);
       startAutoplay();
-    });
+    }
+
+    document.querySelectorAll("[data-carousel]").forEach(initCarousel);
   })();
 </script>
 
