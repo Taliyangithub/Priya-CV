@@ -6,746 +6,1285 @@
   <title>Priya Taliyan – Portfolio</title>
 
   <style>
-    :root {
-      --text-primary: #f3f4f6;
-      --text-secondary: #cbd5e1;
-      --text-muted: #94a3b8;
+    :root{
+      --text-primary:#f3f4f6;
+      --text-secondary:#cbd5e1;
+      --text-muted:#94a3b8;
 
-      --surface-main: #0b0f14;
-      --surface-header: rgba(10,14,20,0.9);
-      --surface-card: #111827;
+      --surface-main:#070A10;
+      --surface-header:rgba(10,14,20,.72);
+      --surface-card:rgba(17,24,39,.72);
 
-      --accent-a: rgba(34,197,94,0.25);
-      --accent-b: rgba(99,102,241,0.25);
-      --accent-c: rgba(168,85,247,0.25);
+      --ring:rgba(255,255,255,.14);
+      --ring-2:rgba(255,255,255,.10);
+      --glass:rgba(255,255,255,.06);
+
+      --accent-a:rgba(34,197,94,.35);
+      --accent-b:rgba(99,102,241,.38);
+      --accent-c:rgba(168,85,247,.35);
+
+      --shadow: 0 28px 90px rgba(0,0,0,.62);
+      --shadow-soft: 0 18px 50px rgba(0,0,0,.45);
+
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 14px;
+
+      --max: 1120px;
     }
 
-    * { box-sizing: border-box; }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(1400px 900px at 20% 12%, rgba(99,102,241,.10), transparent 60%),
+                  radial-gradient(1200px 900px at 82% 55%, rgba(34,197,94,.08), transparent 62%),
+                  radial-gradient(1200px 900px at 45% 86%, rgba(168,85,247,.08), transparent 62%),
+                  var(--surface-main);
+      color:var(--text-primary);
+      overflow-x:hidden;
+    }
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--surface-main);
-      color: var(--text-primary);
+    /* Subtle animated grain */
+    .grain{
+      pointer-events:none;
+      position:fixed;
+      inset:-40%;
+      opacity:.18;
+      z-index:0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      transform: translateZ(0);
+      animation: grainMove 10s steps(8) infinite;
+    }
+    @keyframes grainMove{
+      0%{ transform: translate3d(-2%, -2%, 0); }
+      25%{ transform: translate3d(2%, -1%, 0); }
+      50%{ transform: translate3d(1%, 2%, 0); }
+      75%{ transform: translate3d(-1%, 1%, 0); }
+      100%{ transform: translate3d(-2%, -2%, 0); }
+    }
+
+    /* Background aurora blobs */
+    .aurora{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .blob{
+      position:absolute;
+      width: 720px;
+      height: 720px;
+      border-radius: 999px;
+      filter: blur(40px);
+      opacity:.35;
+      transform: translateZ(0);
+      animation: float 14s ease-in-out infinite;
+    }
+    .blob.b1{
+      left:-180px;
+      top:-220px;
+      background: radial-gradient(circle at 30% 30%, rgba(99,102,241,.55), transparent 60%),
+                  radial-gradient(circle at 70% 60%, rgba(168,85,247,.38), transparent 60%);
+      animation-duration: 16s;
+    }
+    .blob.b2{
+      right:-240px;
+      top:120px;
+      background: radial-gradient(circle at 40% 40%, rgba(34,197,94,.50), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(99,102,241,.30), transparent 60%);
+      animation-duration: 18s;
+      animation-delay: -4s;
+    }
+    .blob.b3{
+      left: 16%;
+      bottom:-420px;
+      width: 920px;
+      height: 920px;
+      background: radial-gradient(circle at 35% 35%, rgba(168,85,247,.45), transparent 60%),
+                  radial-gradient(circle at 75% 60%, rgba(34,197,94,.25), transparent 60%);
+      animation-duration: 22s;
+      animation-delay: -8s;
+    }
+    @keyframes float{
+      0%{ transform: translate3d(0,0,0) scale(1); }
+      50%{ transform: translate3d(18px,-22px,0) scale(1.04); }
+      100%{ transform: translate3d(0,0,0) scale(1); }
+    }
+
+    /* Layout helpers */
+    .wrap{
+      position:relative;
+      z-index:1;
+    }
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
     }
 
     /* Header */
-    header {
+    header{
       position: sticky;
       top: 0;
+      z-index: 50;
       background: var(--surface-header);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      z-index: 1000;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
-
-    nav {
-      max-width: 1100px;
-      margin: auto;
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 1rem 0;
     }
-
-    .plain-link {
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
+    .brand{
+      display:flex;
+      gap:.8rem;
+      align-items:center;
+      text-decoration:none;
+      color:var(--text-primary);
     }
-
-    .plain-link:hover { text-decoration: underline; }
-
-    nav strong { color: var(--text-primary); }
-
-    nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
+    .mark{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(99,102,241,.38), rgba(168,85,247,.30));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 30px rgba(0,0,0,.45);
+      position:relative;
+      overflow:hidden;
+    }
+    .mark::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(120deg, rgba(255,255,255,.18), transparent 40%, rgba(255,255,255,.10));
+      transform: translateX(-35%) rotate(10deg);
+      opacity:.6;
+      animation: sheen 4.2s ease-in-out infinite;
+    }
+    @keyframes sheen{
+      0%{ transform: translateX(-38%) rotate(10deg); opacity:.45; }
+      50%{ transform: translateX(18%) rotate(10deg); opacity:.65; }
+      100%{ transform: translateX(-38%) rotate(10deg); opacity:.45; }
+    }
+    nav strong{ letter-spacing:.2px; font-weight:650; }
+    .nav-links a{
+      margin-left: 1.2rem;
+      text-decoration:none;
       color: var(--text-secondary);
-      font-weight: 500;
+      font-weight: 540;
+      padding:.55rem .75rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease, color 180ms ease;
     }
-
-    nav a:hover { color: var(--text-primary); }
+    .nav-links a:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.10);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
 
     /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      background:
-        radial-gradient(600px at 20% 30%, var(--accent-a), transparent 60%),
-        radial-gradient(700px at 80% 40%, var(--accent-b), transparent 60%),
-        radial-gradient(800px at 50% 80%, var(--accent-c), transparent 60%),
-        linear-gradient(180deg, var(--surface-main), var(--surface-main));
+    .hero{
+      min-height: calc(100vh - 72px);
+      display:grid;
+      align-items:center;
+      padding: 4rem 0 2.5rem;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 2.6rem;
+      align-items:center;
+    }
+    .kicker{
+      color: var(--text-secondary);
+      margin: 0 0 .35rem;
+      letter-spacing:.2px;
+    }
+    .headline{
+      font-size: clamp(2.8rem, 6.8vw, 4.6rem);
+      margin:.2rem 0 .8rem;
+      line-height:1.02;
+      letter-spacing:-.8px;
+    }
+    .subhead{
+      color: var(--text-secondary);
+      margin: 0 0 1.4rem;
+      font-size: 1.05rem;
+      line-height:1.6;
+      max-width: 56ch;
     }
 
-    .hero h1 {
-      font-size: clamp(3rem, 8vw, 4.5rem);
-      margin: 1rem 0;
+    .cta-row{
+      display:flex;
+      gap:.85rem;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 1.2rem;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      padding: .9rem 1.15rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text-primary);
+      text-decoration:none;
+      font-weight: 560;
+      transition: transform 170ms ease, background 170ms ease, border-color 170ms ease, box-shadow 170ms ease;
+      box-shadow: 0 14px 40px rgba(0,0,0,.30);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(99,102,241,.36), rgba(168,85,247,.30));
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,.40);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn.primary::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(120deg, rgba(255,255,255,.18), transparent 40%, rgba(255,255,255,.08));
+      transform: translateX(-40%) rotate(10deg);
+      opacity:.7;
+      animation: sheen 4.6s ease-in-out infinite;
+      pointer-events:none;
     }
 
-    .hero p { color: var(--text-secondary); }
-
-    .badges {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 2rem 0;
+    /* Marquee skills strip */
+    .marquee{
+      margin-top: 2.2rem;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 18px;
+      overflow:hidden;
+      position:relative;
     }
-
-    .badges span {
-      padding: 0.5rem 0.9rem;
+    .marquee::before,
+    .marquee::after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width: 90px;
+      pointer-events:none;
+      z-index:1;
+    }
+    .marquee::before{
+      left:0;
+      background: linear-gradient(90deg, rgba(7,10,16,1), rgba(7,10,16,0));
+    }
+    .marquee::after{
+      right:0;
+      background: linear-gradient(270deg, rgba(7,10,16,1), rgba(7,10,16,0));
+    }
+    .track{
+      display:flex;
+      gap: .75rem;
+      padding: .8rem .6rem;
+      width:max-content;
+      animation: scroll 18s linear infinite;
+    }
+    @keyframes scroll{
+      0%{ transform: translateX(0); }
+      100%{ transform: translateX(-50%); }
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      padding: .55rem .8rem;
       border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      color: var(--text-muted);
-      font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(243,244,246,.92);
+      font-size: .86rem;
+      white-space:nowrap;
+    }
+    .dotg{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(255,255,255,.35);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.08);
     }
 
-    .primary-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.8rem 1.6rem;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(168,85,247,0.35));
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      border: 1px solid rgba(255,255,255,0.14);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    /* Hero right: animated “showcase card” */
+    .showcase{
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      transform: translateZ(0);
+    }
+    .showcase::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(900px at 30% 20%, rgba(99,102,241,.18), transparent 55%),
+                  radial-gradient(900px at 80% 70%, rgba(34,197,94,.14), transparent 55%),
+                  radial-gradient(900px at 55% 95%, rgba(168,85,247,.12), transparent 60%);
+      opacity:.9;
+      filter: blur(10px);
+    }
+    .showcase-inner{
+      position:relative;
+      padding: 1.2rem;
+      display:grid;
+      gap: 1rem;
+    }
+    .mini-card{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,20,.55);
+      backdrop-filter: blur(14px);
+      padding: 1rem;
+      box-shadow: var(--shadow-soft);
+      transform: translateZ(0);
+    }
+    .mini-title{
+      margin:0 0 .25rem;
+      font-weight: 650;
+      letter-spacing:.2px;
+    }
+    .mini-sub{
+      margin:0;
+      color: var(--text-secondary);
+      line-height:1.5;
+      font-size:.95rem;
+    }
+    .stat-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .7rem;
+    }
+    .stat{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding: .8rem;
+      display:grid;
+      gap:.25rem;
+      min-height: 84px;
+    }
+    .stat b{ font-size: 1.05rem; letter-spacing:.2px; }
+    .stat span{ color: var(--text-muted); font-size:.85rem; }
+
+    .scanline{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(255,255,255,.03) 0px,
+        rgba(255,255,255,.03) 1px,
+        transparent 2px,
+        transparent 6px
+      );
+      opacity:.12;
+      mix-blend-mode: overlay;
+      animation: scan 6.5s linear infinite;
+    }
+    @keyframes scan{
+      0%{ transform: translateY(-18%); }
+      100%{ transform: translateY(18%); }
     }
 
     /* Sections */
-    section {
-      max-width: 1100px;
-      margin: 5rem auto;
+    section{
+      margin: 4.8rem 0;
+    }
+    .panel{
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(17,24,39,.64);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
       padding: 3rem 2.5rem;
-      border-radius: 28px;
-      background: var(--surface-card);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+      position:relative;
+      overflow:hidden;
+    }
+    .panel::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(900px at 18% 12%, rgba(99,102,241,.10), transparent 60%),
+                  radial-gradient(900px at 85% 70%, rgba(34,197,94,.08), transparent 60%);
+      opacity:.85;
+      pointer-events:none;
+    }
+    .panel > *{ position:relative; }
+
+    .section-title{
+      margin:0 0 .6rem;
+      font-size: 1.8rem;
+      letter-spacing:-.3px;
+    }
+    .section-note{
+      margin:0 0 2.2rem;
+      color: var(--text-secondary);
+      max-width: 72ch;
+      line-height:1.65;
     }
 
-    h2 { margin-top: 0; }
-
-    .project {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 2.25rem;
-      margin-top: 3rem;
-      padding-top: 2.5rem;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      align-items: center;
+    /* Projects */
+    .project{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 2.2rem;
+      padding-top: 2.4rem;
+      margin-top: 2.4rem;
+      border-top: 1px solid rgba(255,255,255,.10);
+      align-items:center;
     }
-
-    .project:first-of-type {
+    .project:first-of-type{
+      margin-top: 0;
       padding-top: 0;
       border-top: none;
     }
-
-    .project p { color: var(--text-secondary); }
-
-    .tags {
-      display: flex;
-      gap: 0.6rem;
-      margin: 1.2rem 0;
-      flex-wrap: wrap;
+    .project h3{
+      margin:0 0 .45rem;
+      font-size: 1.32rem;
+      letter-spacing:-.2px;
     }
-
-    .tags span {
-      padding: 0.35rem 0.7rem;
+    .project p{
+      margin: 0 0 1.2rem;
+      color: var(--text-secondary);
+      line-height:1.6;
+    }
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      margin: 0 0 1.2rem;
+      padding:0;
+    }
+    .tag{
+      padding: .35rem .7rem;
       border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      font-size: 0.8rem;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
       color: var(--text-muted);
+      font-size:.82rem;
     }
-
-    .actions {
-      margin-top: 1.5rem;
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      align-items: center;
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.7rem;
+      align-items:center;
     }
-
-    .app-btn, .secondary-btn {
-      padding: 0.6rem 1.3rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.06);
+    .chip{
+      padding: .6rem 1.0rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
       color: var(--text-primary);
-      text-decoration: none;
-      cursor: pointer;
-      display: inline-flex;
-      gap: 0.5rem;
-      align-items: center;
+      text-decoration:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      transition: transform 170ms ease, background 170ms ease, border-color 170ms ease;
+      user-select:none;
+    }
+    .chip:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+    .chip.primary{
+      background: linear-gradient(135deg, rgba(99,102,241,.32), rgba(168,85,247,.26));
+      border-color: rgba(255,255,255,.18);
     }
 
-    .app-btn:hover, .secondary-btn:hover {
-      border-color: rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.08);
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 900px) {
-      section { padding: 2.2rem 1.3rem; }
-      .project { grid-template-columns: 1fr; }
-    }
-
-    /* =========================
-       Classy Carousel (Phone frame + crossfade + progress)
-       ========================= */
-
-    .carousel {
-      position: relative;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background:
-        radial-gradient(900px at 20% 10%, rgba(99,102,241,0.18), transparent 55%),
-        radial-gradient(800px at 85% 70%, rgba(34,197,94,0.14), transparent 55%),
-        rgba(255,255,255,0.03);
-      box-shadow: 0 26px 70px rgba(0,0,0,0.55);
-      overflow: hidden;
-      padding: 18px;
-    }
-
-    .carousel-inner {
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center;
-      gap: 12px;
-    }
-
-    .phone-frame {
-      width: min(320px, 100%);
-      aspect-ratio: 9 / 19.5;
-      border-radius: 28px;
-      background: rgba(12,16,24,0.8);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow:
-        0 30px 90px rgba(0,0,0,0.7),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-      position: relative;
-      overflow: hidden;
+    /* Classy carousel: phone frame + cinematic fade */
+    .carousel{
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow-soft);
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
       transform: translateZ(0);
     }
-
-    .phone-frame::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(800px at 20% 15%, rgba(168,85,247,0.12), transparent 60%),
-        radial-gradient(800px at 80% 85%, rgba(99,102,241,0.10), transparent 60%);
-      pointer-events: none;
-      z-index: 1;
+    .carousel::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(900px at 20% 10%, rgba(99,102,241,.14), transparent 55%),
+                  radial-gradient(900px at 85% 75%, rgba(34,197,94,.10), transparent 55%),
+                  radial-gradient(900px at 55% 95%, rgba(168,85,247,.10), transparent 60%);
+      opacity:.9;
+      filter: blur(10px);
+      pointer-events:none;
     }
-
-    .phone-notch {
-      position: absolute;
+    .carousel-inner{
+      position:relative;
+      display:grid;
+      justify-items:center;
+      gap: 12px;
+    }
+    .phone-frame{
+      width: min(330px, 100%);
+      aspect-ratio: 9 / 19.5;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(6,10,16,.75);
+      box-shadow: 0 30px 90px rgba(0,0,0,.70),
+                  inset 0 1px 0 rgba(255,255,255,.06);
+      overflow:hidden;
+      position:relative;
+    }
+    .phone-notch{
+      position:absolute;
       top: 10px;
-      left: 50%;
+      left:50%;
       transform: translateX(-50%);
       width: 38%;
       height: 18px;
       border-radius: 0 0 14px 14px;
-      background: rgba(0,0,0,0.55);
-      border: 1px solid rgba(255,255,255,0.06);
-      z-index: 4;
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.06);
       backdrop-filter: blur(10px);
+      z-index: 4;
     }
-
-    .carousel-stage {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
+    .carousel-stage{
+      position:absolute;
+      inset:0;
+      z-index:2;
     }
-
-    .carousel-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
+    .carousel-slide{
+      position:absolute;
+      inset:0;
+      opacity:0;
       transform: scale(1.02);
-      transition:
-        opacity 720ms cubic-bezier(.2,.8,.2,1),
-        transform 900ms cubic-bezier(.2,.8,.2,1);
+      transition: opacity 820ms cubic-bezier(.2,.8,.2,1),
+                  transform 980ms cubic-bezier(.2,.8,.2,1);
     }
-
-    .carousel-slide.is-active {
-      opacity: 1;
+    .carousel-slide.is-active{
+      opacity:1;
       transform: scale(1);
     }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .carousel-slide img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter: saturate(1.06) contrast(1.03);
       transform: translateZ(0);
-      filter: saturate(1.05) contrast(1.03);
+    }
+    .carousel-gloss{
+      position:absolute;
+      inset:-45% -20%;
+      background: linear-gradient(120deg, rgba(255,255,255,.12), transparent 45%, rgba(255,255,255,.08));
+      transform: translateX(-35%) rotate(10deg);
+      opacity:.55;
+      pointer-events:none;
+      z-index:3;
+      animation: gloss 5.8s ease-in-out infinite;
+    }
+    @keyframes gloss{
+      0%{ transform: translateX(-38%) rotate(10deg); opacity:.46; }
+      50%{ transform: translateX(18%) rotate(10deg); opacity:.66; }
+      100%{ transform: translateX(-38%) rotate(10deg); opacity:.46; }
     }
 
-    .carousel-gloss {
-      position: absolute;
-      inset: -40% -20%;
-      background: linear-gradient(120deg, rgba(255,255,255,0.10), transparent 40%, rgba(255,255,255,0.06));
-      transform: translateX(-18%) rotate(12deg);
-      opacity: 0.55;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    .carousel-meta {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .carousel-meta{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       gap: 10px;
     }
-
-    .meta-pill {
-      display: inline-flex;
-      align-items: center;
+    .meta-pill{
+      display:inline-flex;
+      align-items:center;
       gap: 10px;
       padding: 10px 12px;
       border-radius: 999px;
-      background: rgba(10,14,20,0.55);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,20,.55);
       backdrop-filter: blur(12px);
-      color: rgba(243,244,246,0.9);
-      font-size: 0.82rem;
+      color: rgba(243,244,246,.92);
+      font-size:.82rem;
     }
-
-    .progress {
-      width: 130px;
+    .progress{
+      width: 140px;
       height: 8px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.10);
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:hidden;
     }
-
-    .progress > span {
-      display: block;
-      height: 100%;
-      width: 0%;
-      background: rgba(255,255,255,0.28);
+    .progress > span{
+      display:block;
+      height:100%;
+      width:0%;
+      background: rgba(255,255,255,.28);
       border-radius: 999px;
-      transform: translateZ(0);
     }
-
-    .controls {
-      display: flex;
+    .controls{
+      display:flex;
       gap: 8px;
-      align-items: center;
+      align-items:center;
     }
-
-    .cbtn {
+    .cbtn{
       width: 40px;
       height: 40px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(10,14,20,0.55);
-      color: rgba(243,244,246,0.92);
-      cursor: pointer;
-      display: grid;
-      place-items: center;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10,14,20,.55);
       backdrop-filter: blur(12px);
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-      user-select: none;
+      color: rgba(243,244,246,.92);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      user-select:none;
     }
-
-    .cbtn:hover {
-      border-color: rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.07);
+    .cbtn:hover{
       transform: translateY(-1px);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.22);
     }
-
-    .dots {
-      display: flex;
+    .dots{
+      display:flex;
       gap: 6px;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-wrap:wrap;
+      justify-content:center;
+      width:100%;
+      padding: 2px 0;
     }
-
-    .dot {
+    .dot{
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.10);
-      cursor: pointer;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      cursor:pointer;
       transition: width 220ms ease, background 220ms ease, border-color 220ms ease;
-      padding: 0;
+      padding:0;
     }
-
-    .dot[aria-current="true"] {
+    .dot[aria-current="true"]{
       width: 22px;
-      background: rgba(255,255,255,0.28);
-      border-color: rgba(255,255,255,0.26);
+      background: rgba(255,255,255,.28);
+      border-color: rgba(255,255,255,.26);
     }
 
-    .carousel:focus-within {
-      outline: 2px solid rgba(99,102,241,0.55);
-      outline-offset: 4px;
+    /* Skills section */
+    .skills-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+    .skill-card{
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,20,.45);
+      backdrop-filter: blur(14px);
+      padding: 1.1rem 1.1rem;
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .skill-card::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(700px at 20% 10%, rgba(99,102,241,.10), transparent 60%),
+                  radial-gradient(700px at 85% 85%, rgba(34,197,94,.08), transparent 60%);
+      opacity:.8;
+      pointer-events:none;
+    }
+    .skill-card > *{ position:relative; }
+    .skill-card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
+    }
+    .skill-card h4{
+      margin:0 0 .35rem;
+      font-size: 1rem;
+      letter-spacing:.1px;
+    }
+    .skill-card p{
+      margin:0;
+      color: var(--text-secondary);
+      line-height:1.55;
+      font-size:.95rem;
     }
 
-    @media (max-width: 900px) {
-      .carousel { padding: 16px; }
-      .phone-frame { width: min(340px, 100%); }
-      .progress { width: 110px; }
+    /* Footer */
+    footer{
+      padding: 3.4rem 0 4.5rem;
+      color: var(--text-muted);
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+    .plain-link{
+      color: inherit;
+      text-decoration:none;
+    }
+    .plain-link:hover{ text-decoration:underline; }
+
+    /* Reveal animations */
+    .reveal{
+      opacity:0;
+      transform: translateY(18px);
+      transition: opacity 700ms cubic-bezier(.2,.8,.2,1),
+                  transform 850ms cubic-bezier(.2,.8,.2,1);
+      will-change: opacity, transform;
+    }
+    .reveal.is-in{
+      opacity:1;
+      transform: translateY(0);
+    }
+    .reveal[data-delay="1"]{ transition-delay: 90ms; }
+    .reveal[data-delay="2"]{ transition-delay: 160ms; }
+    .reveal[data-delay="3"]{ transition-delay: 230ms; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .showcase{ order: 2; }
+      .skills-grid{ grid-template-columns: 1fr; }
+      .project{ grid-template-columns: 1fr; }
+      .panel{ padding: 2.3rem 1.4rem; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .carousel-slide, .cbtn, .dot { transition: none; }
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      .grain, .blob, .track, .scanline, .mark::after, .btn.primary::after, .carousel-gloss{ animation:none !important; }
+      .reveal{ transition:none; opacity:1; transform:none; }
+      .carousel-slide{ transition:none; }
     }
   </style>
 </head>
 
 <body>
-
-<header>
-  <nav>
-    <strong>Priya Taliyan</strong>
-    <div>
-      <a href="#home">Home</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-</header>
-
-<section id="home" class="hero">
-  <div>
-    <p>Hello, I’m</p>
-    <h1>Priya</h1>
-    <p><strong>Aspiring Mobile Application Developer</strong></p>
-    <p>I build user-focused mobile applications with an emphasis on clarity, performance, and real-world usability.</p>
-
-    <div class="badges">
-      <span>Swift & SwiftUI</span>
-      <span>Kotlin & Jetpack Compose</span>
-      <span>React Native</span>
-      <span>Firebase</span>
-      <span>Typescript</span>
-    </div>
-
-    <a href="#projects" class="primary-btn">View My Work</a>
+  <div class="aurora" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
   </div>
-</section>
+  <div class="grain" aria-hidden="true"></div>
 
-<section id="projects">
-  <h2>Projects</h2>
-
-  <!-- Happy Steps -->
-  <div class="project">
-    <div>
-      <h3>Happy Steps</h3>
-      <p>Child-focused routine management app designed to encourage positive daily habits.</p>
-      <div class="tags"><span>React Native</span><span>iOS</span><span>Android</span></div>
-      <div class="actions">
-        <a class="app-btn" href="https://apps.apple.com/se/app/happy-steps/id6755143766" target="_blank" rel="noreferrer"> App Store</a>
+  <div class="wrap">
+    <header>
+      <div class="container">
+        <nav>
+          <a class="brand" href="#home" aria-label="Go to home">
+            <span class="mark" aria-hidden="true"></span>
+            <strong>Priya Taliyan</strong>
+          </a>
+          <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
       </div>
-    </div>
+    </header>
 
-    <div>
-      <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Happy Steps screenshots carousel" tabindex="0">
-        <div class="carousel-inner">
-          <div class="phone-frame" data-stage>
-            <div class="phone-notch"></div>
-            <div class="carousel-stage">
-              <div class="carousel-slide is-active"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
+    <main>
+      <!-- HERO -->
+      <section id="home" class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div>
+              <p class="kicker reveal">Hello, I’m</p>
+              <h1 class="headline reveal" data-delay="1">Priya</h1>
+              <p class="subhead reveal" data-delay="2">
+                <strong>Aspiring Mobile Application Developer</strong><br/>
+                I build user-focused mobile applications with an emphasis on clarity, performance, and real-world usability.
+              </p>
+
+              <div class="cta-row reveal" data-delay="3">
+                <a class="btn primary" href="#projects">View My Work</a>
+                <a class="btn" href="#contact">Contact</a>
+              </div>
+
+              <div class="marquee reveal" data-delay="3" aria-label="Skills marquee">
+                <div class="track" data-track>
+                  <span class="pill"><span class="dotg"></span>Swift</span>
+                  <span class="pill"><span class="dotg"></span>SwiftUI</span>
+                  <span class="pill"><span class="dotg"></span>Kotlin</span>
+                  <span class="pill"><span class="dotg"></span>Jetpack Compose</span>
+                  <span class="pill"><span class="dotg"></span>React Native</span>
+                  <span class="pill"><span class="dotg"></span>Firebase</span>
+                  <span class="pill"><span class="dotg"></span>Auth</span>
+                  <span class="pill"><span class="dotg"></span>Realtime DB</span>
+                  <span class="pill"><span class="dotg"></span>Firestore</span>
+                  <span class="pill"><span class="dotg"></span>TypeScript</span>
+                  <span class="pill"><span class="dotg"></span>CI/CD</span>
+                  <span class="pill"><span class="dotg"></span>Security Rules</span>
+
+                  <!-- duplicate set for seamless loop -->
+                  <span class="pill"><span class="dotg"></span>Swift</span>
+                  <span class="pill"><span class="dotg"></span>SwiftUI</span>
+                  <span class="pill"><span class="dotg"></span>Kotlin</span>
+                  <span class="pill"><span class="dotg"></span>Jetpack Compose</span>
+                  <span class="pill"><span class="dotg"></span>React Native</span>
+                  <span class="pill"><span class="dotg"></span>Firebase</span>
+                  <span class="pill"><span class="dotg"></span>Auth</span>
+                  <span class="pill"><span class="dotg"></span>Realtime DB</span>
+                  <span class="pill"><span class="dotg"></span>Firestore</span>
+                  <span class="pill"><span class="dotg"></span>TypeScript</span>
+                  <span class="pill"><span class="dotg"></span>CI/CD</span>
+                  <span class="pill"><span class="dotg"></span>Security Rules</span>
+                </div>
+              </div>
             </div>
-            <div class="carousel-gloss"></div>
+
+            <div class="showcase reveal" data-delay="2" aria-label="Showcase card">
+              <div class="scanline" aria-hidden="true"></div>
+              <div class="showcase-inner">
+                <div class="mini-card">
+                  <p class="mini-title">Mobile-first, production mindset</p>
+                  <p class="mini-sub">Clean UI, fast iteration, and scalable data models with Firebase.</p>
+                </div>
+
+                <div class="stat-grid">
+                  <div class="stat">
+                    <b>iOS</b>
+                    <span>SwiftUI · Auth</span>
+                  </div>
+                  <div class="stat">
+                    <b>Android</b>
+                    <span>Compose · Kotlin</span>
+                  </div>
+                  <div class="stat">
+                    <b>Backend</b>
+                    <span>Rules · Data</span>
+                  </div>
+                </div>
+
+                <div class="mini-card">
+                  <p class="mini-title">What I ship</p>
+                  <p class="mini-sub">App Store releases, polished UX, and reliable authentication flows.</p>
+                </div>
+              </div>
+            </div>
+
           </div>
-
-          <div class="carousel-meta">
-            <div class="meta-pill">
-              <span data-counter>01 / 04</span>
-              <div class="progress" aria-hidden="true"><span data-progress></span></div>
-            </div>
-
-            <div class="controls">
-              <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
-              <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
-            </div>
-          </div>
-
-          <div class="dots" data-dots></div>
         </div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <!-- Commuvia -->
-  <div class="project">
-    <div>
-      <h3>Commuvia</h3>
-      <p>Location-based ride-sharing iOS application for nearby carpooling.</p>
-      <div class="tags"><span>Swift</span><span>SwiftUI</span><span>iOS</span></div>
-      <div class="actions">
-        <a class="app-btn" href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB" target="_blank" rel="noreferrer"> App Store</a>
-      </div>
-    </div>
+      <!-- PROJECTS -->
+      <section id="projects">
+        <div class="container">
+          <div class="panel">
+            <h2 class="section-title reveal">Projects</h2>
+            <p class="section-note reveal" data-delay="1">
+              Selected work with an emphasis on mobile UX, clean architecture, and Firebase-backed features.
+            </p>
 
-    <div>
-      <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Commuvia screenshots carousel" tabindex="0">
-        <div class="carousel-inner">
-          <div class="phone-frame" data-stage>
-            <div class="phone-notch"></div>
-            <div class="carousel-stage">
-              <div class="carousel-slide is-active"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
+            <!-- Happy Steps -->
+            <div class="project">
+              <div class="reveal">
+                <h3>Happy Steps</h3>
+                <p>Child-focused routine management app designed to encourage positive daily habits.</p>
+                <div class="tags">
+                  <span class="tag">React Native</span>
+                  <span class="tag">iOS</span>
+                  <span class="tag">Android</span>
+                </div>
+                <div class="actions">
+                  <a class="chip primary" href="https://apps.apple.com/se/app/happy-steps/id6755143766" target="_blank" rel="noreferrer"> App Store</a>
+                </div>
+              </div>
+
+              <div class="reveal" data-delay="1">
+                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Happy Steps screenshots" tabindex="0">
+                  <div class="carousel-inner">
+                    <div class="phone-frame">
+                      <div class="phone-notch"></div>
+                      <div class="carousel-stage">
+                        <div class="carousel-slide is-active"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
+                      </div>
+                      <div class="carousel-gloss"></div>
+                    </div>
+
+                    <div class="carousel-meta">
+                      <div class="meta-pill">
+                        <span data-counter>01 / 04</span>
+                        <div class="progress" aria-hidden="true"><span data-progress></span></div>
+                      </div>
+                      <div class="controls">
+                        <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
+                        <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
+                      </div>
+                    </div>
+
+                    <div class="dots" data-dots></div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="carousel-gloss"></div>
+
+            <!-- Commuvia -->
+            <div class="project">
+              <div class="reveal">
+                <h3>Commuvia</h3>
+                <p>Location-based ride-sharing iOS application for nearby carpooling.</p>
+                <div class="tags">
+                  <span class="tag">Swift</span>
+                  <span class="tag">SwiftUI</span>
+                  <span class="tag">iOS</span>
+                </div>
+                <div class="actions">
+                  <a class="chip primary" href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB" target="_blank" rel="noreferrer"> App Store</a>
+                </div>
+              </div>
+
+              <div class="reveal" data-delay="1">
+                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Commuvia screenshots" tabindex="0">
+                  <div class="carousel-inner">
+                    <div class="phone-frame">
+                      <div class="phone-notch"></div>
+                      <div class="carousel-stage">
+                        <div class="carousel-slide is-active"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
+                      </div>
+                      <div class="carousel-gloss"></div>
+                    </div>
+
+                    <div class="carousel-meta">
+                      <div class="meta-pill">
+                        <span data-counter>01 / 04</span>
+                        <div class="progress" aria-hidden="true"><span data-progress></span></div>
+                      </div>
+                      <div class="controls">
+                        <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
+                        <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
+                      </div>
+                    </div>
+
+                    <div class="dots" data-dots></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Triple Treat -->
+            <div class="project">
+              <div class="reveal">
+                <h3>Triple Treat</h3>
+                <p>Cloud kitchen management app focusing on orders, inventory, and kitchen workflows.</p>
+                <div class="tags">
+                  <span class="tag">Swift</span>
+                  <span class="tag">Firebase</span>
+                  <span class="tag">Realtime Database</span>
+                </div>
+                <div class="actions">
+                  <span class="chip" role="text">Group Project</span>
+                </div>
+              </div>
+
+              <div class="reveal" data-delay="1">
+                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Triple Treat screenshots" tabindex="0">
+                  <div class="carousel-inner">
+                    <div class="phone-frame">
+                      <div class="phone-notch"></div>
+                      <div class="carousel-stage">
+                        <div class="carousel-slide is-active"><img src="images/teiple1.png" alt="Triple Treat screenshot 1" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple.png" alt="Triple Treat screenshot 2" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple111.png" alt="Triple Treat screenshot 3" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple3.png" alt="Triple Treat screenshot 4" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple4.png" alt="Triple Treat screenshot 5" loading="lazy"></div>
+                      </div>
+                      <div class="carousel-gloss"></div>
+                    </div>
+
+                    <div class="carousel-meta">
+                      <div class="meta-pill">
+                        <span data-counter>01 / 05</span>
+                        <div class="progress" aria-hidden="true"><span data-progress></span></div>
+                      </div>
+                      <div class="controls">
+                        <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
+                        <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
+                      </div>
+                    </div>
+
+                    <div class="dots" data-dots></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
-
-          <div class="carousel-meta">
-            <div class="meta-pill">
-              <span data-counter>01 / 04</span>
-              <div class="progress" aria-hidden="true"><span data-progress></span></div>
-            </div>
-
-            <div class="controls">
-              <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
-              <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
-            </div>
-          </div>
-
-          <div class="dots" data-dots></div>
         </div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <!-- Triple Treat -->
-  <div class="project">
-    <div>
-      <h3>Triple Treat</h3>
-      <p>Cloud kitchen management app focusing on orders, inventory, and kitchen workflows.</p>
-      <div class="tags"><span>Swift</span><span>Firebase</span></div>
-      <div class="actions"><span class="secondary-btn">Group Project</span></div>
-    </div>
+      <!-- SKILLS -->
+      <section id="skills">
+        <div class="container">
+          <div class="panel">
+            <h2 class="section-title reveal">Skills</h2>
+            <p class="section-note reveal" data-delay="1">
+              Practical development skills focused on shipping real mobile apps with reliable authentication, data flows, and polished UI.
+            </p>
 
-    <div>
-      <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Triple Treat screenshots carousel" tabindex="0">
-        <div class="carousel-inner">
-          <div class="phone-frame" data-stage>
-            <div class="phone-notch"></div>
-            <div class="carousel-stage">
-              <div class="carousel-slide is-active"><img src="images/teiple1.png" alt="Triple Treat screenshot 1" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/triple.png" alt="Triple Treat screenshot 2" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/triple111.png" alt="Triple Treat screenshot 3" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/triple3.png" alt="Triple Treat screenshot 4" loading="lazy"></div>
-              <div class="carousel-slide"><img src="images/triple4.png" alt="Triple Treat screenshot 5" loading="lazy"></div>
+            <div class="skills-grid">
+              <div class="skill-card reveal">
+                <h4>iOS Development</h4>
+                <p>Swift, SwiftUI, app architecture, navigation, performance, App Store readiness.</p>
+              </div>
+              <div class="skill-card reveal" data-delay="1">
+                <h4>Android Development</h4>
+                <p>Kotlin, Jetpack Compose, state management, modern UI patterns.</p>
+              </div>
+              <div class="skill-card reveal" data-delay="2">
+                <h4>Firebase & Backend</h4>
+                <p>Auth, Realtime Database/Firestore, security rules, role-based access, data modeling.</p>
+              </div>
+              <div class="skill-card reveal">
+                <h4>Cross-Platform</h4>
+                <p>React Native, TypeScript, reusable components, consistent UX across devices.</p>
+              </div>
+              <div class="skill-card reveal" data-delay="1">
+                <h4>Quality & Delivery</h4>
+                <p>Debugging, build pipelines, release checklists, documentation, iteration.</p>
+              </div>
+              <div class="skill-card reveal" data-delay="2">
+                <h4>Product Thinking</h4>
+                <p>User-focused design, clarity in flows, real-world constraints, accessibility basics.</p>
+              </div>
             </div>
-            <div class="carousel-gloss"></div>
           </div>
-
-          <div class="carousel-meta">
-            <div class="meta-pill">
-              <span data-counter>01 / 05</span>
-              <div class="progress" aria-hidden="true"><span data-progress></span></div>
-            </div>
-
-            <div class="controls">
-              <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
-              <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
-            </div>
-          </div>
-
-          <div class="dots" data-dots></div>
         </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <div class="container">
+          <div class="panel">
+            <h2 class="section-title reveal">Contact</h2>
+            <p class="section-note reveal" data-delay="1">
+              Open to LIA/internship opportunities and junior mobile roles.
+            </p>
+
+            <div class="reveal" data-delay="2" style="display:flex; flex-wrap:wrap; gap:.8rem; align-items:center;">
+              <a class="chip primary" href="mailto:chaudharypia94@gmail.com">Email</a>
+              <a class="chip" href="https://www.linkedin.com/in/priya-taliyan-348667308/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a class="chip" href="https://github.com/Taliyangithub/" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          <a class="plain-link" href="mailto:chaudharypia94@gmail.com">chaudharypia94@gmail.com</a>
+        </p>
+        <p>
+          <a class="plain-link" href="https://www.linkedin.com/in/priya-taliyan-348667308/" target="_blank" rel="noreferrer">LinkedIn</a>
+          ·
+          <a class="plain-link" href="https://github.com/Taliyangithub/" target="_blank" rel="noreferrer">GitHub</a>
+        </p>
       </div>
-    </div>
+    </footer>
   </div>
-</section>
 
-<footer id="contact">
-  <p>
-    Email:
-    <a href="mailto:chaudharypia94@gmail.com" class="plain-link">
-      chaudharypia94@gmail.com
-    </a>
-  </p>
+  <script>
+    (function () {
+      const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  <p>
-    <a href="https://www.linkedin.com/in/priya-taliyan-348667308/"
-       target="_blank"
-       rel="noreferrer"
-       class="plain-link">
-      LinkedIn
-    </a>
-    ·
-    <a href="https://github.com/Taliyangithub/"
-       target="_blank"
-       rel="noreferrer"
-       class="plain-link">
-      GitHub
-    </a>
-  </p>
-</footer>
+      // Reveal on scroll
+      const reveals = Array.from(document.querySelectorAll(".reveal"));
+      if (!prefersReduced && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-in");
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12 });
 
-<script>
-  (function () {
-    const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        reveals.forEach((el) => io.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add("is-in"));
+      }
 
-    function pad2(n) {
-      const s = String(n);
-      return s.length === 1 ? "0" + s : s;
-    }
+      // Parallax aurora (very subtle)
+      if (!prefersReduced) {
+        const blobs = Array.from(document.querySelectorAll(".blob"));
+        let raf = null;
 
-    function initCarousel(root) {
-      const slides = Array.from(root.querySelectorAll(".carousel-slide"));
-      const prevBtn = root.querySelector("[data-prev]");
-      const nextBtn = root.querySelector("[data-next]");
-      const dotsWrap = root.querySelector("[data-dots]");
-      const counterEl = root.querySelector("[data-counter]");
-      const progressEl = root.querySelector("[data-progress]");
+        window.addEventListener("pointermove", (e) => {
+          const x = (e.clientX / window.innerWidth) - 0.5;
+          const y = (e.clientY / window.innerHeight) - 0.5;
 
-      let index = 0;
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            blobs.forEach((b, i) => {
+              const k = 10 + i * 4;
+              b.style.transform = "translate3d(" + (x * k) + "px," + (y * k) + "px,0)";
+            });
+          });
+        }, { passive: true });
+      }
 
-      const autoplay = root.getAttribute("data-autoplay") === "true" && !prefersReduced;
-      const interval = Number(root.getAttribute("data-interval") || 5200);
-      let timer = null;
-      let progressTimer = null;
+      // Classy carousel logic (cross-fade + progress)
+      function pad2(n) {
+        const s = String(n);
+        return s.length === 1 ? "0" + s : s;
+      }
 
-      function setActive(i, userAction) {
-        index = (i + slides.length) % slides.length;
+      function initCarousel(root) {
+        const slides = Array.from(root.querySelectorAll(".carousel-slide"));
+        const prevBtn = root.querySelector("[data-prev]");
+        const nextBtn = root.querySelector("[data-next]");
+        const dotsWrap = root.querySelector("[data-dots]");
+        const counterEl = root.querySelector("[data-counter]");
+        const progressEl = root.querySelector("[data-progress]");
 
-        slides.forEach((s, idx) => {
-          if (idx === index) s.classList.add("is-active");
-          else s.classList.remove("is-active");
-        });
+        let index = 0;
+        const autoplay = root.getAttribute("data-autoplay") === "true" && !prefersReduced;
+        const interval = Number(root.getAttribute("data-interval") || 5200);
+        let timer = null;
 
-        const total = slides.length;
-        if (counterEl) counterEl.textContent = pad2(index + 1) + " / " + pad2(total);
+        function buildDots() {
+          if (!dotsWrap) return;
+          dotsWrap.innerHTML = "";
+          slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "dot";
+            b.setAttribute("aria-label", "Go to slide " + (i + 1));
+            b.addEventListener("click", () => setActive(i, true));
+            dotsWrap.appendChild(b);
+          });
+        }
 
-        if (dotsWrap) {
+        function syncDots() {
+          if (!dotsWrap) return;
           const dots = Array.from(dotsWrap.querySelectorAll(".dot"));
-          dots.forEach((d, idx) => d.setAttribute("aria-current", idx === index ? "true" : "false"));
+          dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
         }
 
-        if (userAction) restartAutoplay();
-      }
+        function setCounter() {
+          const total = slides.length;
+          if (counterEl) counterEl.textContent = pad2(index + 1) + " / " + pad2(total);
+        }
 
-      function buildDots() {
-        if (!dotsWrap) return;
-        dotsWrap.innerHTML = "";
-        slides.forEach((_, i) => {
-          const b = document.createElement("button");
-          b.type = "button";
-          b.className = "dot";
-          b.setAttribute("aria-label", "Go to slide " + (i + 1));
-          b.addEventListener("click", () => setActive(i, true));
-          dotsWrap.appendChild(b);
-        });
-      }
-
-      function stopAutoplay() {
-        if (timer) window.clearInterval(timer);
-        if (progressTimer) window.clearInterval(progressTimer);
-        timer = null;
-        progressTimer = null;
-
-        if (progressEl) {
-          progressEl.style.width = "0%";
+        function startProgress() {
+          if (!progressEl) return;
           progressEl.style.transition = "none";
+          progressEl.style.width = "0%";
+          void progressEl.offsetWidth;
+          progressEl.style.transition = "width " + interval + "ms linear";
+          progressEl.style.width = "100%";
         }
-      }
 
-      function startProgress() {
-        if (!progressEl) return;
-        progressEl.style.transition = "none";
-        progressEl.style.width = "0%";
+        function setActive(i, userAction) {
+          index = (i + slides.length) % slides.length;
+          slides.forEach((s, idx) => {
+            if (idx === index) s.classList.add("is-active");
+            else s.classList.remove("is-active");
+          });
+          setCounter();
+          syncDots();
+          if (autoplay) startProgress();
+          if (userAction) restartAutoplay();
+        }
 
-        void progressEl.offsetWidth;
+        function stopAutoplay() {
+          if (timer) window.clearInterval(timer);
+          timer = null;
+          if (progressEl) {
+            progressEl.style.transition = "none";
+            progressEl.style.width = "0%";
+          }
+        }
 
-        progressEl.style.transition = "width " + interval + "ms linear";
-        progressEl.style.width = "100%";
-      }
-
-      function startAutoplay() {
-        if (!autoplay) return;
-        stopAutoplay();
-        startProgress();
-        timer = window.setInterval(() => {
-          setActive(index + 1, false);
+        function startAutoplay() {
+          if (!autoplay) return;
+          stopAutoplay();
           startProgress();
-        }, interval);
-      }
+          timer = window.setInterval(() => {
+            setActive(index + 1, false);
+          }, interval);
+        }
 
-      function restartAutoplay() {
-        if (!autoplay) return;
+        function restartAutoplay() {
+          if (!autoplay) return;
+          startAutoplay();
+        }
+
+        prevBtn && prevBtn.addEventListener("click", () => setActive(index - 1, true));
+        nextBtn && nextBtn.addEventListener("click", () => setActive(index + 1, true));
+
+        root.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") setActive(index - 1, true);
+          if (e.key === "ArrowRight") setActive(index + 1, true);
+        });
+
+        root.addEventListener("mouseenter", stopAutoplay);
+        root.addEventListener("mouseleave", startAutoplay);
+        root.addEventListener("focusin", stopAutoplay);
+        root.addEventListener("focusout", startAutoplay);
+
+        // Swipe / drag
+        let down = false;
+        let startX = 0;
+        const threshold = 44;
+
+        function onDown(x) { down = true; startX = x; stopAutoplay(); }
+        function onUp(x) {
+          if (!down) return;
+          down = false;
+          const dx = x - startX;
+          if (Math.abs(dx) > threshold) setActive(index + (dx < 0 ? 1 : -1), true);
+          else startAutoplay();
+        }
+
+        root.addEventListener("mousedown", (e) => onDown(e.clientX));
+        window.addEventListener("mouseup", (e) => onUp(e.clientX));
+
+        root.addEventListener("touchstart", (e) => {
+          if (e.touches && e.touches[0]) onDown(e.touches[0].clientX);
+        }, { passive: true });
+
+        root.addEventListener("touchend", (e) => {
+          const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+          onUp(t ? t.clientX : startX);
+        });
+
+        buildDots();
+        setActive(0, false);
         startAutoplay();
       }
 
-      prevBtn && prevBtn.addEventListener("click", () => setActive(index - 1, true));
-      nextBtn && nextBtn.addEventListener("click", () => setActive(index + 1, true));
-
-      root.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") setActive(index - 1, true);
-        if (e.key === "ArrowRight") setActive(index + 1, true);
-      });
-
-      root.addEventListener("mouseenter", stopAutoplay);
-      root.addEventListener("mouseleave", startAutoplay);
-      root.addEventListener("focusin", stopAutoplay);
-      root.addEventListener("focusout", startAutoplay);
-
-      let isDown = false;
-      let startX = 0;
-
-      function down(x) {
-        isDown = true;
-        startX = x;
-        stopAutoplay();
-      }
-
-      function up(x) {
-        if (!isDown) return;
-        isDown = false;
-        const dx = x - startX;
-        const threshold = 42;
-
-        if (Math.abs(dx) > threshold) {
-          setActive(index + (dx < 0 ? 1 : -1), true);
-        } else {
-          startAutoplay();
-        }
-      }
-
-      root.addEventListener("mousedown", (e) => down(e.clientX));
-      window.addEventListener("mouseup", (e) => up(e.clientX));
-
-      root.addEventListener("touchstart", (e) => {
-        if (e.touches && e.touches[0]) down(e.touches[0].clientX);
-      }, { passive: true });
-
-      root.addEventListener("touchend", (e) => {
-        const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
-        up(t ? t.clientX : startX);
-      });
-
-      buildDots();
-      setActive(0, false);
-      startAutoplay();
-    }
-
-    document.querySelectorAll("[data-carousel]").forEach(initCarousel);
-  })();
-</script>
-
+      document.querySelectorAll("[data-carousel]").forEach(initCarousel);
+    })();
+  </script>
 </body>
 </html>
