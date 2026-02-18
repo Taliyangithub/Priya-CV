@@ -11,24 +11,24 @@
       --text-secondary:#cbd5e1;
       --text-muted:#94a3b8;
 
-      --surface-main:#070A10;
-      --surface-header:rgba(10,14,20,.72);
-      --surface-card:rgba(17,24,39,.72);
+      --surface-main:#060812;
+      --surface-header:rgba(10,14,20,.70);
+      --surface-card:rgba(17,24,39,.62);
 
       --ring:rgba(255,255,255,.14);
-      --ring-2:rgba(255,255,255,.10);
+      --ring2:rgba(255,255,255,.10);
       --glass:rgba(255,255,255,.06);
 
       --accent-a:rgba(34,197,94,.35);
-      --accent-b:rgba(99,102,241,.38);
-      --accent-c:rgba(168,85,247,.35);
+      --accent-b:rgba(99,102,241,.42);
+      --accent-c:rgba(168,85,247,.38);
 
-      --shadow: 0 28px 90px rgba(0,0,0,.62);
-      --shadow-soft: 0 18px 50px rgba(0,0,0,.45);
+      --shadow: 0 30px 100px rgba(0,0,0,.65);
+      --shadow-soft: 0 18px 60px rgba(0,0,0,.45);
 
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 14px;
+      --r-xl: 28px;
+      --r-lg: 22px;
+      --r-md: 16px;
 
       --max: 1120px;
     }
@@ -38,20 +38,56 @@
     body{
       margin:0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(1400px 900px at 20% 12%, rgba(99,102,241,.10), transparent 60%),
-                  radial-gradient(1200px 900px at 82% 55%, rgba(34,197,94,.08), transparent 62%),
-                  radial-gradient(1200px 900px at 45% 86%, rgba(168,85,247,.08), transparent 62%),
-                  var(--surface-main);
+      background:
+        radial-gradient(1400px 900px at 18% 12%, rgba(99,102,241,.10), transparent 62%),
+        radial-gradient(1200px 900px at 82% 52%, rgba(34,197,94,.08), transparent 62%),
+        radial-gradient(1200px 900px at 46% 88%, rgba(168,85,247,.08), transparent 62%),
+        var(--surface-main);
       color:var(--text-primary);
       overflow-x:hidden;
     }
 
-    /* Subtle animated grain */
+    /* Cursor halo + trailing glow */
+    .cursor-halo{
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      z-index: 9999;
+    }
+    .halo{
+      position:absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.25);
+      mix-blend-mode: screen;
+      transform: translate3d(-50%, -50%, 0);
+      opacity: .0;
+      transition: opacity 220ms ease;
+      box-shadow:
+        0 0 0 10px rgba(99,102,241,.08),
+        0 0 0 22px rgba(168,85,247,.06),
+        0 0 60px rgba(99,102,241,.20);
+      filter: blur(.2px);
+    }
+    .halo.big{
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle at 30% 30%, rgba(99,102,241,.14), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(34,197,94,.10), transparent 60%),
+                  radial-gradient(circle at 50% 50%, rgba(168,85,247,.10), transparent 60%);
+      opacity: 0;
+      transition: opacity 220ms ease;
+      box-shadow: none;
+      filter: blur(2px);
+    }
+
+    /* Animated grain */
     .grain{
       pointer-events:none;
       position:fixed;
       inset:-40%;
-      opacity:.18;
+      opacity:.16;
       z-index:0;
       background-image:
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
@@ -67,7 +103,7 @@
       100%{ transform: translate3d(-2%, -2%, 0); }
     }
 
-    /* Background aurora blobs */
+    /* Aurora blobs */
     .aurora{
       position:fixed;
       inset:0;
@@ -77,37 +113,37 @@
     }
     .blob{
       position:absolute;
-      width: 720px;
-      height: 720px;
+      width: 760px;
+      height: 760px;
       border-radius: 999px;
-      filter: blur(40px);
-      opacity:.35;
+      filter: blur(44px);
+      opacity:.34;
       transform: translateZ(0);
-      animation: float 14s ease-in-out infinite;
+      animation: float 16s ease-in-out infinite;
     }
     .blob.b1{
-      left:-180px;
-      top:-220px;
-      background: radial-gradient(circle at 30% 30%, rgba(99,102,241,.55), transparent 60%),
-                  radial-gradient(circle at 70% 60%, rgba(168,85,247,.38), transparent 60%);
-      animation-duration: 16s;
+      left:-220px;
+      top:-260px;
+      background: radial-gradient(circle at 30% 30%, rgba(99,102,241,.55), transparent 62%),
+                  radial-gradient(circle at 70% 60%, rgba(168,85,247,.38), transparent 62%);
+      animation-duration: 18s;
     }
     .blob.b2{
-      right:-240px;
-      top:120px;
-      background: radial-gradient(circle at 40% 40%, rgba(34,197,94,.50), transparent 60%),
-                  radial-gradient(circle at 70% 70%, rgba(99,102,241,.30), transparent 60%);
-      animation-duration: 18s;
+      right:-260px;
+      top:140px;
+      background: radial-gradient(circle at 40% 40%, rgba(34,197,94,.50), transparent 62%),
+                  radial-gradient(circle at 70% 70%, rgba(99,102,241,.30), transparent 62%);
+      animation-duration: 20s;
       animation-delay: -4s;
     }
     .blob.b3{
       left: 16%;
-      bottom:-420px;
-      width: 920px;
-      height: 920px;
-      background: radial-gradient(circle at 35% 35%, rgba(168,85,247,.45), transparent 60%),
-                  radial-gradient(circle at 75% 60%, rgba(34,197,94,.25), transparent 60%);
-      animation-duration: 22s;
+      bottom:-460px;
+      width: 980px;
+      height: 980px;
+      background: radial-gradient(circle at 35% 35%, rgba(168,85,247,.45), transparent 62%),
+                  radial-gradient(circle at 75% 60%, rgba(34,197,94,.25), transparent 62%);
+      animation-duration: 24s;
       animation-delay: -8s;
     }
     @keyframes float{
@@ -116,11 +152,7 @@
       100%{ transform: translate3d(0,0,0) scale(1); }
     }
 
-    /* Layout helpers */
-    .wrap{
-      position:relative;
-      z-index:1;
-    }
+    .wrap{ position:relative; z-index:1; }
     .container{
       max-width: var(--max);
       margin: 0 auto;
@@ -131,9 +163,9 @@
     header{
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 60;
       background: var(--surface-header);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(255,255,255,.06);
     }
     nav{
@@ -152,8 +184,8 @@
     .mark{
       width: 34px; height: 34px;
       border-radius: 12px;
-      background: linear-gradient(135deg, rgba(99,102,241,.38), rgba(168,85,247,.30));
-      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(99,102,241,.40), rgba(168,85,247,.32));
+      border: 1px solid rgba(255,255,255,.16);
       box-shadow: 0 10px 30px rgba(0,0,0,.45);
       position:relative;
       overflow:hidden;
@@ -174,10 +206,10 @@
     }
     nav strong{ letter-spacing:.2px; font-weight:650; }
     .nav-links a{
-      margin-left: 1.2rem;
+      margin-left: 1.1rem;
       text-decoration:none;
       color: var(--text-secondary);
-      font-weight: 540;
+      font-weight: 560;
       padding:.55rem .75rem;
       border-radius: 12px;
       border: 1px solid transparent;
@@ -195,12 +227,12 @@
       min-height: calc(100vh - 72px);
       display:grid;
       align-items:center;
-      padding: 4rem 0 2.5rem;
+      padding: 4.2rem 0 2.2rem;
     }
     .hero-grid{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
-      gap: 2.6rem;
+      gap: 2.8rem;
       align-items:center;
     }
     .kicker{
@@ -209,19 +241,20 @@
       letter-spacing:.2px;
     }
     .headline{
-      font-size: clamp(2.8rem, 6.8vw, 4.6rem);
-      margin:.2rem 0 .8rem;
+      font-size: clamp(2.9rem, 6.9vw, 4.7rem);
+      margin:.15rem 0 .85rem;
       line-height:1.02;
-      letter-spacing:-.8px;
+      letter-spacing:-.9px;
     }
     .subhead{
       color: var(--text-secondary);
       margin: 0 0 1.4rem;
       font-size: 1.05rem;
-      line-height:1.6;
-      max-width: 56ch;
+      line-height:1.65;
+      max-width: 58ch;
     }
 
+    /* Magnetic buttons */
     .cta-row{
       display:flex;
       gap:.85rem;
@@ -230,29 +263,29 @@
       margin-top: 1.2rem;
     }
     .btn{
+      position:relative;
       display:inline-flex;
       align-items:center;
       gap:.55rem;
-      padding: .9rem 1.15rem;
+      padding: .92rem 1.15rem;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       color: var(--text-primary);
       text-decoration:none;
-      font-weight: 560;
-      transition: transform 170ms ease, background 170ms ease, border-color 170ms ease, box-shadow 170ms ease;
-      box-shadow: 0 14px 40px rgba(0,0,0,.30);
+      font-weight: 600;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+      box-shadow: 0 14px 44px rgba(0,0,0,.30);
+      will-change: transform;
     }
     .btn:hover{
-      transform: translateY(-1px);
       background: rgba(255,255,255,.08);
       border-color: rgba(255,255,255,.22);
     }
     .btn.primary{
-      background: linear-gradient(135deg, rgba(99,102,241,.36), rgba(168,85,247,.30));
+      background: linear-gradient(135deg, rgba(99,102,241,.38), rgba(168,85,247,.30));
       border-color: rgba(255,255,255,.18);
-      box-shadow: 0 18px 60px rgba(0,0,0,.40);
-      position:relative;
+      box-shadow: 0 18px 64px rgba(0,0,0,.42);
       overflow:hidden;
     }
     .btn.primary::after{
@@ -266,9 +299,9 @@
       pointer-events:none;
     }
 
-    /* Marquee skills strip */
+    /* Skills marquee */
     .marquee{
-      margin-top: 2.2rem;
+      margin-top: 2.1rem;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       border-radius: 18px;
@@ -280,22 +313,22 @@
       content:"";
       position:absolute;
       top:0; bottom:0;
-      width: 90px;
+      width: 92px;
       pointer-events:none;
       z-index:1;
     }
     .marquee::before{
       left:0;
-      background: linear-gradient(90deg, rgba(7,10,16,1), rgba(7,10,16,0));
+      background: linear-gradient(90deg, rgba(6,8,18,1), rgba(6,8,18,0));
     }
     .marquee::after{
       right:0;
-      background: linear-gradient(270deg, rgba(7,10,16,1), rgba(7,10,16,0));
+      background: linear-gradient(270deg, rgba(6,8,18,1), rgba(6,8,18,0));
     }
     .track{
       display:flex;
       gap: .75rem;
-      padding: .8rem .6rem;
+      padding: .82rem .6rem;
       width:max-content;
       animation: scroll 18s linear infinite;
     }
@@ -321,9 +354,9 @@
       box-shadow: 0 0 0 6px rgba(255,255,255,.08);
     }
 
-    /* Hero right: animated “showcase card” */
-    .showcase{
-      border-radius: var(--radius-xl);
+    /* HERO right: AI Sphere card */
+    .sphere-card{
+      border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
@@ -331,88 +364,116 @@
       position:relative;
       transform: translateZ(0);
     }
-    .showcase::before{
+    .sphere-card::before{
       content:"";
       position:absolute;
       inset:-1px;
-      background: radial-gradient(900px at 30% 20%, rgba(99,102,241,.18), transparent 55%),
-                  radial-gradient(900px at 80% 70%, rgba(34,197,94,.14), transparent 55%),
-                  radial-gradient(900px at 55% 95%, rgba(168,85,247,.12), transparent 60%);
-      opacity:.9;
+      background:
+        radial-gradient(900px at 30% 20%, rgba(99,102,241,.18), transparent 58%),
+        radial-gradient(900px at 80% 70%, rgba(34,197,94,.12), transparent 58%),
+        radial-gradient(900px at 55% 95%, rgba(168,85,247,.12), transparent 62%);
+      opacity:.95;
       filter: blur(10px);
+      pointer-events:none;
     }
-    .showcase-inner{
+    .sphere-top{
       position:relative;
-      padding: 1.2rem;
-      display:grid;
+      padding: 1.05rem 1.05rem 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       gap: 1rem;
     }
-    .mini-card{
-      border-radius: 18px;
+    .sphere-title{
+      margin:0;
+      font-weight: 700;
+      letter-spacing:.2px;
+      font-size: 1.0rem;
+    }
+    .sphere-sub{
+      margin:.25rem 0 0;
+      color: var(--text-secondary);
+      font-size: .92rem;
+      line-height:1.45;
+    }
+    .legend{
+      display:flex;
+      gap:.55rem;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .legend span{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      padding: .45rem .6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,20,.52);
+      backdrop-filter: blur(14px);
+      color: rgba(243,244,246,.90);
+      font-size: .78rem;
+      white-space:nowrap;
+    }
+    .key{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.30);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.08);
+    }
+    .key.a{ background: rgba(99,102,241,.60); box-shadow: 0 0 0 6px rgba(99,102,241,.14); }
+    .key.b{ background: rgba(34,197,94,.55); box-shadow: 0 0 0 6px rgba(34,197,94,.13); }
+    .key.c{ background: rgba(168,85,247,.55); box-shadow: 0 0 0 6px rgba(168,85,247,.12); }
+
+    .sphere-wrap{
+      position:relative;
+      padding: 1.05rem;
+    }
+    .sphere-canvas{
+      width: 100%;
+      aspect-ratio: 16/12;
+      border-radius: 22px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(10,14,20,.55);
-      backdrop-filter: blur(14px);
-      padding: 1rem;
-      box-shadow: var(--shadow-soft);
-      transform: translateZ(0);
-    }
-    .mini-title{
-      margin:0 0 .25rem;
-      font-weight: 650;
-      letter-spacing:.2px;
-    }
-    .mini-sub{
-      margin:0;
-      color: var(--text-secondary);
-      line-height:1.5;
-      font-size:.95rem;
-    }
-    .stat-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: .7rem;
-    }
-    .stat{
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      padding: .8rem;
-      display:grid;
-      gap:.25rem;
-      min-height: 84px;
-    }
-    .stat b{ font-size: 1.05rem; letter-spacing:.2px; }
-    .stat span{ color: var(--text-muted); font-size:.85rem; }
-
-    .scanline{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background: repeating-linear-gradient(
-        180deg,
-        rgba(255,255,255,.03) 0px,
-        rgba(255,255,255,.03) 1px,
-        transparent 2px,
-        transparent 6px
-      );
-      opacity:.12;
-      mix-blend-mode: overlay;
-      animation: scan 6.5s linear infinite;
-    }
-    @keyframes scan{
-      0%{ transform: translateY(-18%); }
-      100%{ transform: translateY(18%); }
-    }
-
-    /* Sections */
-    section{
-      margin: 4.8rem 0;
-    }
-    .panel{
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(17,24,39,.64);
       backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-soft);
+      display:block;
+    }
+    .sphere-hint{
+      position:absolute;
+      left: 1.6rem;
+      bottom: 1.6rem;
+      display:inline-flex;
+      gap:.55rem;
+      align-items:center;
+      padding: .55rem .8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,14,20,.52);
+      backdrop-filter: blur(14px);
+      color: rgba(243,244,246,.86);
+      font-size: .80rem;
+      pointer-events:none;
+    }
+    .spark{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.30);
+      box-shadow:
+        0 0 0 7px rgba(255,255,255,.07),
+        0 0 40px rgba(99,102,241,.25);
+    }
+
+    /* Panels */
+    section{ margin: 4.6rem 0; }
+    .panel{
+      border-radius: var(--r-xl);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(17,24,39,.60);
+      backdrop-filter: blur(18px);
       box-shadow: var(--shadow);
       padding: 3rem 2.5rem;
       position:relative;
@@ -422,22 +483,23 @@
       content:"";
       position:absolute;
       inset:-1px;
-      background: radial-gradient(900px at 18% 12%, rgba(99,102,241,.10), transparent 60%),
-                  radial-gradient(900px at 85% 70%, rgba(34,197,94,.08), transparent 60%);
-      opacity:.85;
+      background:
+        radial-gradient(900px at 18% 12%, rgba(99,102,241,.10), transparent 62%),
+        radial-gradient(900px at 85% 70%, rgba(34,197,94,.08), transparent 62%);
+      opacity:.9;
       pointer-events:none;
     }
     .panel > *{ position:relative; }
 
     .section-title{
       margin:0 0 .6rem;
-      font-size: 1.8rem;
-      letter-spacing:-.3px;
+      font-size: 1.85rem;
+      letter-spacing:-.35px;
     }
     .section-note{
       margin:0 0 2.2rem;
       color: var(--text-secondary);
-      max-width: 72ch;
+      max-width: 74ch;
       line-height:1.65;
     }
 
@@ -458,7 +520,7 @@
     }
     .project h3{
       margin:0 0 .45rem;
-      font-size: 1.32rem;
+      font-size: 1.35rem;
       letter-spacing:-.2px;
     }
     .project p{
@@ -488,7 +550,8 @@
       align-items:center;
     }
     .chip{
-      padding: .6rem 1.0rem;
+      position:relative;
+      padding: .64rem 1.05rem;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
@@ -498,22 +561,23 @@
       display:inline-flex;
       align-items:center;
       gap:.55rem;
-      transition: transform 170ms ease, background 170ms ease, border-color 170ms ease;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
       user-select:none;
+      will-change: transform;
     }
     .chip:hover{
-      transform: translateY(-1px);
       background: rgba(255,255,255,.08);
       border-color: rgba(255,255,255,.22);
+      box-shadow: 0 18px 60px rgba(0,0,0,.24);
     }
     .chip.primary{
       background: linear-gradient(135deg, rgba(99,102,241,.32), rgba(168,85,247,.26));
       border-color: rgba(255,255,255,.18);
     }
 
-    /* Classy carousel: phone frame + cinematic fade */
+    /* Carousel (cinematic fade + phone frame) */
     .carousel{
-      border-radius: var(--radius-xl);
+      border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       box-shadow: var(--shadow-soft);
@@ -526,10 +590,11 @@
       content:"";
       position:absolute;
       inset:-1px;
-      background: radial-gradient(900px at 20% 10%, rgba(99,102,241,.14), transparent 55%),
-                  radial-gradient(900px at 85% 75%, rgba(34,197,94,.10), transparent 55%),
-                  radial-gradient(900px at 55% 95%, rgba(168,85,247,.10), transparent 60%);
-      opacity:.9;
+      background:
+        radial-gradient(900px at 20% 10%, rgba(99,102,241,.14), transparent 58%),
+        radial-gradient(900px at 85% 75%, rgba(34,197,94,.10), transparent 58%),
+        radial-gradient(900px at 55% 95%, rgba(168,85,247,.10), transparent 62%);
+      opacity:.95;
       filter: blur(10px);
       pointer-events:none;
     }
@@ -685,7 +750,7 @@
       border-color: rgba(255,255,255,.26);
     }
 
-    /* Skills section */
+    /* Skills grid */
     .skills-grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -702,37 +767,37 @@
       transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
       position:relative;
       overflow:hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
     .skill-card::after{
       content:"";
       position:absolute;
       inset:-1px;
-      background: radial-gradient(700px at 20% 10%, rgba(99,102,241,.10), transparent 60%),
-                  radial-gradient(700px at 85% 85%, rgba(34,197,94,.08), transparent 60%);
-      opacity:.8;
+      background:
+        radial-gradient(700px at 20% 10%, rgba(99,102,241,.10), transparent 62%),
+        radial-gradient(700px at 85% 85%, rgba(34,197,94,.08), transparent 62%);
+      opacity:.85;
       pointer-events:none;
     }
     .skill-card > *{ position:relative; }
-    .skill-card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,.20);
-      background: rgba(255,255,255,.06);
-    }
     .skill-card h4{
       margin:0 0 .35rem;
       font-size: 1rem;
       letter-spacing:.1px;
+      transform: translateZ(10px);
     }
     .skill-card p{
       margin:0;
       color: var(--text-secondary);
       line-height:1.55;
       font-size:.95rem;
+      transform: translateZ(6px);
     }
 
     /* Footer */
     footer{
-      padding: 3.4rem 0 4.5rem;
+      padding: 3.4rem 0 4.6rem;
       color: var(--text-muted);
       text-align:center;
       position:relative;
@@ -744,12 +809,12 @@
     }
     .plain-link:hover{ text-decoration:underline; }
 
-    /* Reveal animations */
+    /* Reveal */
     .reveal{
       opacity:0;
       transform: translateY(18px);
-      transition: opacity 700ms cubic-bezier(.2,.8,.2,1),
-                  transform 850ms cubic-bezier(.2,.8,.2,1);
+      transition: opacity 720ms cubic-bezier(.2,.8,.2,1),
+                  transform 900ms cubic-bezier(.2,.8,.2,1);
       will-change: opacity, transform;
     }
     .reveal.is-in{
@@ -763,17 +828,17 @@
     /* Responsive */
     @media (max-width: 980px){
       .hero-grid{ grid-template-columns: 1fr; }
-      .showcase{ order: 2; }
-      .skills-grid{ grid-template-columns: 1fr; }
       .project{ grid-template-columns: 1fr; }
+      .skills-grid{ grid-template-columns: 1fr; }
       .panel{ padding: 2.3rem 1.4rem; }
     }
 
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior:auto; }
-      .grain, .blob, .track, .scanline, .mark::after, .btn.primary::after, .carousel-gloss{ animation:none !important; }
+      .grain, .blob, .track, .mark::after, .btn.primary::after, .carousel-gloss{ animation:none !important; }
       .reveal{ transition:none; opacity:1; transform:none; }
       .carousel-slide{ transition:none; }
+      .halo, .halo.big{ display:none; }
     }
   </style>
 </head>
@@ -785,6 +850,11 @@
     <div class="blob b3"></div>
   </div>
   <div class="grain" aria-hidden="true"></div>
+
+  <div class="cursor-halo" aria-hidden="true">
+    <div class="halo big" id="haloBig"></div>
+    <div class="halo" id="haloSmall"></div>
+  </div>
 
   <div class="wrap">
     <header>
@@ -818,8 +888,8 @@
               </p>
 
               <div class="cta-row reveal" data-delay="3">
-                <a class="btn primary" href="#projects">View My Work</a>
-                <a class="btn" href="#contact">Contact</a>
+                <a class="btn primary magnet" href="#projects">View My Work</a>
+                <a class="btn magnet" href="#contact">Contact</a>
               </div>
 
               <div class="marquee reveal" data-delay="3" aria-label="Skills marquee">
@@ -834,10 +904,9 @@
                   <span class="pill"><span class="dotg"></span>Realtime DB</span>
                   <span class="pill"><span class="dotg"></span>Firestore</span>
                   <span class="pill"><span class="dotg"></span>TypeScript</span>
-                  <span class="pill"><span class="dotg"></span>CI/CD</span>
                   <span class="pill"><span class="dotg"></span>Security Rules</span>
+                  <span class="pill"><span class="dotg"></span>CI/CD</span>
 
-                  <!-- duplicate set for seamless loop -->
                   <span class="pill"><span class="dotg"></span>Swift</span>
                   <span class="pill"><span class="dotg"></span>SwiftUI</span>
                   <span class="pill"><span class="dotg"></span>Kotlin</span>
@@ -848,39 +917,29 @@
                   <span class="pill"><span class="dotg"></span>Realtime DB</span>
                   <span class="pill"><span class="dotg"></span>Firestore</span>
                   <span class="pill"><span class="dotg"></span>TypeScript</span>
-                  <span class="pill"><span class="dotg"></span>CI/CD</span>
                   <span class="pill"><span class="dotg"></span>Security Rules</span>
+                  <span class="pill"><span class="dotg"></span>CI/CD</span>
                 </div>
               </div>
             </div>
 
-            <div class="showcase reveal" data-delay="2" aria-label="Showcase card">
-              <div class="scanline" aria-hidden="true"></div>
-              <div class="showcase-inner">
-                <div class="mini-card">
-                  <p class="mini-title">Mobile-first, production mindset</p>
-                  <p class="mini-sub">Clean UI, fast iteration, and scalable data models with Firebase.</p>
+            <!-- AI Sphere -->
+            <div class="sphere-card reveal" data-delay="2">
+              <div class="sphere-top">
+                <div>
+                  <p class="sphere-title">Interactive AI Sphere</p>
+                  <p class="sphere-sub">Mouse controls rotation. Click to pulse. Represents connected skills and systems.</p>
                 </div>
+                <div class="legend" aria-label="Legend">
+                  <span><span class="key a" aria-hidden="true"></span>Mobile</span>
+                  <span><span class="key b" aria-hidden="true"></span>Firebase</span>
+                  <span><span class="key c" aria-hidden="true"></span>UI/UX</span>
+                </div>
+              </div>
 
-                <div class="stat-grid">
-                  <div class="stat">
-                    <b>iOS</b>
-                    <span>SwiftUI · Auth</span>
-                  </div>
-                  <div class="stat">
-                    <b>Android</b>
-                    <span>Compose · Kotlin</span>
-                  </div>
-                  <div class="stat">
-                    <b>Backend</b>
-                    <span>Rules · Data</span>
-                  </div>
-                </div>
-
-                <div class="mini-card">
-                  <p class="mini-title">What I ship</p>
-                  <p class="mini-sub">App Store releases, polished UX, and reliable authentication flows.</p>
-                </div>
+              <div class="sphere-wrap">
+                <canvas id="sphere" class="sphere-canvas" aria-label="Interactive 3D sphere canvas"></canvas>
+                <div class="sphere-hint"><span class="spark" aria-hidden="true"></span>Move · Click · Drag</div>
               </div>
             </div>
 
@@ -899,7 +958,7 @@
 
             <!-- Happy Steps -->
             <div class="project">
-              <div class="reveal">
+              <div class="reveal tilt">
                 <h3>Happy Steps</h3>
                 <p>Child-focused routine management app designed to encourage positive daily habits.</p>
                 <div class="tags">
@@ -908,7 +967,7 @@
                   <span class="tag">Android</span>
                 </div>
                 <div class="actions">
-                  <a class="chip primary" href="https://apps.apple.com/se/app/happy-steps/id6755143766" target="_blank" rel="noreferrer"> App Store</a>
+                  <a class="chip primary magnet" href="https://apps.apple.com/se/app/happy-steps/id6755143766" target="_blank" rel="noreferrer"> App Store</a>
                 </div>
               </div>
 
@@ -945,7 +1004,7 @@
 
             <!-- Commuvia -->
             <div class="project">
-              <div class="reveal">
+              <div class="reveal tilt">
                 <h3>Commuvia</h3>
                 <p>Location-based ride-sharing iOS application for nearby carpooling.</p>
                 <div class="tags">
@@ -954,7 +1013,7 @@
                   <span class="tag">iOS</span>
                 </div>
                 <div class="actions">
-                  <a class="chip primary" href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB" target="_blank" rel="noreferrer"> App Store</a>
+                  <a class="chip primary magnet" href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB" target="_blank" rel="noreferrer"> App Store</a>
                 </div>
               </div>
 
@@ -991,7 +1050,7 @@
 
             <!-- Triple Treat -->
             <div class="project">
-              <div class="reveal">
+              <div class="reveal tilt">
                 <h3>Triple Treat</h3>
                 <p>Cloud kitchen management app focusing on orders, inventory, and kitchen workflows.</p>
                 <div class="tags">
@@ -1046,31 +1105,31 @@
           <div class="panel">
             <h2 class="section-title reveal">Skills</h2>
             <p class="section-note reveal" data-delay="1">
-              Practical development skills focused on shipping real mobile apps with reliable authentication, data flows, and polished UI.
+              Practical skills focused on shipping real mobile apps with reliable authentication, data flows, and polished UI.
             </p>
 
             <div class="skills-grid">
-              <div class="skill-card reveal">
+              <div class="skill-card reveal tilt">
                 <h4>iOS Development</h4>
                 <p>Swift, SwiftUI, app architecture, navigation, performance, App Store readiness.</p>
               </div>
-              <div class="skill-card reveal" data-delay="1">
+              <div class="skill-card reveal tilt" data-delay="1">
                 <h4>Android Development</h4>
                 <p>Kotlin, Jetpack Compose, state management, modern UI patterns.</p>
               </div>
-              <div class="skill-card reveal" data-delay="2">
+              <div class="skill-card reveal tilt" data-delay="2">
                 <h4>Firebase & Backend</h4>
                 <p>Auth, Realtime Database/Firestore, security rules, role-based access, data modeling.</p>
               </div>
-              <div class="skill-card reveal">
+              <div class="skill-card reveal tilt">
                 <h4>Cross-Platform</h4>
                 <p>React Native, TypeScript, reusable components, consistent UX across devices.</p>
               </div>
-              <div class="skill-card reveal" data-delay="1">
+              <div class="skill-card reveal tilt" data-delay="1">
                 <h4>Quality & Delivery</h4>
                 <p>Debugging, build pipelines, release checklists, documentation, iteration.</p>
               </div>
-              <div class="skill-card reveal" data-delay="2">
+              <div class="skill-card reveal tilt" data-delay="2">
                 <h4>Product Thinking</h4>
                 <p>User-focused design, clarity in flows, real-world constraints, accessibility basics.</p>
               </div>
@@ -1089,9 +1148,9 @@
             </p>
 
             <div class="reveal" data-delay="2" style="display:flex; flex-wrap:wrap; gap:.8rem; align-items:center;">
-              <a class="chip primary" href="mailto:chaudharypia94@gmail.com">Email</a>
-              <a class="chip" href="https://www.linkedin.com/in/priya-taliyan-348667308/" target="_blank" rel="noreferrer">LinkedIn</a>
-              <a class="chip" href="https://github.com/Taliyangithub/" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="chip primary magnet" href="mailto:chaudharypia94@gmail.com">Email</a>
+              <a class="chip magnet" href="https://www.linkedin.com/in/priya-taliyan-348667308/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a class="chip magnet" href="https://github.com/Taliyangithub/" target="_blank" rel="noreferrer">GitHub</a>
             </div>
           </div>
         </div>
@@ -1100,9 +1159,7 @@
 
     <footer>
       <div class="container">
-        <p>
-          <a class="plain-link" href="mailto:chaudharypia94@gmail.com">chaudharypia94@gmail.com</a>
-        </p>
+        <p><a class="plain-link" href="mailto:chaudharypia94@gmail.com">chaudharypia94@gmail.com</a></p>
         <p>
           <a class="plain-link" href="https://www.linkedin.com/in/priya-taliyan-348667308/" target="_blank" rel="noreferrer">LinkedIn</a>
           ·
@@ -1116,7 +1173,51 @@
     (function () {
       const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // Reveal on scroll
+      // Cursor halo
+      const haloSmall = document.getElementById("haloSmall");
+      const haloBig = document.getElementById("haloBig");
+      let hx = window.innerWidth * 0.5;
+      let hy = window.innerHeight * 0.5;
+      let bx = hx;
+      let by = hy;
+
+      function setHaloOpacity(on) {
+        if (!haloSmall || !haloBig) return;
+        haloSmall.style.opacity = on ? "1" : "0";
+        haloBig.style.opacity = on ? "1" : "0";
+      }
+
+      if (!prefersReduced && haloSmall && haloBig) {
+        setHaloOpacity(true);
+
+        window.addEventListener("pointermove", (e) => {
+          hx = e.clientX;
+          hy = e.clientY;
+        }, { passive: true });
+
+        const interactiveSelectors = "a, button, .magnet, .tilt, canvas";
+        window.addEventListener("pointerover", (e) => {
+          if (e.target && e.target.closest && e.target.closest(interactiveSelectors)) {
+            haloSmall.style.opacity = "1";
+            haloBig.style.opacity = "1";
+          }
+        }, { passive: true });
+
+        function animateHalo() {
+          bx += (hx - bx) * 0.12;
+          by += (hy - by) * 0.12;
+
+          haloSmall.style.left = hx + "px";
+          haloSmall.style.top = hy + "px";
+          haloBig.style.left = bx + "px";
+          haloBig.style.top = by + "px";
+
+          requestAnimationFrame(animateHalo);
+        }
+        requestAnimationFrame(animateHalo);
+      }
+
+      // Reveal
       const reveals = Array.from(document.querySelectorAll(".reveal"));
       if (!prefersReduced && "IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
@@ -1127,32 +1228,79 @@
             }
           });
         }, { threshold: 0.12 });
-
         reveals.forEach((el) => io.observe(el));
       } else {
         reveals.forEach((el) => el.classList.add("is-in"));
       }
 
-      // Parallax aurora (very subtle)
-      if (!prefersReduced) {
-        const blobs = Array.from(document.querySelectorAll(".blob"));
-        let raf = null;
+      // Magnetic effect
+      function initMagnet(el) {
+        let rect = null;
 
-        window.addEventListener("pointermove", (e) => {
-          const x = (e.clientX / window.innerWidth) - 0.5;
-          const y = (e.clientY / window.innerHeight) - 0.5;
+        function onMove(e) {
+          rect = rect || el.getBoundingClientRect();
+          const x = e.clientX - (rect.left + rect.width / 2);
+          const y = e.clientY - (rect.top + rect.height / 2);
+          const mx = x * 0.18;
+          const my = y * 0.18;
+          el.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
+        }
 
-          if (raf) cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(() => {
-            blobs.forEach((b, i) => {
-              const k = 10 + i * 4;
-              b.style.transform = "translate3d(" + (x * k) + "px," + (y * k) + "px,0)";
-            });
-          });
-        }, { passive: true });
+        function onEnter() {
+          rect = el.getBoundingClientRect();
+          el.style.transition = "transform 120ms ease";
+        }
+
+        function onLeave() {
+          el.style.transition = "transform 220ms ease";
+          el.style.transform = "translate3d(0,0,0)";
+          rect = null;
+        }
+
+        el.addEventListener("pointerenter", onEnter);
+        el.addEventListener("pointermove", onMove);
+        el.addEventListener("pointerleave", onLeave);
       }
 
-      // Classy carousel logic (cross-fade + progress)
+      if (!prefersReduced) {
+        document.querySelectorAll(".magnet").forEach(initMagnet);
+      }
+
+      // 3D tilt on cards
+      function initTilt(el) {
+        let rect = null;
+        const max = 9;
+
+        function onEnter() {
+          rect = el.getBoundingClientRect();
+          el.style.transition = "transform 120ms ease";
+        }
+
+        function onMove(e) {
+          if (!rect) rect = el.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          const rx = (py - 0.5) * -max;
+          const ry = (px - 0.5) * max;
+          el.style.transform = "perspective(900px) rotateX(" + rx + "deg) rotateY(" + ry + "deg) translateZ(0)";
+        }
+
+        function onLeave() {
+          el.style.transition = "transform 240ms ease";
+          el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+          rect = null;
+        }
+
+        el.addEventListener("pointerenter", onEnter);
+        el.addEventListener("pointermove", onMove);
+        el.addEventListener("pointerleave", onLeave);
+      }
+
+      if (!prefersReduced) {
+        document.querySelectorAll(".tilt").forEach(initTilt);
+      }
+
+      // Carousel (cross-fade + progress)
       function pad2(n) {
         const s = String(n);
         return s.length === 1 ? "0" + s : s;
@@ -1252,7 +1400,6 @@
         root.addEventListener("focusin", stopAutoplay);
         root.addEventListener("focusout", startAutoplay);
 
-        // Swipe / drag
         let down = false;
         let startX = 0;
         const threshold = 44;
@@ -1284,6 +1431,258 @@
       }
 
       document.querySelectorAll("[data-carousel]").forEach(initCarousel);
+
+      // Interactive 3D Sphere (canvas, no libraries)
+      const canvas = document.getElementById("sphere");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d", { alpha: true });
+      const DPR = Math.min(2, window.devicePixelRatio || 1);
+
+      function resizeCanvas() {
+        const r = canvas.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.floor(r.width * DPR));
+        canvas.height = Math.max(1, Math.floor(r.height * DPR));
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas, { passive: true });
+
+      const state = {
+        rx: 0.0,
+        ry: 0.0,
+        targetRx: 0.0,
+        targetRy: 0.0,
+        drag: false,
+        lastX: 0,
+        lastY: 0,
+        pulse: 0,
+        mx: 0,
+        my: 0
+      };
+
+      const points = [];
+      const pointCount = 220;
+
+      function randSphere() {
+        const u = Math.random();
+        const v = Math.random();
+        const theta = 2 * Math.PI * u;
+        const phi = Math.acos(2 * v - 1);
+        const x = Math.sin(phi) * Math.cos(theta);
+        const y = Math.cos(phi);
+        const z = Math.sin(phi) * Math.sin(theta);
+        return { x, y, z };
+      }
+
+      const groups = [
+        { name: "Mobile",   color: [99,102,241], weight: 0.38 },
+        { name: "Firebase", color: [34,197,94],  weight: 0.32 },
+        { name: "UI",       color: [168,85,247], weight: 0.30 }
+      ];
+
+      function pickGroup() {
+        const r = Math.random();
+        let acc = 0;
+        for (const g of groups) {
+          acc += g.weight;
+          if (r <= acc) return g;
+        }
+        return groups[0];
+      }
+
+      for (let i = 0; i < pointCount; i++) {
+        const p = randSphere();
+        const g = pickGroup();
+        points.push({
+          x: p.x, y: p.y, z: p.z,
+          vx: (Math.random() - 0.5) * 0.0005,
+          vy: (Math.random() - 0.5) * 0.0005,
+          vz: (Math.random() - 0.5) * 0.0005,
+          c: g.color,
+          r: 1.0 + Math.random() * 1.6
+        });
+      }
+
+      function rotY(p, a) {
+        const s = Math.sin(a), c = Math.cos(a);
+        return { x: p.x * c + p.z * s, y: p.y, z: -p.x * s + p.z * c };
+      }
+      function rotX(p, a) {
+        const s = Math.sin(a), c = Math.cos(a);
+        return { x: p.x, y: p.y * c - p.z * s, z: p.y * s + p.z * c };
+      }
+
+      function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+      function draw() {
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const cx = w * 0.5;
+        const cy = h * 0.5;
+        const baseRadius = Math.min(w, h) * 0.28;
+
+        // Smoothly approach target rotation
+        state.rx += (state.targetRx - state.rx) * 0.08;
+        state.ry += (state.targetRy - state.ry) * 0.08;
+
+        // Ambient rotation
+        state.ry += 0.0012;
+        state.rx += 0.0007;
+
+        // Pulse damping
+        state.pulse *= 0.92;
+
+        // Projected points buffer
+        const proj = [];
+
+        const perspective = 2.6;
+        const glow = 0.8 + state.pulse * 0.9;
+
+        for (const p of points) {
+          // Small internal drift to feel alive
+          p.x = clamp(p.x + p.vx, -1.1, 1.1);
+          p.y = clamp(p.y + p.vy, -1.1, 1.1);
+          p.z = clamp(p.z + p.vz, -1.1, 1.1);
+
+          let q = rotY(p, state.ry);
+          q = rotX(q, state.rx);
+
+          const z = q.z + perspective;
+          const s = 1 / z;
+
+          const x2 = cx + q.x * baseRadius * s;
+          const y2 = cy + q.y * baseRadius * s;
+
+          const depth = clamp((q.z + 1.2) / 2.4, 0, 1);
+          const alpha = 0.18 + depth * 0.78;
+
+          proj.push({
+            x: x2,
+            y: y2,
+            z: q.z,
+            s,
+            depth,
+            alpha,
+            c: p.c,
+            r: p.r
+          });
+        }
+
+        // Sort by depth for nicer compositing
+        proj.sort((a, b) => a.z - b.z);
+
+        // Connections
+        ctx.save();
+        ctx.lineWidth = 1 * DPR;
+        for (let i = 0; i < proj.length; i++) {
+          const a = proj[i];
+          for (let j = i + 1; j < proj.length; j++) {
+            const b = proj[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const d2 = dx * dx + dy * dy;
+
+            // Distance threshold in screen space
+            const maxD = (baseRadius * 0.26) * (baseRadius * 0.26);
+            if (d2 > maxD) continue;
+
+            const dist = Math.sqrt(d2);
+            const t = 1 - (dist / (baseRadius * 0.26));
+            const aAlpha = (0.06 + t * 0.22) * (0.55 + a.depth * 0.55) * glow;
+
+            ctx.strokeStyle = "rgba(255,255,255," + aAlpha.toFixed(4) + ")";
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+
+        // Outer aura ring
+        ctx.save();
+        ctx.globalCompositeOperation = "screen";
+        const grad = ctx.createRadialGradient(cx, cy, baseRadius * 0.25, cx, cy, baseRadius * 1.08);
+        grad.addColorStop(0, "rgba(99,102,241,0.00)");
+        grad.addColorStop(0.45, "rgba(99,102,241,0.10)");
+        grad.addColorStop(0.72, "rgba(168,85,247,0.10)");
+        grad.addColorStop(1, "rgba(34,197,94,0.00)");
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, baseRadius * 1.05, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Points
+        for (const p of proj) {
+          const [r, g, b] = p.c;
+          const radius = (p.r + p.depth * 1.6) * DPR * (0.9 + state.pulse * 0.25);
+          const a = p.alpha * (0.70 + p.depth * 0.35) * glow;
+
+          // Glow
+          ctx.save();
+          ctx.globalCompositeOperation = "screen";
+          ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + (a * 0.22).toFixed(4) + ")";
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, radius * 3.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+
+          // Core
+          ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a.toFixed(4) + ")";
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      if (!prefersReduced) {
+        requestAnimationFrame(draw);
+      }
+
+      // Mouse controls: hover influences target rotation
+      function normFromEvent(e) {
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        return { x: (x - 0.5) * 2, y: (y - 0.5) * 2 };
+      }
+
+      canvas.addEventListener("pointermove", (e) => {
+        const n = normFromEvent(e);
+        if (!state.drag) {
+          state.targetRy = n.x * 0.9;
+          state.targetRx = -n.y * 0.6;
+        } else {
+          const dx = e.clientX - state.lastX;
+          const dy = e.clientY - state.lastY;
+          state.targetRy += dx * 0.0032;
+          state.targetRx += dy * 0.0026;
+          state.lastX = e.clientX;
+          state.lastY = e.clientY;
+        }
+      }, { passive: true });
+
+      canvas.addEventListener("pointerdown", (e) => {
+        state.drag = true;
+        state.lastX = e.clientX;
+        state.lastY = e.clientY;
+        canvas.setPointerCapture(e.pointerId);
+        state.pulse = 1.0;
+      });
+
+      canvas.addEventListener("pointerup", (e) => {
+        state.drag = false;
+        try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
+      });
+
+      canvas.addEventListener("click", () => {
+        state.pulse = 1.2;
+      });
+
     })();
   </script>
 </body>
