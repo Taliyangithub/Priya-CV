@@ -18,8 +18,6 @@
       --shadow-soft: 0 18px 60px rgba(0,0,0,.45);
 
       --r-xl: 28px;
-      --r-lg: 22px;
-      --r-md: 16px;
 
       --max: 1120px;
     }
@@ -38,9 +36,7 @@
       overflow-x:hidden;
     }
 
-    /* =========================
-       Cursor halo (no trailing)
-       ========================= */
+    /* Cursor halo (no trailing) */
     .cursor-halo{
       position: fixed;
       inset: 0;
@@ -75,9 +71,7 @@
       filter: blur(2px);
     }
 
-    /* =========================
-       Ambient layers
-       ========================= */
+    /* Ambient layers */
     .grain{
       pointer-events:none;
       position:fixed;
@@ -153,9 +147,7 @@
       padding: 0 1.5rem;
     }
 
-    /* =========================
-       Header
-       ========================= */
+    /* Header */
     header{
       position: sticky;
       top: 0;
@@ -218,9 +210,7 @@
       transform: translateY(-1px);
     }
 
-    /* =========================
-       Hero
-       ========================= */
+    /* Hero */
     .hero{
       min-height: calc(100vh - 72px);
       display:grid;
@@ -255,7 +245,7 @@
       max-width: 58ch;
     }
 
-    /* Liquid veil canvas */
+    /* Liquid hero canvas */
     .liquid-layer{
       position:absolute;
       inset:-40px 0 -40px 0;
@@ -316,6 +306,49 @@
       pointer-events:none;
     }
 
+    /* Readable skills chips (replaces scrolling marquee) */
+    .skills-inline{
+      margin-top: 1.9rem;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: 18px;
+      padding: 1rem 1rem;
+    }
+    .skills-inline__title{
+      margin: 0 0 .75rem;
+      font-size: .95rem;
+      font-weight: 650;
+      color: rgba(243,244,246,.92);
+      letter-spacing:.2px;
+    }
+    .skills-inline__grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap: .55rem;
+      align-items:center;
+    }
+    .skill-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      padding: .55rem .85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(243,244,246,.92);
+      font-size: .90rem;
+      line-height: 1;
+      white-space:nowrap;
+    }
+    .skill-pill__dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background: rgba(255,255,255,.35);
+      box-shadow: 0 0 0 6px rgba(255,255,255,.08);
+      flex: 0 0 auto;
+    }
+
     /* Store badges */
     .store-badges{
       display:flex;
@@ -349,62 +382,7 @@
       width: auto;
     }
 
-    /* Marquee */
-    .marquee{
-      margin-top: 2.1rem;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      border-radius: 18px;
-      overflow:hidden;
-      position:relative;
-    }
-    .marquee::before,
-    .marquee::after{
-      content:"";
-      position:absolute;
-      top:0; bottom:0;
-      width: 92px;
-      pointer-events:none;
-      z-index:1;
-    }
-    .marquee::before{
-      left:0;
-      background: linear-gradient(90deg, rgba(6,8,18,1), rgba(6,8,18,0));
-    }
-    .marquee::after{
-      right:0;
-      background: linear-gradient(270deg, rgba(6,8,18,1), rgba(6,8,18,0));
-    }
-    .track{
-      display:flex;
-      gap: .75rem;
-      padding: .82rem .6rem;
-      width:max-content;
-      animation: scroll 18s linear infinite;
-    }
-    @keyframes scroll{
-      0%{ transform: translateX(0); }
-      100%{ transform: translateX(-50%); }
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:.5rem;
-      padding: .55rem .8rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(243,244,246,.92);
-      font-size: .86rem;
-      white-space:nowrap;
-    }
-    .dotg{
-      width:8px; height:8px; border-radius:999px;
-      background: rgba(255,255,255,.35);
-      box-shadow: 0 0 0 6px rgba(255,255,255,.08);
-    }
-
-    /* Sphere */
+    /* AI Sphere card */
     .sphere-card{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -572,7 +550,7 @@
       letter-spacing:-.2px;
     }
     .project p{
-      margin: 0 0 1.0rem;
+      margin: 0 0 1rem;
       color: var(--text-secondary);
       line-height:1.6;
     }
@@ -642,9 +620,7 @@
     .content ul{ margin:.4rem 0 0 1.1rem; padding:0; }
     .content li{ margin:.2rem 0; }
 
-    /* =========================
-       iPhone-only carousel (no external UI)
-       ========================= */
+    /* iPhone-only carousel */
     .iphone-carousel{
       width: min(360px, 100%);
       margin: 0 auto;
@@ -739,7 +715,7 @@
       100%{ transform: translateX(-38%) rotate(10deg); opacity:.46; }
     }
 
-    /* Skills */
+    /* Skills section grid */
     .skills-grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -784,7 +760,6 @@
       transform: translateZ(6px);
     }
 
-    /* Footer */
     footer{
       padding: 3.4rem 0 4.6rem;
       color: var(--text-muted);
@@ -827,7 +802,7 @@
 
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior:auto; }
-      .grain, .blob, .track, .mark::after, .btn.primary::after, .iphone-carousel__gloss{ animation:none !important; }
+      .grain, .blob, .mark::after, .btn.primary::after, .iphone-carousel__gloss{ animation:none !important; }
       .reveal{ transition:none; opacity:1; transform:none; }
       .iphone-carousel__slide{ transition:none; }
       .halo, .halo.big{ display:none; }
@@ -889,33 +864,21 @@
                 <a class="btn magnet" href="#contact">Contact</a>
               </div>
 
-              <div class="marquee reveal" data-delay="3" aria-label="Skills marquee">
-                <div class="track" data-track>
-                  <span class="pill"><span class="dotg"></span>Swift</span>
-                  <span class="pill"><span class="dotg"></span>SwiftUI</span>
-                  <span class="pill"><span class="dotg"></span>Kotlin</span>
-                  <span class="pill"><span class="dotg"></span>Jetpack Compose</span>
-                  <span class="pill"><span class="dotg"></span>React Native</span>
-                  <span class="pill"><span class="dotg"></span>Firebase</span>
-                  <span class="pill"><span class="dotg"></span>Auth</span>
-                  <span class="pill"><span class="dotg"></span>Realtime DB</span>
-                  <span class="pill"><span class="dotg"></span>Firestore</span>
-                  <span class="pill"><span class="dotg"></span>TypeScript</span>
-                  <span class="pill"><span class="dotg"></span>Security Rules</span>
-                  <span class="pill"><span class="dotg"></span>CI/CD</span>
-
-                  <span class="pill"><span class="dotg"></span>Swift</span>
-                  <span class="pill"><span class="dotg"></span>SwiftUI</span>
-                  <span class="pill"><span class="dotg"></span>Kotlin</span>
-                  <span class="pill"><span class="dotg"></span>Jetpack Compose</span>
-                  <span class="pill"><span class="dotg"></span>React Native</span>
-                  <span class="pill"><span class="dotg"></span>Firebase</span>
-                  <span class="pill"><span class="dotg"></span>Auth</span>
-                  <span class="pill"><span class="dotg"></span>Realtime DB</span>
-                  <span class="pill"><span class="dotg"></span>Firestore</span>
-                  <span class="pill"><span class="dotg"></span>TypeScript</span>
-                  <span class="pill"><span class="dotg"></span>Security Rules</span>
-                  <span class="pill"><span class="dotg"></span>CI/CD</span>
+              <div class="skills-inline reveal" data-delay="3" aria-label="Key skills">
+                <p class="skills-inline__title">Key skills</p>
+                <div class="skills-inline__grid">
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Swift</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>SwiftUI</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Kotlin</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Jetpack Compose</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>React Native</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Firebase</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Auth</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Realtime DB</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Firestore</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>TypeScript</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Security Rules</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>CI/CD</span>
                 </div>
               </div>
             </div>
@@ -1060,6 +1023,10 @@
                 </p>
                 <p style="margin-top:-0.4rem;">
                   Built for real-world kitchen operations, TripleTreat simplifies daily management so you can focus on delivering great food and service.
+                </p>
+
+                <p style="margin: .2rem 0 1rem; color: rgba(203,213,225,.92);">
+                  Group project (team-built).
                 </p>
 
                 <details class="details">
@@ -1274,21 +1241,25 @@
       /* Magnetic */
       function initMagnet(el) {
         let rect = null;
+
         function onMove(e) {
           rect = rect || el.getBoundingClientRect();
           const x = e.clientX - (rect.left + rect.width / 2);
           const y = e.clientY - (rect.top + rect.height / 2);
           el.style.transform = "translate3d(" + (x * 0.18) + "px," + (y * 0.18) + "px,0)";
         }
+
         function onEnter() {
           rect = el.getBoundingClientRect();
           el.style.transition = "transform 120ms ease";
         }
+
         function onLeave() {
           el.style.transition = "transform 240ms ease";
           el.style.transform = "translate3d(0,0,0)";
           rect = null;
         }
+
         el.addEventListener("pointerenter", onEnter);
         el.addEventListener("pointermove", onMove);
         el.addEventListener("pointerleave", onLeave);
@@ -1299,10 +1270,12 @@
       function initTilt(el) {
         let rect = null;
         const max = 9;
+
         function onEnter() {
           rect = el.getBoundingClientRect();
           el.style.transition = "transform 120ms ease";
         }
+
         function onMove(e) {
           if (!rect) rect = el.getBoundingClientRect();
           const px = (e.clientX - rect.left) / rect.width;
@@ -1311,11 +1284,13 @@
           const ry = (px - 0.5) * max;
           el.style.transform = "perspective(900px) rotateX(" + rx + "deg) rotateY(" + ry + "deg) translateZ(0)";
         }
+
         function onLeave() {
           el.style.transition = "transform 260ms ease";
           el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
           rect = null;
         }
+
         el.addEventListener("pointerenter", onEnter);
         el.addEventListener("pointermove", onMove);
         el.addEventListener("pointerleave", onLeave);
@@ -1373,7 +1348,6 @@
           root.focus({ preventScroll: true });
           onDown(e.clientX);
         });
-
         root.addEventListener("pointerup", (e) => onUp(e.clientX));
         root.addEventListener("pointercancel", (e) => onUp(e.clientX));
 
