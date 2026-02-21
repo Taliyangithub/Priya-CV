@@ -306,7 +306,7 @@
       pointer-events:none;
     }
 
-    /* Readable skills chips (replaces scrolling marquee) */
+    /* Readable skills chips */
     .skills-inline{
       margin-top: 1.9rem;
       border: 1px solid rgba(255,255,255,.10);
@@ -382,7 +382,7 @@
       width: auto;
     }
 
-    /* AI Sphere card */
+    /* Sphere card */
     .sphere-card{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -873,32 +873,32 @@
                   <span class="skill-pill"><span class="skill-pill__dot"></span>Jetpack Compose</span>
                   <span class="skill-pill"><span class="skill-pill__dot"></span>React Native</span>
                   <span class="skill-pill"><span class="skill-pill__dot"></span>Firebase</span>
-                  <span class="skill-pill"><span class="skill-pill__dot"></span>Auth</span>
-                  <span class="skill-pill"><span class="skill-pill__dot"></span>Realtime DB</span>
-                  <span class="skill-pill"><span class="skill-pill__dot"></span>Firestore</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Git</span>
                   <span class="skill-pill"><span class="skill-pill__dot"></span>TypeScript</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Firestore</span>
+                  <span class="skill-pill"><span class="skill-pill__dot"></span>Realtime DB</span>
                   <span class="skill-pill"><span class="skill-pill__dot"></span>Security Rules</span>
                   <span class="skill-pill"><span class="skill-pill__dot"></span>CI/CD</span>
                 </div>
               </div>
             </div>
 
-            <!-- AI Sphere -->
+            <!-- SKILL SPHERE -->
             <div class="sphere-card reveal tilt" data-delay="2">
               <div class="sphere-top">
                 <div>
-                  <p class="sphere-title">Interactive Skill Sphere</p>
-                  <p class="sphere-sub">Hover and drag to rotate. Click to pulse. Designed to feel like a live system map.</p>
+                  <p class="sphere-title">Skill Map</p>
+                  <p class="sphere-sub">Hover and drag to rotate. Primary skills are larger and always labeled.</p>
                 </div>
                 <div class="legend" aria-label="Legend">
-                  <span><span class="key a" aria-hidden="true"></span>Mobile</span>
-                  <span><span class="key b" aria-hidden="true"></span>Firebase</span>
-                  <span><span class="key c" aria-hidden="true"></span>UI/UX</span>
+                  <span><span class="key a" aria-hidden="true"></span>Primary</span>
+                  <span><span class="key b" aria-hidden="true"></span>Secondary</span>
+                  <span><span class="key c" aria-hidden="true"></span>Other</span>
                 </div>
               </div>
 
               <div class="sphere-wrap">
-                <canvas id="sphere" class="sphere-canvas" aria-label="Interactive 3D sphere canvas"></canvas>
+                <canvas id="sphere" class="sphere-canvas" aria-label="Skill sphere canvas"></canvas>
                 <div class="sphere-hint"><span class="spark" aria-hidden="true"></span>Move · Click · Drag</div>
               </div>
             </div>
@@ -1487,7 +1487,9 @@
         });
       }
 
-      /* Sphere */
+      /* =========================
+         Skill Sphere (labeled mapping)
+         ========================= */
       const canvas = document.getElementById("sphere");
       if (!canvas) return;
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -1500,9 +1502,39 @@
       resizeCanvas();
       window.addEventListener("resize", resizeCanvas, { passive: true });
 
+      const PRIMARY = ["Swift", "SwiftUI", "Kotlin", "Jetpack Compose","React Native", "Firebase"];
+      const SECONDARY = ["Git","TypeScript"];
+      const OTHERS = [
+        "Firestore", "Realtime DB",
+        "Firebase Auth", "Security Rules", "CI/CD", "REST APIs", "UI/UX", "Testing"
+      ];
+
+      const SKILLS = [...PRIMARY, ...SECONDARY, ...OTHERS];
+      const COLORS = {
+        primary: [99,102,241],
+        secondary: [34,197,94],
+        other: [168,85,247]
+      };
+
+      function groupFor(name) {
+        if (PRIMARY.includes(name)) return "primary";
+        if (SECONDARY.includes(name)) return "secondary";
+        return "other";
+      }
+
+      function sizeFor(name) {
+        if (PRIMARY.includes(name)) return 3.4;
+        if (SECONDARY.includes(name)) return 2.5;
+        return 1.7;
+      }
+
+      function shouldLabel(name, depth) {
+        if (PRIMARY.includes(name)) return true;
+        if (SECONDARY.includes(name)) return depth > 0.65;
+        return false;
+      }
+
       const state = { rx:0, ry:0, targetRx:0, targetRy:0, drag:false, lastX:0, lastY:0, pulse:0 };
-      const points = [];
-      const pointCount = 220;
 
       function randSphere() {
         const u = Math.random();
@@ -1512,32 +1544,19 @@
         return { x: Math.sin(phi) * Math.cos(theta), y: Math.cos(phi), z: Math.sin(phi) * Math.sin(theta) };
       }
 
-      const groups = [
-        { color: [99,102,241], weight: 0.38 },
-        { color: [34,197,94],  weight: 0.32 },
-        { color: [168,85,247], weight: 0.30 }
-      ];
-
-      function pickGroup() {
-        const r = Math.random();
-        let acc = 0;
-        for (const g of groups) {
-          acc += g.weight;
-          if (r <= acc) return g;
-        }
-        return groups[0];
-      }
-
-      for (let i = 0; i < pointCount; i++) {
+      const points = [];
+      for (let i = 0; i < SKILLS.length; i++) {
         const p = randSphere();
-        const g = pickGroup();
+        const name = SKILLS[i];
+        const g = groupFor(name);
         points.push({
+          name,
           x: p.x, y: p.y, z: p.z,
-          vx: (Math.random() - 0.5) * 0.0005,
-          vy: (Math.random() - 0.5) * 0.0005,
-          vz: (Math.random() - 0.5) * 0.0005,
-          c: g.color,
-          r: 1.0 + Math.random() * 1.6
+          vx: (Math.random() - 0.5) * 0.00035,
+          vy: (Math.random() - 0.5) * 0.00035,
+          vz: (Math.random() - 0.5) * 0.00035,
+          c: COLORS[g],
+          baseR: sizeFor(name)
         });
       }
 
@@ -1564,8 +1583,8 @@
         state.rx += (state.targetRx - state.rx) * 0.08;
         state.ry += (state.targetRy - state.ry) * 0.08;
 
-        state.ry += 0.0012;
-        state.rx += 0.0007;
+        state.ry += 0.0011;
+        state.rx += 0.0006;
 
         state.pulse *= 0.92;
         const glow = 0.8 + state.pulse * 0.9;
@@ -1590,11 +1609,21 @@
           const depth = clamp((q.z + 1.2) / 2.4, 0, 1);
           const alpha = 0.18 + depth * 0.78;
 
-          proj.push({ x:x2, y:y2, z:q.z, depth, alpha, c:p.c, r:p.r });
+          proj.push({
+            name: p.name,
+            x: x2,
+            y: y2,
+            z: q.z,
+            depth,
+            alpha,
+            c: p.c,
+            r: p.baseR
+          });
         }
 
         proj.sort((a, b) => a.z - b.z);
 
+        /* Connections */
         ctx.save();
         ctx.lineWidth = 1 * DPR;
         for (let i = 0; i < proj.length; i++) {
@@ -1605,12 +1634,12 @@
             const dy = a.y - b.y;
             const d2 = dx * dx + dy * dy;
 
-            const maxD = (baseRadius * 0.26) * (baseRadius * 0.26);
+            const maxD = (baseRadius * 0.30) * (baseRadius * 0.30);
             if (d2 > maxD) continue;
 
             const dist = Math.sqrt(d2);
-            const t = 1 - (dist / (baseRadius * 0.26));
-            const aAlpha = (0.06 + t * 0.22) * (0.55 + a.depth * 0.55) * glow;
+            const t = 1 - (dist / (baseRadius * 0.30));
+            const aAlpha = (0.05 + t * 0.20) * (0.55 + a.depth * 0.55) * glow;
 
             ctx.strokeStyle = "rgba(255,255,255," + aAlpha.toFixed(4) + ")";
             ctx.beginPath();
@@ -1621,27 +1650,30 @@
         }
         ctx.restore();
 
+        /* Aura ring */
         ctx.save();
         ctx.globalCompositeOperation = "screen";
-        const grad = ctx.createRadialGradient(cx, cy, baseRadius * 0.25, cx, cy, baseRadius * 1.08);
-        grad.addColorStop(0, "rgba(99,102,241,0.00)");
-        grad.addColorStop(0.45, "rgba(99,102,241,0.10)");
-        grad.addColorStop(0.72, "rgba(168,85,247,0.10)");
-        grad.addColorStop(1, "rgba(34,197,94,0.00)");
-        ctx.fillStyle = grad;
+        const ring = ctx.createRadialGradient(cx, cy, baseRadius * 0.25, cx, cy, baseRadius * 1.08);
+        ring.addColorStop(0, "rgba(99,102,241,0.00)");
+        ring.addColorStop(0.45, "rgba(99,102,241,0.10)");
+        ring.addColorStop(0.72, "rgba(168,85,247,0.10)");
+        ring.addColorStop(1, "rgba(34,197,94,0.00)");
+        ctx.fillStyle = ring;
         ctx.beginPath();
         ctx.arc(cx, cy, baseRadius * 1.05, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
+        /* Points + labels */
         for (const p of proj) {
           const rr = p.c[0], gg = p.c[1], bb = p.c[2];
-          const radius = (p.r + p.depth * 1.6) * DPR * (0.9 + state.pulse * 0.25);
+
+          const radius = (p.r + p.depth * 1.5) * DPR * (0.9 + state.pulse * 0.22);
           const a = p.alpha * (0.70 + p.depth * 0.35) * glow;
 
           ctx.save();
           ctx.globalCompositeOperation = "screen";
-          ctx.fillStyle = "rgba(" + rr + "," + gg + "," + bb + "," + (a * 0.22).toFixed(4) + ")";
+          ctx.fillStyle = "rgba(" + rr + "," + gg + "," + bb + "," + (a * 0.18).toFixed(4) + ")";
           ctx.beginPath();
           ctx.arc(p.x, p.y, radius * 3.2, 0, Math.PI * 2);
           ctx.fill();
@@ -1651,6 +1683,47 @@
           ctx.beginPath();
           ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
           ctx.fill();
+
+          if (shouldLabel(p.name, p.depth)) {
+            const pad = 10 * DPR;
+            const lx = p.x + pad;
+            const ly = p.y + (4 * DPR);
+
+            ctx.save();
+            ctx.globalCompositeOperation = "source-over";
+            ctx.font = (12 * DPR) + "px system-ui, -apple-system, Segoe UI, sans-serif";
+            ctx.textBaseline = "middle";
+
+            const text = p.name;
+            const m = ctx.measureText(text);
+            const tw = m.width;
+            const th = 18 * DPR;
+
+            const bgA = PRIMARY.includes(p.name) ? 0.55 : 0.38;
+            ctx.fillStyle = "rgba(10,14,20," + bgA + ")";
+            ctx.strokeStyle = "rgba(255,255,255,0.12)";
+            ctx.lineWidth = 1 * DPR;
+
+            const bx = lx - (6 * DPR);
+            const by = ly - th/2;
+            const bw = tw + (12 * DPR);
+            const bh = th;
+
+            const r = 9 * DPR;
+            ctx.beginPath();
+            ctx.moveTo(bx + r, by);
+            ctx.arcTo(bx + bw, by, bx + bw, by + bh, r);
+            ctx.arcTo(bx + bw, by + bh, bx, by + bh, r);
+            ctx.arcTo(bx, by + bh, bx, by, r);
+            ctx.arcTo(bx, by, bx + bw, by, r);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = "rgba(243,244,246,0.92)";
+            ctx.fillText(text, lx, ly);
+            ctx.restore();
+          }
         }
 
         requestAnimationFrame(drawSphere);
