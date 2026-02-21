@@ -252,7 +252,7 @@
       max-width: 58ch;
     }
 
-    /* Liquid veil canvas over hero background */
+    /* Liquid veil canvas */
     .liquid-layer{
       position:absolute;
       inset:-40px 0 -40px 0;
@@ -313,6 +313,42 @@
       pointer-events:none;
     }
 
+    /* Store badges */
+    .store-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      align-items:center;
+      margin-top: .2rem;
+    }
+    .store-badge{
+      display:inline-flex;
+      align-items:center;
+      border-radius: 12px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      box-shadow: 0 14px 44px rgba(0,0,0,.30);
+      transform: translateZ(0);
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+      text-decoration:none;
+      will-change: transform;
+    }
+    .store-badge:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 18px 60px rgba(0,0,0,.24);
+      filter: brightness(1.03);
+    }
+    .store-badge img{
+      display:block;
+      height: 44px;
+      width: auto;
+    }
+    @media (max-width: 420px){
+      .store-badge img{ height: 40px; }
+    }
+
     /* Marquee */
     .marquee{
       margin-top: 2.1rem;
@@ -368,50 +404,7 @@
       box-shadow: 0 0 0 6px rgba(255,255,255,.08);
     }
 
-    /* =========================
-       Store badge buttons (image style)
-       Put badge images inside: /images/
-       - images/appstore-badge.svg  (or .png)
-       - images/googleplay-badge.png
-       ========================= */
-    .store-badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      align-items:center;
-      margin-top: .2rem;
-    }
-    .store-badge{
-      display:inline-flex;
-      align-items:center;
-      border-radius: 12px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.25);
-      box-shadow: 0 14px 44px rgba(0,0,0,.30);
-      transform: translateZ(0);
-      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, filter 160ms ease;
-      text-decoration:none;
-      will-change: transform;
-    }
-    .store-badge:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.22);
-      box-shadow: 0 18px 60px rgba(0,0,0,.24);
-      filter: brightness(1.03);
-    }
-    .store-badge img{
-      display:block;
-      height: 44px;
-      width: auto;
-    }
-    @media (max-width: 420px){
-      .store-badge img{ height: 40px; }
-    }
-
-    /* =========================
-       AI Sphere card
-       ========================= */
+    /* Sphere card */
     .sphere-card{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -525,9 +518,7 @@
         0 0 40px rgba(99,102,241,.25);
     }
 
-    /* =========================
-       Panels
-       ========================= */
+    /* Panels */
     section{ margin: 4.6rem 0; }
     .panel{
       border-radius: var(--r-xl);
@@ -563,9 +554,7 @@
       line-height:1.65;
     }
 
-    /* =========================
-       Projects + details
-       ========================= */
+    /* Projects */
     .project{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
@@ -606,6 +595,7 @@
       font-size:.82rem;
     }
 
+    /* Details */
     .details{
       margin-top: 1rem;
       border-radius: 16px;
@@ -662,9 +652,7 @@
       margin:.2rem 0;
     }
 
-    /* =========================
-       Carousel
-       ========================= */
+    /* Carousel */
     .carousel{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -839,9 +827,7 @@
       border-color: rgba(255,255,255,.26);
     }
 
-    /* =========================
-       Skills
-       ========================= */
+    /* Skills */
     .skills-grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1074,7 +1060,7 @@
                      href="https://apps.apple.com/se/app/happy-steps/id6755143766"
                      target="_blank" rel="noreferrer"
                      aria-label="Download Happy Steps on the App Store">
-                    <img src="images/appstore-badge.svg" alt="Download on the App Store" loading="lazy">
+                    <img src="images/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="Download on the App Store" loading="lazy">
                   </a>
                 </div>
               </div>
@@ -1139,7 +1125,7 @@
                      href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB"
                      target="_blank" rel="noreferrer"
                      aria-label="Download Commuvia on the App Store">
-                    <img src="images/appstore-badge.svg" alt="Download on the App Store" loading="lazy">
+                    <img src="images/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="Download on the App Store" loading="lazy">
                   </a>
                 </div>
               </div>
@@ -1259,18 +1245,8 @@
                 </div>
 
                 <div class="store-badges">
-                  <!-- Replace href later when you publish (or remove if not needed) -->
-                  <a class="store-badge magnet"
-                     href="#"
-                     aria-label="Download TripleTreat on the App Store">
-                    <img src="images/appstore-badge.svg" alt="Download on the App Store" loading="lazy">
-                  </a>
-
-                  <!-- Optional: keep only if you have Android release -->
-                  <a class="store-badge magnet"
-                     href="#"
-                     aria-label="Get TripleTreat on Google Play">
-                    <img src="images/googleplay-badge.png" alt="Get it on Google Play" loading="lazy">
+                  <a class="store-badge magnet" href="#" aria-label="Download TripleTreat on the App Store">
+                    <img src="images/Download_on_the_App_Store_Badge_US-UK_RGB_wht_092917.svg" alt="Download on the App Store" loading="lazy">
                   </a>
                 </div>
               </div>
@@ -1390,14 +1366,10 @@
 
       let hx = window.innerWidth * 0.5;
       let hy = window.innerHeight * 0.5;
-      let bx = hx;
-      let by = hy;
 
       const DPR = Math.min(2, window.devicePixelRatio || 1);
 
-      /* =========================
-         Cursor halo (no trailing)
-         ========================= */
+      /* Cursor halo (no trailing) */
       if (!prefersReduced && haloSmall && haloBig) {
         haloSmall.style.opacity = "1";
         haloBig.style.opacity = "1";
@@ -1405,25 +1377,14 @@
         window.addEventListener("pointermove", (e) => {
           hx = e.clientX;
           hy = e.clientY;
-        }, { passive: true });
-
-        function animateHalo() {
-          bx = hx;
-          by = hy;
-
           haloSmall.style.left = hx + "px";
           haloSmall.style.top = hy + "px";
-          haloBig.style.left = bx + "px";
-          haloBig.style.top = by + "px";
-
-          requestAnimationFrame(animateHalo);
-        }
-        requestAnimationFrame(animateHalo);
+          haloBig.style.left = hx + "px";
+          haloBig.style.top = hy + "px";
+        }, { passive: true });
       }
 
-      /* =========================
-         Reveal on scroll
-         ========================= */
+      /* Reveal */
       const reveals = Array.from(document.querySelectorAll(".reveal"));
       if (!prefersReduced && "IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
@@ -1439,9 +1400,7 @@
         reveals.forEach((el) => el.classList.add("is-in"));
       }
 
-      /* =========================
-         Magnetic effect
-         ========================= */
+      /* Magnetic */
       function initMagnet(el) {
         let rect = null;
 
@@ -1474,9 +1433,7 @@
         document.querySelectorAll(".magnet").forEach(initMagnet);
       }
 
-      /* =========================
-         Tilt effect
-         ========================= */
+      /* Tilt */
       function initTilt(el) {
         let rect = null;
         const max = 9;
@@ -1510,9 +1467,7 @@
         document.querySelectorAll(".tilt").forEach(initTilt);
       }
 
-      /* =========================
-         Carousel
-         ========================= */
+      /* Carousel */
       function pad2(n) {
         const s = String(n);
         return s.length === 1 ? "0" + s : s;
@@ -1644,9 +1599,7 @@
 
       document.querySelectorAll("[data-carousel]").forEach(initCarousel);
 
-      /* =========================
-         Liquid veil (hero canvas)
-         ========================= */
+      /* Liquid */
       const liquidCanvas = document.getElementById("liquidCanvas");
       const lctx = liquidCanvas ? liquidCanvas.getContext("2d", { alpha: true }) : null;
 
@@ -1767,9 +1720,7 @@
         });
       }
 
-      /* =========================
-         Interactive 3D Sphere (canvas, no libraries)
-         ========================= */
+      /* Sphere */
       const canvas = document.getElementById("sphere");
       if (!canvas) return;
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -1931,19 +1882,19 @@
         ctx.restore();
 
         for (const p of proj) {
-          const r = p.c[0], g = p.c[1], b = p.c[2];
+          const rr = p.c[0], gg = p.c[1], bb = p.c[2];
           const radius = (p.r + p.depth * 1.6) * DPR * (0.9 + state.pulse * 0.25);
           const a = p.alpha * (0.70 + p.depth * 0.35) * glow;
 
           ctx.save();
           ctx.globalCompositeOperation = "screen";
-          ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + (a * 0.22).toFixed(4) + ")";
+          ctx.fillStyle = "rgba(" + rr + "," + gg + "," + bb + "," + (a * 0.22).toFixed(4) + ")";
           ctx.beginPath();
           ctx.arc(p.x, p.y, radius * 3.2, 0, Math.PI * 2);
           ctx.fill();
           ctx.restore();
 
-          ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a.toFixed(4) + ")";
+          ctx.fillStyle = "rgba(" + rr + "," + gg + "," + bb + "," + a.toFixed(4) + ")";
           ctx.beginPath();
           ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
           ctx.fill();
