@@ -13,15 +13,11 @@
 
       --surface-main:#060812;
       --surface-header:rgba(10,14,20,.70);
-      --surface-card:rgba(17,24,39,.62);
 
       --shadow: 0 30px 100px rgba(0,0,0,.65);
       --shadow-soft: 0 18px 60px rgba(0,0,0,.45);
 
       --r-xl: 28px;
-      --r-lg: 22px;
-      --r-md: 16px;
-
       --max: 1120px;
     }
 
@@ -272,7 +268,7 @@
       filter: blur(0.2px);
     }
 
-    /* Magnetic buttons */
+    /* Buttons */
     .cta-row{
       display:flex;
       gap:.85rem;
@@ -317,7 +313,7 @@
       pointer-events:none;
     }
 
-    /* Skills marquee */
+    /* Marquee */
     .marquee{
       margin-top: 2.1rem;
       border: 1px solid rgba(255,255,255,.10);
@@ -372,51 +368,50 @@
       box-shadow: 0 0 0 6px rgba(255,255,255,.08);
     }
 
-    /* App Store badge button */
-    .appstore-badge{
+    /* =========================
+       Store badge buttons (image style)
+       Put badge images inside: /images/
+       - images/appstore-badge.svg  (or .png)
+       - images/googleplay-badge.png
+       ========================= */
+    .store-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      align-items:center;
+      margin-top: .2rem;
+    }
+    .store-badge{
       display:inline-flex;
       align-items:center;
-      gap:.6rem;
-      padding:.66rem .95rem;
-      border-radius: 14px;
+      border-radius: 12px;
+      overflow:hidden;
       border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      text-decoration:none;
-      color: var(--text-primary);
+      background: rgba(0,0,0,.25);
       box-shadow: 0 14px 44px rgba(0,0,0,.30);
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
-      user-select:none;
+      transform: translateZ(0);
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+      text-decoration:none;
       will-change: transform;
     }
-    .appstore-badge:hover{
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.22);
+    .store-badge:hover{
       transform: translateY(-1px);
+      border-color: rgba(255,255,255,.22);
       box-shadow: 0 18px 60px rgba(0,0,0,.24);
+      filter: brightness(1.03);
     }
-    .appstore-badge svg{
-      width: 22px;
-      height: 22px;
-      flex: 0 0 auto;
-      opacity: .95;
+    .store-badge img{
+      display:block;
+      height: 44px;
+      width: auto;
     }
-    .appstore-badge .txt{
-      display:flex;
-      flex-direction:column;
-      line-height:1.05;
-    }
-    .appstore-badge .txt .top{
-      font-size: .70rem;
-      color: rgba(243,244,246,.80);
-      letter-spacing:.15px;
-    }
-    .appstore-badge .txt .bottom{
-      font-size: .95rem;
-      font-weight: 700;
-      letter-spacing:.1px;
+    @media (max-width: 420px){
+      .store-badge img{ height: 40px; }
     }
 
-    /* AI Sphere card */
+    /* =========================
+       AI Sphere card
+       ========================= */
     .sphere-card{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -610,38 +605,6 @@
       color: var(--text-muted);
       font-size:.82rem;
     }
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:.7rem;
-      align-items:center;
-      margin-top: .2rem;
-    }
-    .chip{
-      position:relative;
-      padding: .64rem 1.05rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text-primary);
-      text-decoration:none;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:.55rem;
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
-      user-select:none;
-      will-change: transform;
-    }
-    .chip:hover{
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.22);
-      box-shadow: 0 18px 60px rgba(0,0,0,.24);
-    }
-    .chip.primary{
-      background: linear-gradient(135deg, rgba(99,102,241,.32), rgba(168,85,247,.26));
-      border-color: rgba(255,255,255,.18);
-    }
 
     .details{
       margin-top: 1rem;
@@ -684,6 +647,19 @@
       color: var(--text-secondary);
       line-height: 1.65;
       font-size: .98rem;
+    }
+    .content h4{
+      margin: .9rem 0 .35rem;
+      font-size: 1rem;
+      color: rgba(243,244,246,.92);
+      letter-spacing:.1px;
+    }
+    .content ul{
+      margin:.4rem 0 0 1.1rem;
+      padding:0;
+    }
+    .content li{
+      margin:.2rem 0;
     }
 
     /* =========================
@@ -1092,18 +1068,13 @@
                   <span class="tag">iOS</span>
                   <span class="tag">Android</span>
                 </div>
-                <div class="actions">
-                  <a class="appstore-badge magnet"
+
+                <div class="store-badges">
+                  <a class="store-badge magnet"
                      href="https://apps.apple.com/se/app/happy-steps/id6755143766"
                      target="_blank" rel="noreferrer"
                      aria-label="Download Happy Steps on the App Store">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                      <path fill="currentColor" d="M16.62 13.35c.02 2.2 1.94 2.93 1.96 2.94-.01.05-.3 1.03-.98 2.04-.59.88-1.2 1.75-2.17 1.77-.95.02-1.25-.56-2.34-.56-1.09 0-1.42.54-2.32.58-.94.04-1.65-.95-2.24-1.82-1.22-1.78-2.15-5.04-.9-7.25.62-1.1 1.73-1.8 2.94-1.82.92-.02 1.78.62 2.34.62.56 0 1.62-.77 2.73-.66.46.02 1.75.19 2.58 1.41-.07.04-1.54.9-1.53 2.75zM14.84 5.2c.5-.6.84-1.44.75-2.28-.72.03-1.59.48-2.1 1.08-.46.53-.87 1.39-.76 2.2.8.06 1.6-.41 2.11-1z"/>
-                    </svg>
-                    <span class="txt">
-                      <span class="top">Download on the</span>
-                      <span class="bottom">App Store</span>
-                    </span>
+                    <img src="images/appstore-badge.svg" alt="Download on the App Store" loading="lazy">
                   </a>
                 </div>
               </div>
@@ -1163,18 +1134,12 @@
                   <span class="tag">Firestore</span>
                 </div>
 
-                <div class="actions">
-                  <a class="appstore-badge magnet"
+                <div class="store-badges">
+                  <a class="store-badge magnet"
                      href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB"
                      target="_blank" rel="noreferrer"
                      aria-label="Download Commuvia on the App Store">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                      <path fill="currentColor" d="M16.62 13.35c.02 2.2 1.94 2.93 1.96 2.94-.01.05-.3 1.03-.98 2.04-.59.88-1.2 1.75-2.17 1.77-.95.02-1.25-.56-2.34-.56-1.09 0-1.42.54-2.32.58-.94.04-1.65-.95-2.24-1.82-1.22-1.78-2.15-5.04-.9-7.25.62-1.1 1.73-1.8 2.94-1.82.92-.02 1.78.62 2.34.62.56 0 1.62-.77 2.73-.66.46.02 1.75.19 2.58 1.41-.07.04-1.54.9-1.53 2.75zM14.84 5.2c.5-.6.84-1.44.75-2.28-.72.03-1.59.48-2.1 1.08-.46.53-.87 1.39-.76 2.2.8.06 1.6-.41 2.11-1z"/>
-                    </svg>
-                    <span class="txt">
-                      <span class="top">Download on the</span>
-                      <span class="bottom">App Store</span>
-                    </span>
+                    <img src="images/appstore-badge.svg" alt="Download on the App Store" loading="lazy">
                   </a>
                 </div>
               </div>
@@ -1210,36 +1175,117 @@
               </div>
             </div>
 
-            <!-- Triple Treat -->
+            <!-- TripleTreat -->
             <div class="project">
               <div class="reveal tilt">
-                <h3>Triple Treat</h3>
+                <h3>TripleTreat – Smart Kitchen Management</h3>
                 <p>
-                  TripleTreat is a smart kitchen management app for cloud kitchens and small restaurants.
-                  It helps manage orders, inventory, menus, and staff in one secure platform.
-                  Real-time updates and role-based access keep daily operations organized and efficient.
+                  TripleTreat is a powerful and easy-to-use kitchen management application designed for cloud kitchens,
+                  small restaurants, and food businesses. It helps you manage orders, inventory, menus, and staff in one secure platform.
                 </p>
-                <div class="tags">
+                <p style="margin-top:-0.4rem;">
+                  Built for real-world kitchen operations, TripleTreat simplifies daily management so you can focus on delivering great food and service.
+                </p>
+
+                <details class="details">
+                  <summary>Core features and who it is for</summary>
+                  <div class="content">
+                    <h4>Kitchen Management</h4>
+                    <ul>
+                      <li>Create and manage multiple kitchens</li>
+                      <li>Owner and staff role-based access</li>
+                      <li>Secure team collaboration</li>
+                    </ul>
+
+                    <h4>Order Tracking</h4>
+                    <ul>
+                      <li>Create and manage customer orders</li>
+                      <li>Support for takeaway and table orders</li>
+                      <li>Track order status (Pending, Completed)</li>
+                      <li>Daily order counters</li>
+                    </ul>
+
+                    <h4>Inventory Control</h4>
+                    <ul>
+                      <li>Add and manage inventory items</li>
+                      <li>Track quantities and units</li>
+                      <li>Monitor expiry dates</li>
+                      <li>Identify low stock items</li>
+                    </ul>
+
+                    <h4>Menu Management</h4>
+                    <ul>
+                      <li>Create categories and menu items</li>
+                      <li>Set prices and availability</li>
+                      <li>Update menu instantly</li>
+                    </ul>
+
+                    <h4>Staff Management</h4>
+                    <ul>
+                      <li>Add staff securely by email</li>
+                      <li>Assign roles (Owner / Staff)</li>
+                      <li>Manage access permissions</li>
+                    </ul>
+
+                    <h4>Security & Reliability</h4>
+                    <ul>
+                      <li>Secure authentication</li>
+                      <li>Role-based access control</li>
+                      <li>Real-time data synchronization</li>
+                      <li>Reliable cloud-based backend</li>
+                    </ul>
+
+                    <h4>Who is TripleTreat for?</h4>
+                    <ul>
+                      <li>Cloud kitchens</li>
+                      <li>Home-based food businesses</li>
+                      <li>Small restaurants</li>
+                      <li>Catering services</li>
+                      <li>Multi-kitchen operators</li>
+                    </ul>
+
+                    <p style="margin-top:1rem;">
+                      TripleTreat brings structure, efficiency, and clarity to kitchen operations, helping food businesses stay organized and scalable.
+                    </p>
+                  </div>
+                </details>
+
+                <div class="tags" style="margin-top:1rem;">
                   <span class="tag">Swift</span>
+                  <span class="tag">SwiftUI</span>
                   <span class="tag">Firebase</span>
                   <span class="tag">Realtime Database</span>
+                  <span class="tag">Role-based Access</span>
                 </div>
-                <div class="actions">
-                  <span class="chip" role="text">Group Project</span>
+
+                <div class="store-badges">
+                  <!-- Replace href later when you publish (or remove if not needed) -->
+                  <a class="store-badge magnet"
+                     href="#"
+                     aria-label="Download TripleTreat on the App Store">
+                    <img src="images/appstore-badge.svg" alt="Download on the App Store" loading="lazy">
+                  </a>
+
+                  <!-- Optional: keep only if you have Android release -->
+                  <a class="store-badge magnet"
+                     href="#"
+                     aria-label="Get TripleTreat on Google Play">
+                    <img src="images/googleplay-badge.png" alt="Get it on Google Play" loading="lazy">
+                  </a>
                 </div>
               </div>
 
               <div class="reveal" data-delay="1">
-                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Triple Treat screenshots" tabindex="0">
+                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="TripleTreat screenshots" tabindex="0">
                   <div class="carousel-inner">
                     <div class="phone-frame">
                       <div class="phone-notch"></div>
                       <div class="carousel-stage">
-                        <div class="carousel-slide is-active"><img src="images/teiple1.png" alt="Triple Treat screenshot 1" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple.png" alt="Triple Treat screenshot 2" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple111.png" alt="Triple Treat screenshot 3" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple3.png" alt="Triple Treat screenshot 4" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple4.png" alt="Triple Treat screenshot 5" loading="lazy"></div>
+                        <div class="carousel-slide is-active"><img src="images/teiple1.png" alt="TripleTreat screenshot 1" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple.png" alt="TripleTreat screenshot 2" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple111.png" alt="TripleTreat screenshot 3" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple3.png" alt="TripleTreat screenshot 4" loading="lazy"></div>
+                        <div class="carousel-slide"><img src="images/triple4.png" alt="TripleTreat screenshot 5" loading="lazy"></div>
                       </div>
                       <div class="carousel-gloss"></div>
                     </div>
@@ -1314,9 +1360,9 @@
             </p>
 
             <div class="reveal" data-delay="2" style="display:flex; flex-wrap:wrap; gap:.8rem; align-items:center;">
-              <a class="chip primary magnet" href="mailto:chaudharypia94@gmail.com">Email</a>
-              <a class="chip magnet" href="https://www.linkedin.com/in/priya-taliyan-348667308/" target="_blank" rel="noreferrer">LinkedIn</a>
-              <a class="chip magnet" href="https://github.com/Taliyangithub/" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="btn magnet" href="mailto:chaudharypia94@gmail.com">Email</a>
+              <a class="btn magnet" href="https://www.linkedin.com/in/priya-taliyan-348667308/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a class="btn magnet" href="https://github.com/Taliyangithub/" target="_blank" rel="noreferrer">GitHub</a>
             </div>
           </div>
         </div>
