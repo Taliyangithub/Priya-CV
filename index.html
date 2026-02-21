@@ -36,7 +36,6 @@
       overflow-x:hidden;
     }
 
-    /* Cursor halo (no trailing) */
     .cursor-halo{
       position: fixed;
       inset: 0;
@@ -71,7 +70,6 @@
       filter: blur(2px);
     }
 
-    /* Ambient layers */
     .grain{
       pointer-events:none;
       position:fixed;
@@ -147,7 +145,6 @@
       padding: 0 1.5rem;
     }
 
-    /* Header */
     header{
       position: sticky;
       top: 0;
@@ -210,7 +207,6 @@
       transform: translateY(-1px);
     }
 
-    /* Hero */
     .hero{
       min-height: calc(100vh - 72px);
       display:grid;
@@ -245,7 +241,6 @@
       max-width: 58ch;
     }
 
-    /* Liquid hero canvas */
     .liquid-layer{
       position:absolute;
       inset:-40px 0 -40px 0;
@@ -261,7 +256,6 @@
       filter: blur(0.2px);
     }
 
-    /* Buttons */
     .cta-row{
       display:flex;
       gap:.85rem;
@@ -306,7 +300,6 @@
       pointer-events:none;
     }
 
-    /* Readable skills chips */
     .skills-inline{
       margin-top: 1.9rem;
       border: 1px solid rgba(255,255,255,.10);
@@ -349,7 +342,6 @@
       flex: 0 0 auto;
     }
 
-    /* Store badges */
     .store-badges{
       display:flex;
       flex-wrap:wrap;
@@ -382,7 +374,6 @@
       width: auto;
     }
 
-    /* Sphere card */
     .sphere-card{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -493,7 +484,6 @@
         0 0 40px rgba(99,102,241,.25);
     }
 
-    /* Panels */
     section{ margin: 4.6rem 0; }
     .panel{
       border-radius: var(--r-xl);
@@ -529,7 +519,6 @@
       line-height:1.65;
     }
 
-    /* Projects */
     .project{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
@@ -570,7 +559,6 @@
       font-size:.82rem;
     }
 
-    /* Details */
     .details{
       margin-top: 1rem;
       border-radius: 16px;
@@ -620,102 +608,52 @@
     .content ul{ margin:.4rem 0 0 1.1rem; padding:0; }
     .content li{ margin:.2rem 0; }
 
-    /* iPhone-only carousel */
-    .iphone-carousel{
+    .device-frame{
       width: min(360px, 100%);
       margin: 0 auto;
-      aspect-ratio: 9 / 19.5;
-      border-radius: 44px;
       position: relative;
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.16);
-      box-shadow:
-        0 40px 120px rgba(0,0,0,.70),
-        inset 0 1px 0 rgba(255,255,255,.08);
-      padding: 14px;
-      transform: translateZ(0);
       user-select: none;
       touch-action: pan-y;
       outline: none;
+      filter: drop-shadow(0 40px 120px rgba(0,0,0,.70));
+      transform: translateZ(0);
     }
-    .iphone-carousel::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      border-radius: 46px;
-      background:
-        radial-gradient(900px at 30% 20%, rgba(99,102,241,.12), transparent 58%),
-        radial-gradient(900px at 80% 70%, rgba(34,197,94,.08), transparent 58%),
-        radial-gradient(900px at 55% 95%, rgba(168,85,247,.08), transparent 62%);
-      filter: blur(10px);
-      opacity:.9;
-      pointer-events:none;
-      z-index:0;
+    .device-frame__img{
+      display: block;
+      width: 100%;
+      height: auto;
     }
-    .iphone-carousel__inner{
-      position: relative;
-      height: 100%;
-      border-radius: 36px;
+    .device-frame__screen{
+      position: absolute;
+      inset: var(--screen-top, 8.6%) var(--screen-right, 8.25%) var(--screen-bottom, 8.9%) var(--screen-left, 8.25%);
+      border-radius: var(--screen-radius, 34px);
       overflow: hidden;
       background: rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.12);
-      z-index:1;
     }
-    .iphone-carousel__island{
-      position:absolute;
-      top: 10px;
-      left:50%;
-      transform: translateX(-50%);
-      width: 44%;
-      height: 26px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.78);
-      border: 1px solid rgba(255,255,255,.10);
-      z-index:5;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-      pointer-events:none;
+    .device-frame__stage{
+      position: absolute;
+      inset: 0;
     }
-    .iphone-carousel__stage{
-      position:absolute;
-      inset:0;
-      z-index:2;
-    }
-    .iphone-carousel__slide{
-      position:absolute;
-      inset:0;
-      opacity:0;
+    .device-frame__slide{
+      position: absolute;
+      inset: 0;
+      opacity: 0;
       transform: scale(1.01);
       transition: opacity 820ms cubic-bezier(.2,.8,.2,1),
                   transform 980ms cubic-bezier(.2,.8,.2,1);
     }
-    .iphone-carousel__slide.is-active{
-      opacity:1;
+    .device-frame__slide.is-active{
+      opacity: 1;
       transform: scale(1);
     }
-    .iphone-carousel__slide img{
-      width:100%;
-      height:100%;
+    .device-frame__slide img{
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      display:block;
+      display: block;
       filter: saturate(1.05) contrast(1.02);
     }
-    .iphone-carousel__gloss{
-      position:absolute;
-      inset:-45% -25%;
-      background: linear-gradient(120deg, rgba(255,255,255,.12), transparent 45%, rgba(255,255,255,.06));
-      transform: translateX(-35%) rotate(10deg);
-      opacity:.55;
-      pointer-events:none;
-      z-index:4;
-      animation: iphoneGloss 6.2s ease-in-out infinite;
-    }
-    @keyframes iphoneGloss{
-      0%{ transform: translateX(-38%) rotate(10deg); opacity:.46; }
-      50%{ transform: translateX(18%) rotate(10deg); opacity:.66; }
-      100%{ transform: translateX(-38%) rotate(10deg); opacity:.46; }
-    }
 
-    /* Skills section grid */
     .skills-grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -770,7 +708,6 @@
     .plain-link{ color: inherit; text-decoration:none; }
     .plain-link:hover{ text-decoration:underline; }
 
-    /* Reveal */
     .reveal{
       opacity:0;
       transform: translateY(18px);
@@ -786,13 +723,11 @@
     .reveal[data-delay="2"]{ transition-delay: 160ms; }
     .reveal[data-delay="3"]{ transition-delay: 230ms; }
 
-    /* Tilt targets */
     .tilt{
       transform-style: preserve-3d;
       will-change: transform;
     }
 
-    /* Responsive */
     @media (max-width: 980px){
       .hero-grid{ grid-template-columns: 1fr; }
       .project{ grid-template-columns: 1fr; }
@@ -802,9 +737,8 @@
 
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior:auto; }
-      .grain, .blob, .mark::after, .btn.primary::after, .iphone-carousel__gloss{ animation:none !important; }
+      .grain, .blob, .mark::after, .btn.primary::after{ animation:none !important; }
       .reveal{ transition:none; opacity:1; transform:none; }
-      .iphone-carousel__slide{ transition:none; }
       .halo, .halo.big{ display:none; }
       .liquid-layer{ display:none; }
     }
@@ -843,7 +777,6 @@
     </header>
 
     <main>
-      <!-- HERO -->
       <section id="home" class="hero">
         <div class="liquid-layer" aria-hidden="true">
           <canvas id="liquidCanvas"></canvas>
@@ -883,12 +816,11 @@
               </div>
             </div>
 
-            <!-- SKILL SPHERE -->
             <div class="sphere-card reveal tilt" data-delay="2">
               <div class="sphere-top">
                 <div>
                   <p class="sphere-title">Skill Map</p>
-                  <p class="sphere-sub">Hover and drag to rotate. Primary skills are larger and always labeled.</p>
+                  <p class="sphere-sub">Hover and drag to rotate. Scroll/pinch to zoom. Primary skills are larger and always labeled.</p>
                 </div>
                 <div class="legend" aria-label="Legend">
                   <span><span class="key a" aria-hidden="true"></span>Primary</span>
@@ -898,8 +830,8 @@
               </div>
 
               <div class="sphere-wrap">
-                <canvas id="sphere" class="sphere-canvas" aria-label="Skill sphere canvas"></canvas>
-                <div class="sphere-hint"><span class="spark" aria-hidden="true"></span>Move · Click · Drag</div>
+                <canvas id="sphere" class="sphere-canvas" aria-label="Skill map canvas" tabindex="0"></canvas>
+                <div class="sphere-hint"><span class="spark" aria-hidden="true"></span>Move · Click · Drag · Scroll</div>
               </div>
             </div>
 
@@ -907,7 +839,6 @@
         </div>
       </section>
 
-      <!-- PROJECTS -->
       <section id="projects">
         <div class="container">
           <div class="panel">
@@ -916,7 +847,6 @@
               Selected work with an emphasis on mobile UX, clean architecture, and Firebase-backed features.
             </p>
 
-            <!-- Happy Steps -->
             <div class="project">
               <div class="reveal tilt">
                 <h3>Happy Steps</h3>
@@ -938,27 +868,26 @@
               </div>
 
               <div class="reveal" data-delay="1">
-                <div class="iphone-carousel"
+                <div class="device-frame"
+                     style="--screen-top: 8.6%; --screen-right: 8.25%; --screen-bottom: 8.9%; --screen-left: 8.25%; --screen-radius: 34px;"
                      data-iphone-carousel
                      data-autoplay="true"
                      data-interval="5200"
                      aria-label="Happy Steps screenshots"
                      tabindex="0">
-                  <div class="iphone-carousel__inner">
-                    <div class="iphone-carousel__island" aria-hidden="true"></div>
-                    <div class="iphone-carousel__stage">
-                      <div class="iphone-carousel__slide is-active"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
+                  <img class="device-frame__img" src="images/iPhone 17 Pro Max - Cosmic Orange - Portrait.png" alt="" aria-hidden="true" loading="lazy">
+                  <div class="device-frame__screen">
+                    <div class="device-frame__stage">
+                      <div class="device-frame__slide is-active"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
                     </div>
-                    <div class="iphone-carousel__gloss" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Commuvia -->
             <div class="project">
               <div class="reveal tilt">
                 <h3>Commuvia</h3>
@@ -993,27 +922,26 @@
               </div>
 
               <div class="reveal" data-delay="1">
-                <div class="iphone-carousel"
+                <div class="device-frame"
+                     style="--screen-top: 8.6%; --screen-right: 8.25%; --screen-bottom: 8.9%; --screen-left: 8.25%; --screen-radius: 34px;"
                      data-iphone-carousel
                      data-autoplay="true"
                      data-interval="5200"
                      aria-label="Commuvia screenshots"
                      tabindex="0">
-                  <div class="iphone-carousel__inner">
-                    <div class="iphone-carousel__island" aria-hidden="true"></div>
-                    <div class="iphone-carousel__stage">
-                      <div class="iphone-carousel__slide is-active"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
+                  <img class="device-frame__img" src="images/iPhone 17 Pro Max - Cosmic Orange - Portrait.png" alt="" aria-hidden="true" loading="lazy">
+                  <div class="device-frame__screen">
+                    <div class="device-frame__stage">
+                      <div class="device-frame__slide is-active"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
                     </div>
-                    <div class="iphone-carousel__gloss" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- TripleTreat -->
             <div class="project">
               <div class="reveal tilt">
                 <h3>TripleTreat – Smart Kitchen Management</h3>
@@ -1108,22 +1036,22 @@
               </div>
 
               <div class="reveal" data-delay="1">
-                <div class="iphone-carousel"
+                <div class="device-frame"
+                     style="--screen-top: 8.6%; --screen-right: 8.25%; --screen-bottom: 8.9%; --screen-left: 8.25%; --screen-radius: 34px;"
                      data-iphone-carousel
                      data-autoplay="true"
                      data-interval="5200"
                      aria-label="TripleTreat screenshots"
                      tabindex="0">
-                  <div class="iphone-carousel__inner">
-                    <div class="iphone-carousel__island" aria-hidden="true"></div>
-                    <div class="iphone-carousel__stage">
-                      <div class="iphone-carousel__slide is-active"><img src="images/teiple1.png" alt="TripleTreat screenshot 1" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/triple.png" alt="TripleTreat screenshot 2" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/triple111.png" alt="TripleTreat screenshot 3" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/triple3.png" alt="TripleTreat screenshot 4" loading="lazy"></div>
-                      <div class="iphone-carousel__slide"><img src="images/triple4.png" alt="TripleTreat screenshot 5" loading="lazy"></div>
+                  <img class="device-frame__img" src="images/iPhone 17 Pro Max - Cosmic Orange - Portrait.png" alt="" aria-hidden="true" loading="lazy">
+                  <div class="device-frame__screen">
+                    <div class="device-frame__stage">
+                      <div class="device-frame__slide is-active"><img src="images/teiple1.png" alt="TripleTreat screenshot 1" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/triple.png" alt="TripleTreat screenshot 2" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/triple111.png" alt="TripleTreat screenshot 3" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/triple3.png" alt="TripleTreat screenshot 4" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/triple4.png" alt="TripleTreat screenshot 5" loading="lazy"></div>
                     </div>
-                    <div class="iphone-carousel__gloss" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>
@@ -1133,7 +1061,6 @@
         </div>
       </section>
 
-      <!-- SKILLS -->
       <section id="skills">
         <div class="container">
           <div class="panel">
@@ -1172,7 +1099,6 @@
         </div>
       </section>
 
-      <!-- CONTACT -->
       <section id="contact">
         <div class="container">
           <div class="panel">
@@ -1208,7 +1134,6 @@
       const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const DPR = Math.min(2, window.devicePixelRatio || 1);
 
-      /* Cursor halo (no trailing) */
       const haloSmall = document.getElementById("haloSmall");
       const haloBig = document.getElementById("haloBig");
       if (!prefersReduced && haloSmall && haloBig) {
@@ -1222,7 +1147,6 @@
         }, { passive: true });
       }
 
-      /* Reveal */
       const reveals = Array.from(document.querySelectorAll(".reveal"));
       if (!prefersReduced && "IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
@@ -1238,7 +1162,6 @@
         reveals.forEach((el) => el.classList.add("is-in"));
       }
 
-      /* Magnetic */
       function initMagnet(el) {
         let rect = null;
 
@@ -1266,7 +1189,6 @@
       }
       if (!prefersReduced) document.querySelectorAll(".magnet").forEach(initMagnet);
 
-      /* Tilt */
       function initTilt(el) {
         let rect = null;
         const max = 9;
@@ -1297,9 +1219,8 @@
       }
       if (!prefersReduced) document.querySelectorAll(".tilt").forEach(initTilt);
 
-      /* iPhone-only carousel (drag + autoplay) */
       function initIphoneCarousel(root) {
-        const slides = Array.from(root.querySelectorAll(".iphone-carousel__slide"));
+        const slides = Array.from(root.querySelectorAll(".device-frame__slide"));
         if (slides.length <= 1) return;
 
         let index = 0;
@@ -1370,7 +1291,6 @@
       }
       document.querySelectorAll("[data-iphone-carousel]").forEach(initIphoneCarousel);
 
-      /* Liquid hero */
       const liquidCanvas = document.getElementById("liquidCanvas");
       const lctx = liquidCanvas ? liquidCanvas.getContext("2d", { alpha: true }) : null;
 
@@ -1487,9 +1407,6 @@
         });
       }
 
-      /* =========================
-         Skill Sphere (labeled mapping)
-         ========================= */
       const canvas = document.getElementById("sphere");
       if (!canvas) return;
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -1534,7 +1451,15 @@
         return false;
       }
 
-      const state = { rx:0, ry:0, targetRx:0, targetRy:0, drag:false, lastX:0, lastY:0, pulse:0 };
+      const state = {
+        rx: 0, ry: 0,
+        targetRx: 0, targetRy: 0,
+        drag: false,
+        lastX: 0, lastY: 0,
+        pulse: 0,
+        zoom: 1.0,
+        targetZoom: 1.0
+      };
 
       function randSphere() {
         const u = Math.random();
@@ -1570,6 +1495,9 @@
       }
       function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
+      const ZOOM_MIN = 0.45;
+      const ZOOM_MAX = 3.25;
+
       function drawSphere() {
         if (prefersReduced) return;
 
@@ -1578,16 +1506,19 @@
 
         const cx = w * 0.5;
         const cy = h * 0.5;
-        const baseRadius = Math.min(w, h) * 0.28;
 
         state.rx += (state.targetRx - state.rx) * 0.08;
         state.ry += (state.targetRy - state.ry) * 0.08;
+
+        state.zoom += (state.targetZoom - state.zoom) * 0.22;
 
         state.ry += 0.0011;
         state.rx += 0.0006;
 
         state.pulse *= 0.92;
         const glow = 0.8 + state.pulse * 0.9;
+
+        const baseRadius = Math.min(w, h) * 0.28 * state.zoom;
 
         const proj = [];
         const perspective = 2.6;
@@ -1623,7 +1554,6 @@
 
         proj.sort((a, b) => a.z - b.z);
 
-        /* Connections */
         ctx.save();
         ctx.lineWidth = 1 * DPR;
         for (let i = 0; i < proj.length; i++) {
@@ -1650,7 +1580,6 @@
         }
         ctx.restore();
 
-        /* Aura ring */
         ctx.save();
         ctx.globalCompositeOperation = "screen";
         const ring = ctx.createRadialGradient(cx, cy, baseRadius * 0.25, cx, cy, baseRadius * 1.08);
@@ -1664,7 +1593,6 @@
         ctx.fill();
         ctx.restore();
 
-        /* Points + labels */
         for (const p of proj) {
           const rr = p.c[0], gg = p.c[1], bb = p.c[2];
 
@@ -1742,7 +1670,7 @@
         const n = normFromEvent(e);
         if (!state.drag) {
           state.targetRy = n.x * 0.9;
-          state.targetRx = -n.y * 0.6;
+          state.targetRx = n.y * 0.6;
         } else {
           const dx = e.clientX - state.lastX;
           const dy = e.clientY - state.lastY;
@@ -1759,6 +1687,7 @@
         state.lastY = e.clientY;
         canvas.setPointerCapture(e.pointerId);
         state.pulse = 1.0;
+        canvas.focus({ preventScroll: true });
       });
 
       canvas.addEventListener("pointerup", (e) => {
@@ -1767,6 +1696,67 @@
       });
 
       canvas.addEventListener("click", () => { state.pulse = 1.2; });
+
+      canvas.addEventListener("wheel", (e) => {
+        if (prefersReduced) return;
+        e.preventDefault();
+
+        const delta = e.deltaY || 0;
+        const speed = 0.0038;
+        const factor = Math.exp(-delta * speed);
+
+        state.targetZoom = clamp(state.targetZoom * factor, ZOOM_MIN, ZOOM_MAX);
+        state.pulse = 0.9;
+      }, { passive: false });
+
+      let pinchStartDist = null;
+      let pinchStartZoom = null;
+
+      function touchDist(t1, t2) {
+        const dx = t1.clientX - t2.clientX;
+        const dy = t1.clientY - t2.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+      }
+
+      canvas.addEventListener("touchstart", (e) => {
+        if (prefersReduced) return;
+        if (e.touches && e.touches.length === 2) {
+          pinchStartDist = touchDist(e.touches[0], e.touches[1]);
+          pinchStartZoom = state.targetZoom;
+        }
+      }, { passive: true });
+
+      canvas.addEventListener("touchmove", (e) => {
+        if (prefersReduced) return;
+        if (e.touches && e.touches.length === 2 && pinchStartDist && pinchStartZoom) {
+          const d = touchDist(e.touches[0], e.touches[1]);
+          const ratio = d / pinchStartDist;
+          state.targetZoom = clamp(pinchStartZoom * ratio, ZOOM_MIN, ZOOM_MAX);
+          state.pulse = 0.6;
+        }
+      }, { passive: true });
+
+      canvas.addEventListener("touchend", (e) => {
+        if (!e.touches || e.touches.length < 2) {
+          pinchStartDist = null;
+          pinchStartZoom = null;
+        }
+      }, { passive: true });
+
+      canvas.addEventListener("keydown", (e) => {
+        if (prefersReduced) return;
+
+        if (e.key === "+" || e.key === "=") {
+          state.targetZoom = clamp(state.targetZoom * 1.12, ZOOM_MIN, ZOOM_MAX);
+          e.preventDefault();
+        } else if (e.key === "-" || e.key === "_") {
+          state.targetZoom = clamp(state.targetZoom / 1.12, ZOOM_MIN, ZOOM_MAX);
+          e.preventDefault();
+        } else if (e.key === "0") {
+          state.targetZoom = 1.0;
+          e.preventDefault();
+        }
+      });
 
     })();
   </script>
