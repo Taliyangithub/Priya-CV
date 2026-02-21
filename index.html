@@ -18,6 +18,9 @@
       --shadow-soft: 0 18px 60px rgba(0,0,0,.45);
 
       --r-xl: 28px;
+      --r-lg: 22px;
+      --r-md: 16px;
+
       --max: 1120px;
     }
 
@@ -345,9 +348,6 @@
       height: 44px;
       width: auto;
     }
-    @media (max-width: 420px){
-      .store-badge img{ height: 40px; }
-    }
 
     /* Marquee */
     .marquee{
@@ -404,7 +404,7 @@
       box-shadow: 0 0 0 6px rgba(255,255,255,.08);
     }
 
-    /* Sphere card */
+    /* Sphere */
     .sphere-card{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -478,10 +478,7 @@
     .key.b{ background: rgba(34,197,94,.55); box-shadow: 0 0 0 6px rgba(34,197,94,.13); }
     .key.c{ background: rgba(168,85,247,.55); box-shadow: 0 0 0 6px rgba(168,85,247,.12); }
 
-    .sphere-wrap{
-      position:relative;
-      padding: 1.05rem;
-    }
+    .sphere-wrap{ position:relative; padding: 1.05rem; }
     .sphere-canvas{
       width: 100%;
       aspect-ratio: 16/12;
@@ -575,7 +572,7 @@
       letter-spacing:-.2px;
     }
     .project p{
-      margin: 0 0 1.2rem;
+      margin: 0 0 1.0rem;
       color: var(--text-secondary);
       line-height:1.6;
     }
@@ -629,9 +626,7 @@
       transition: transform 180ms ease;
       flex: 0 0 auto;
     }
-    .details[open] summary::after{
-      transform: rotate(45deg);
-    }
+    .details[open] summary::after{ transform: rotate(45deg); }
     .details .content{
       padding: 0 1rem 1rem;
       color: var(--text-secondary);
@@ -644,187 +639,104 @@
       color: rgba(243,244,246,.92);
       letter-spacing:.1px;
     }
-    .content ul{
-      margin:.4rem 0 0 1.1rem;
-      padding:0;
-    }
-    .content li{
-      margin:.2rem 0;
-    }
+    .content ul{ margin:.4rem 0 0 1.1rem; padding:0; }
+    .content li{ margin:.2rem 0; }
 
-    /* Carousel */
-    .carousel{
-      border-radius: var(--r-xl);
-      border: 1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      box-shadow: var(--shadow-soft);
-      padding: 16px;
-      position:relative;
-      overflow:hidden;
+    /* =========================
+       iPhone-only carousel (no external UI)
+       ========================= */
+    .iphone-carousel{
+      width: min(360px, 100%);
+      margin: 0 auto;
+      aspect-ratio: 9 / 19.5;
+      border-radius: 44px;
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow:
+        0 40px 120px rgba(0,0,0,.70),
+        inset 0 1px 0 rgba(255,255,255,.08);
+      padding: 14px;
       transform: translateZ(0);
+      user-select: none;
+      touch-action: pan-y;
+      outline: none;
     }
-    .carousel::before{
+    .iphone-carousel::before{
       content:"";
       position:absolute;
-      inset:-1px;
+      inset:-2px;
+      border-radius: 46px;
       background:
-        radial-gradient(900px at 20% 10%, rgba(99,102,241,.14), transparent 58%),
-        radial-gradient(900px at 85% 75%, rgba(34,197,94,.10), transparent 58%),
-        radial-gradient(900px at 55% 95%, rgba(168,85,247,.10), transparent 62%);
-      opacity:.95;
+        radial-gradient(900px at 30% 20%, rgba(99,102,241,.12), transparent 58%),
+        radial-gradient(900px at 80% 70%, rgba(34,197,94,.08), transparent 58%),
+        radial-gradient(900px at 55% 95%, rgba(168,85,247,.08), transparent 62%);
       filter: blur(10px);
+      opacity:.9;
       pointer-events:none;
+      z-index:0;
     }
-    .carousel-inner{
-      position:relative;
-      display:grid;
-      justify-items:center;
-      gap: 12px;
+    .iphone-carousel__inner{
+      position: relative;
+      height: 100%;
+      border-radius: 36px;
+      overflow: hidden;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      z-index:1;
     }
-    .phone-frame{
-      width: min(330px, 100%);
-      aspect-ratio: 9 / 19.5;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(6,10,16,.75);
-      box-shadow: 0 30px 90px rgba(0,0,0,.70),
-                  inset 0 1px 0 rgba(255,255,255,.06);
-      overflow:hidden;
-      position:relative;
-    }
-    .phone-notch{
+    .iphone-carousel__island{
       position:absolute;
       top: 10px;
       left:50%;
       transform: translateX(-50%);
-      width: 38%;
-      height: 18px;
-      border-radius: 0 0 14px 14px;
-      background: rgba(0,0,0,.55);
-      border: 1px solid rgba(255,255,255,.06);
-      backdrop-filter: blur(10px);
-      z-index: 4;
+      width: 44%;
+      height: 26px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.78);
+      border: 1px solid rgba(255,255,255,.10);
+      z-index:5;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+      pointer-events:none;
     }
-    .carousel-stage{
+    .iphone-carousel__stage{
       position:absolute;
       inset:0;
       z-index:2;
     }
-    .carousel-slide{
+    .iphone-carousel__slide{
       position:absolute;
       inset:0;
       opacity:0;
-      transform: scale(1.02);
+      transform: scale(1.01);
       transition: opacity 820ms cubic-bezier(.2,.8,.2,1),
                   transform 980ms cubic-bezier(.2,.8,.2,1);
     }
-    .carousel-slide.is-active{
+    .iphone-carousel__slide.is-active{
       opacity:1;
       transform: scale(1);
     }
-    .carousel-slide img{
+    .iphone-carousel__slide img{
       width:100%;
       height:100%;
-      object-fit:cover;
-      filter: saturate(1.06) contrast(1.03);
-      transform: translateZ(0);
+      object-fit: cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.02);
     }
-    .carousel-gloss{
+    .iphone-carousel__gloss{
       position:absolute;
-      inset:-45% -20%;
-      background: linear-gradient(120deg, rgba(255,255,255,.12), transparent 45%, rgba(255,255,255,.08));
+      inset:-45% -25%;
+      background: linear-gradient(120deg, rgba(255,255,255,.12), transparent 45%, rgba(255,255,255,.06));
       transform: translateX(-35%) rotate(10deg);
       opacity:.55;
       pointer-events:none;
-      z-index:3;
-      animation: gloss 5.8s ease-in-out infinite;
+      z-index:4;
+      animation: iphoneGloss 6.2s ease-in-out infinite;
     }
-    @keyframes gloss{
+    @keyframes iphoneGloss{
       0%{ transform: translateX(-38%) rotate(10deg); opacity:.46; }
       50%{ transform: translateX(18%) rotate(10deg); opacity:.66; }
       100%{ transform: translateX(-38%) rotate(10deg); opacity:.46; }
-    }
-
-    .carousel-meta{
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-    }
-    .meta-pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(10,14,20,.55);
-      backdrop-filter: blur(12px);
-      color: rgba(243,244,246,.92);
-      font-size:.82rem;
-    }
-    .progress{
-      width: 140px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-    }
-    .progress > span{
-      display:block;
-      height:100%;
-      width:0%;
-      background: rgba(255,255,255,.28);
-      border-radius: 999px;
-    }
-    .controls{
-      display:flex;
-      gap: 8px;
-      align-items:center;
-    }
-    .cbtn{
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(10,14,20,.55);
-      backdrop-filter: blur(12px);
-      color: rgba(243,244,246,.92);
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-      user-select:none;
-    }
-    .cbtn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.07);
-      border-color: rgba(255,255,255,.22);
-    }
-    .dots{
-      display:flex;
-      gap: 6px;
-      flex-wrap:wrap;
-      justify-content:center;
-      width:100%;
-      padding: 2px 0;
-    }
-    .dot{
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.10);
-      cursor:pointer;
-      transition: width 220ms ease, background 220ms ease, border-color 220ms ease;
-      padding:0;
-    }
-    .dot[aria-current="true"]{
-      width: 22px;
-      background: rgba(255,255,255,.28);
-      border-color: rgba(255,255,255,.26);
     }
 
     /* Skills */
@@ -880,10 +792,7 @@
       position:relative;
       z-index:1;
     }
-    .plain-link{
-      color: inherit;
-      text-decoration:none;
-    }
+    .plain-link{ color: inherit; text-decoration:none; }
     .plain-link:hover{ text-decoration:underline; }
 
     /* Reveal */
@@ -918,9 +827,9 @@
 
     @media (prefers-reduced-motion: reduce){
       html{ scroll-behavior:auto; }
-      .grain, .blob, .track, .mark::after, .btn.primary::after, .carousel-gloss{ animation:none !important; }
+      .grain, .blob, .track, .mark::after, .btn.primary::after, .iphone-carousel__gloss{ animation:none !important; }
       .reveal{ transition:none; opacity:1; transform:none; }
-      .carousel-slide{ transition:none; }
+      .iphone-carousel__slide{ transition:none; }
       .halo, .halo.big{ display:none; }
       .liquid-layer{ display:none; }
     }
@@ -1066,31 +975,21 @@
               </div>
 
               <div class="reveal" data-delay="1">
-                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Happy Steps screenshots" tabindex="0">
-                  <div class="carousel-inner">
-                    <div class="phone-frame">
-                      <div class="phone-notch"></div>
-                      <div class="carousel-stage">
-                        <div class="carousel-slide is-active"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
-                      </div>
-                      <div class="carousel-gloss"></div>
+                <div class="iphone-carousel"
+                     data-iphone-carousel
+                     data-autoplay="true"
+                     data-interval="5200"
+                     aria-label="Happy Steps screenshots"
+                     tabindex="0">
+                  <div class="iphone-carousel__inner">
+                    <div class="iphone-carousel__island" aria-hidden="true"></div>
+                    <div class="iphone-carousel__stage">
+                      <div class="iphone-carousel__slide is-active"><img src="images/happystep1.jpeg" alt="Happy Steps screenshot 1" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/happystep2.jpeg" alt="Happy Steps screenshot 2" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/happystep3.jpeg" alt="Happy Steps screenshot 3" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/happystep4.jpeg" alt="Happy Steps screenshot 4" loading="lazy"></div>
                     </div>
-
-                    <div class="carousel-meta">
-                      <div class="meta-pill">
-                        <span data-counter>01 / 04</span>
-                        <div class="progress" aria-hidden="true"><span data-progress></span></div>
-                      </div>
-                      <div class="controls">
-                        <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
-                        <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
-                      </div>
-                    </div>
-
-                    <div class="dots" data-dots></div>
+                    <div class="iphone-carousel__gloss" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>
@@ -1131,31 +1030,21 @@
               </div>
 
               <div class="reveal" data-delay="1">
-                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="Commuvia screenshots" tabindex="0">
-                  <div class="carousel-inner">
-                    <div class="phone-frame">
-                      <div class="phone-notch"></div>
-                      <div class="carousel-stage">
-                        <div class="carousel-slide is-active"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
-                      </div>
-                      <div class="carousel-gloss"></div>
+                <div class="iphone-carousel"
+                     data-iphone-carousel
+                     data-autoplay="true"
+                     data-interval="5200"
+                     aria-label="Commuvia screenshots"
+                     tabindex="0">
+                  <div class="iphone-carousel__inner">
+                    <div class="iphone-carousel__island" aria-hidden="true"></div>
+                    <div class="iphone-carousel__stage">
+                      <div class="iphone-carousel__slide is-active"><img src="images/commuvia1.jpeg" alt="Commuvia screenshot 1" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
                     </div>
-
-                    <div class="carousel-meta">
-                      <div class="meta-pill">
-                        <span data-counter>01 / 04</span>
-                        <div class="progress" aria-hidden="true"><span data-progress></span></div>
-                      </div>
-                      <div class="controls">
-                        <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
-                        <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
-                      </div>
-                    </div>
-
-                    <div class="dots" data-dots></div>
+                    <div class="iphone-carousel__gloss" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>
@@ -1252,32 +1141,22 @@
               </div>
 
               <div class="reveal" data-delay="1">
-                <div class="carousel" data-carousel data-autoplay="true" data-interval="5200" aria-label="TripleTreat screenshots" tabindex="0">
-                  <div class="carousel-inner">
-                    <div class="phone-frame">
-                      <div class="phone-notch"></div>
-                      <div class="carousel-stage">
-                        <div class="carousel-slide is-active"><img src="images/teiple1.png" alt="TripleTreat screenshot 1" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple.png" alt="TripleTreat screenshot 2" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple111.png" alt="TripleTreat screenshot 3" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple3.png" alt="TripleTreat screenshot 4" loading="lazy"></div>
-                        <div class="carousel-slide"><img src="images/triple4.png" alt="TripleTreat screenshot 5" loading="lazy"></div>
-                      </div>
-                      <div class="carousel-gloss"></div>
+                <div class="iphone-carousel"
+                     data-iphone-carousel
+                     data-autoplay="true"
+                     data-interval="5200"
+                     aria-label="TripleTreat screenshots"
+                     tabindex="0">
+                  <div class="iphone-carousel__inner">
+                    <div class="iphone-carousel__island" aria-hidden="true"></div>
+                    <div class="iphone-carousel__stage">
+                      <div class="iphone-carousel__slide is-active"><img src="images/teiple1.png" alt="TripleTreat screenshot 1" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/triple.png" alt="TripleTreat screenshot 2" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/triple111.png" alt="TripleTreat screenshot 3" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/triple3.png" alt="TripleTreat screenshot 4" loading="lazy"></div>
+                      <div class="iphone-carousel__slide"><img src="images/triple4.png" alt="TripleTreat screenshot 5" loading="lazy"></div>
                     </div>
-
-                    <div class="carousel-meta">
-                      <div class="meta-pill">
-                        <span data-counter>01 / 05</span>
-                        <div class="progress" aria-hidden="true"><span data-progress></span></div>
-                      </div>
-                      <div class="controls">
-                        <button class="cbtn" type="button" data-prev aria-label="Previous slide">‹</button>
-                        <button class="cbtn" type="button" data-next aria-label="Next slide">›</button>
-                      </div>
-                    </div>
-
-                    <div class="dots" data-dots></div>
+                    <div class="iphone-carousel__gloss" aria-hidden="true"></div>
                   </div>
                 </div>
               </div>
@@ -1360,27 +1239,19 @@
   <script>
     (function () {
       const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      const haloSmall = document.getElementById("haloSmall");
-      const haloBig = document.getElementById("haloBig");
-
-      let hx = window.innerWidth * 0.5;
-      let hy = window.innerHeight * 0.5;
-
       const DPR = Math.min(2, window.devicePixelRatio || 1);
 
       /* Cursor halo (no trailing) */
+      const haloSmall = document.getElementById("haloSmall");
+      const haloBig = document.getElementById("haloBig");
       if (!prefersReduced && haloSmall && haloBig) {
         haloSmall.style.opacity = "1";
         haloBig.style.opacity = "1";
-
         window.addEventListener("pointermove", (e) => {
-          hx = e.clientX;
-          hy = e.clientY;
-          haloSmall.style.left = hx + "px";
-          haloSmall.style.top = hy + "px";
-          haloBig.style.left = hx + "px";
-          haloBig.style.top = hy + "px";
+          haloSmall.style.left = e.clientX + "px";
+          haloSmall.style.top = e.clientY + "px";
+          haloBig.style.left = e.clientX + "px";
+          haloBig.style.top = e.clientY + "px";
         }, { passive: true });
       }
 
@@ -1403,46 +1274,35 @@
       /* Magnetic */
       function initMagnet(el) {
         let rect = null;
-
         function onMove(e) {
           rect = rect || el.getBoundingClientRect();
           const x = e.clientX - (rect.left + rect.width / 2);
           const y = e.clientY - (rect.top + rect.height / 2);
-          const mx = x * 0.18;
-          const my = y * 0.18;
-          el.style.transform = "translate3d(" + mx + "px," + my + "px,0)";
+          el.style.transform = "translate3d(" + (x * 0.18) + "px," + (y * 0.18) + "px,0)";
         }
-
         function onEnter() {
           rect = el.getBoundingClientRect();
           el.style.transition = "transform 120ms ease";
         }
-
         function onLeave() {
           el.style.transition = "transform 240ms ease";
           el.style.transform = "translate3d(0,0,0)";
           rect = null;
         }
-
         el.addEventListener("pointerenter", onEnter);
         el.addEventListener("pointermove", onMove);
         el.addEventListener("pointerleave", onLeave);
       }
-
-      if (!prefersReduced) {
-        document.querySelectorAll(".magnet").forEach(initMagnet);
-      }
+      if (!prefersReduced) document.querySelectorAll(".magnet").forEach(initMagnet);
 
       /* Tilt */
       function initTilt(el) {
         let rect = null;
         const max = 9;
-
         function onEnter() {
           rect = el.getBoundingClientRect();
           el.style.transition = "transform 120ms ease";
         }
-
         function onMove(e) {
           if (!rect) rect = el.getBoundingClientRect();
           const px = (e.clientX - rect.left) / rect.width;
@@ -1451,137 +1311,71 @@
           const ry = (px - 0.5) * max;
           el.style.transform = "perspective(900px) rotateX(" + rx + "deg) rotateY(" + ry + "deg) translateZ(0)";
         }
-
         function onLeave() {
           el.style.transition = "transform 260ms ease";
           el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
           rect = null;
         }
-
         el.addEventListener("pointerenter", onEnter);
         el.addEventListener("pointermove", onMove);
         el.addEventListener("pointerleave", onLeave);
       }
+      if (!prefersReduced) document.querySelectorAll(".tilt").forEach(initTilt);
 
-      if (!prefersReduced) {
-        document.querySelectorAll(".tilt").forEach(initTilt);
-      }
-
-      /* Carousel */
-      function pad2(n) {
-        const s = String(n);
-        return s.length === 1 ? "0" + s : s;
-      }
-
-      function initCarousel(root) {
-        const slides = Array.from(root.querySelectorAll(".carousel-slide"));
-        const prevBtn = root.querySelector("[data-prev]");
-        const nextBtn = root.querySelector("[data-next]");
-        const dotsWrap = root.querySelector("[data-dots]");
-        const counterEl = root.querySelector("[data-counter]");
-        const progressEl = root.querySelector("[data-progress]");
+      /* iPhone-only carousel (drag + autoplay) */
+      function initIphoneCarousel(root) {
+        const slides = Array.from(root.querySelectorAll(".iphone-carousel__slide"));
+        if (slides.length <= 1) return;
 
         let index = 0;
         const autoplay = root.getAttribute("data-autoplay") === "true" && !prefersReduced;
         const interval = Number(root.getAttribute("data-interval") || 5200);
         let timer = null;
 
-        function buildDots() {
-          if (!dotsWrap) return;
-          dotsWrap.innerHTML = "";
-          slides.forEach((_, i) => {
-            const b = document.createElement("button");
-            b.type = "button";
-            b.className = "dot";
-            b.setAttribute("aria-label", "Go to slide " + (i + 1));
-            b.addEventListener("click", () => setActive(i, true));
-            dotsWrap.appendChild(b);
-          });
-        }
-
-        function syncDots() {
-          if (!dotsWrap) return;
-          const dots = Array.from(dotsWrap.querySelectorAll(".dot"));
-          dots.forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
-        }
-
-        function setCounter() {
-          const total = slides.length;
-          if (counterEl) counterEl.textContent = pad2(index + 1) + " / " + pad2(total);
-        }
-
-        function startProgress() {
-          if (!progressEl) return;
-          progressEl.style.transition = "none";
-          progressEl.style.width = "0%";
-          void progressEl.offsetWidth;
-          progressEl.style.transition = "width " + interval + "ms linear";
-          progressEl.style.width = "100%";
-        }
-
-        function setActive(i, userAction) {
+        function setActive(i) {
           index = (i + slides.length) % slides.length;
           slides.forEach((s, idx) => {
             if (idx === index) s.classList.add("is-active");
             else s.classList.remove("is-active");
           });
-          setCounter();
-          syncDots();
-          if (autoplay) startProgress();
-          if (userAction) restartAutoplay();
         }
 
-        function stopAutoplay() {
+        function stop() {
           if (timer) window.clearInterval(timer);
           timer = null;
-          if (progressEl) {
-            progressEl.style.transition = "none";
-            progressEl.style.width = "0%";
-          }
         }
 
-        function startAutoplay() {
+        function start() {
           if (!autoplay) return;
-          stopAutoplay();
-          startProgress();
-          timer = window.setInterval(() => {
-            setActive(index + 1, false);
-          }, interval);
+          stop();
+          timer = window.setInterval(() => setActive(index + 1), interval);
         }
-
-        function restartAutoplay() {
-          if (!autoplay) return;
-          startAutoplay();
-        }
-
-        prevBtn && prevBtn.addEventListener("click", () => setActive(index - 1, true));
-        nextBtn && nextBtn.addEventListener("click", () => setActive(index + 1, true));
-
-        root.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowLeft") setActive(index - 1, true);
-          if (e.key === "ArrowRight") setActive(index + 1, true);
-        });
-
-        root.addEventListener("mouseenter", stopAutoplay);
-        root.addEventListener("mouseleave", startAutoplay);
-        root.addEventListener("focusin", stopAutoplay);
-        root.addEventListener("focusout", startAutoplay);
 
         let down = false;
         let startX = 0;
         const threshold = 44;
 
-        function onDown(x) { down = true; startX = x; stopAutoplay(); }
+        function onDown(x) {
+          down = true;
+          startX = x;
+          stop();
+        }
+
         function onUp(x) {
           if (!down) return;
           down = false;
           const dx = x - startX;
-          if (Math.abs(dx) > threshold) setActive(index + (dx < 0 ? 1 : -1), true);
-          else startAutoplay();
+          if (Math.abs(dx) > threshold) setActive(index + (dx < 0 ? 1 : -1));
+          start();
         }
 
-        root.addEventListener("mousedown", (e) => onDown(e.clientX));
-        window.addEventListener("mouseup", (e) => onUp(e.clientX));
+        root.addEventListener("pointerdown", (e) => {
+          root.focus({ preventScroll: true });
+          onDown(e.clientX);
+        });
+
+        root.addEventListener("pointerup", (e) => onUp(e.clientX));
+        root.addEventListener("pointercancel", (e) => onUp(e.clientX));
 
         root.addEventListener("touchstart", (e) => {
           if (e.touches && e.touches[0]) onDown(e.touches[0].clientX);
@@ -1592,14 +1386,17 @@
           onUp(t ? t.clientX : startX);
         });
 
-        buildDots();
-        setActive(0, false);
-        startAutoplay();
+        root.addEventListener("mouseenter", stop);
+        root.addEventListener("mouseleave", start);
+        root.addEventListener("focusin", stop);
+        root.addEventListener("focusout", start);
+
+        setActive(0);
+        start();
       }
+      document.querySelectorAll("[data-iphone-carousel]").forEach(initIphoneCarousel);
 
-      document.querySelectorAll("[data-carousel]").forEach(initCarousel);
-
-      /* Liquid */
+      /* Liquid hero */
       const liquidCanvas = document.getElementById("liquidCanvas");
       const lctx = liquidCanvas ? liquidCanvas.getContext("2d", { alpha: true }) : null;
 
@@ -1671,14 +1468,13 @@
         lctx.save();
         lctx.globalCompositeOperation = "destination-out";
 
-        const r = strength;
-        const grad = lctx.createRadialGradient(x, y, 0, x, y, r);
+        const grad = lctx.createRadialGradient(x, y, 0, x, y, strength);
         grad.addColorStop(0, "rgba(0,0,0,0.90)");
         grad.addColorStop(0.55, "rgba(0,0,0,0.55)");
         grad.addColorStop(1, "rgba(0,0,0,0.0)");
         lctx.fillStyle = grad;
         lctx.beginPath();
-        lctx.arc(x, y, r, 0, Math.PI * 2);
+        lctx.arc(x, y, strength, 0, Math.PI * 2);
         lctx.fill();
 
         lctx.restore();
@@ -1700,10 +1496,7 @@
         function mapToLiquid(e) {
           const rect = liquidCanvas.getBoundingClientRect();
           const dpr = liquidCanvas.width / rect.width;
-          return {
-            x: (e.clientX - rect.left) * dpr,
-            y: (e.clientY - rect.top) * dpr
-          };
+          return { x: (e.clientX - rect.left) * dpr, y: (e.clientY - rect.top) * dpr };
         }
 
         window.addEventListener("pointermove", (e) => {
@@ -1733,17 +1526,7 @@
       resizeCanvas();
       window.addEventListener("resize", resizeCanvas, { passive: true });
 
-      const state = {
-        rx: 0.0,
-        ry: 0.0,
-        targetRx: 0.0,
-        targetRy: 0.0,
-        drag: false,
-        lastX: 0,
-        lastY: 0,
-        pulse: 0
-      };
-
+      const state = { rx:0, ry:0, targetRx:0, targetRy:0, drag:false, lastX:0, lastY:0, pulse:0 };
       const points = [];
       const pointCount = 220;
 
@@ -1752,11 +1535,7 @@
         const v = Math.random();
         const theta = 2 * Math.PI * u;
         const phi = Math.acos(2 * v - 1);
-        return {
-          x: Math.sin(phi) * Math.cos(theta),
-          y: Math.cos(phi),
-          z: Math.sin(phi) * Math.sin(theta)
-        };
+        return { x: Math.sin(phi) * Math.cos(theta), y: Math.cos(phi), z: Math.sin(phi) * Math.sin(theta) };
       }
 
       const groups = [
@@ -1940,9 +1719,7 @@
         try { canvas.releasePointerCapture(e.pointerId); } catch (_) {}
       });
 
-      canvas.addEventListener("click", () => {
-        state.pulse = 1.2;
-      });
+      canvas.addEventListener("click", () => { state.pulse = 1.2; });
 
     })();
   </script>
