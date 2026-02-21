@@ -36,40 +36,7 @@
       overflow-x:hidden;
     }
 
-    .cursor-halo{
-      position: fixed;
-      inset: 0;
-      pointer-events:none;
-      z-index: 9999;
-    }
-    .halo{
-      position:absolute;
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.22);
-      mix-blend-mode: screen;
-      transform: translate3d(-50%, -50%, 0);
-      opacity: 0;
-      transition: opacity 220ms ease;
-      box-shadow:
-        0 0 0 10px rgba(99,102,241,.08),
-        0 0 0 22px rgba(168,85,247,.06),
-        0 0 70px rgba(99,102,241,.22);
-      filter: blur(.15px);
-    }
-    .halo.big{
-      width: 140px;
-      height: 140px;
-      background: radial-gradient(circle at 30% 30%, rgba(99,102,241,.14), transparent 60%),
-                  radial-gradient(circle at 70% 70%, rgba(34,197,94,.10), transparent 60%),
-                  radial-gradient(circle at 50% 50%, rgba(168,85,247,.10), transparent 60%);
-      opacity: 0;
-      transition: opacity 220ms ease;
-      box-shadow: none;
-      filter: blur(2px);
-    }
-
+    /* Ambient layers */
     .grain{
       pointer-events:none;
       position:fixed;
@@ -145,6 +112,7 @@
       padding: 0 1.5rem;
     }
 
+    /* Header */
     header{
       position: sticky;
       top: 0;
@@ -207,6 +175,7 @@
       transform: translateY(-1px);
     }
 
+    /* Hero */
     .hero{
       min-height: calc(100vh - 72px);
       display:grid;
@@ -241,6 +210,7 @@
       max-width: 58ch;
     }
 
+    /* Liquid hero canvas */
     .liquid-layer{
       position:absolute;
       inset:-40px 0 -40px 0;
@@ -256,6 +226,7 @@
       filter: blur(0.2px);
     }
 
+    /* Buttons */
     .cta-row{
       display:flex;
       gap:.85rem;
@@ -342,6 +313,7 @@
       flex: 0 0 auto;
     }
 
+    /* Store badges */
     .store-badges{
       display:flex;
       flex-wrap:wrap;
@@ -374,6 +346,7 @@
       width: auto;
     }
 
+    /* Sphere card */
     .sphere-card{
       border-radius: var(--r-xl);
       border: 1px solid rgba(255,255,255,.12);
@@ -608,6 +581,7 @@
     .content ul{ margin:.4rem 0 0 1.1rem; padding:0; }
     .content li{ margin:.2rem 0; }
 
+    /* Device frame using PNG (Bezels) */
     .device-frame{
       width: min(360px, 100%);
       margin: 0 auto;
@@ -654,6 +628,7 @@
       filter: saturate(1.05) contrast(1.02);
     }
 
+    /* Skills cards */
     .skills-grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -708,6 +683,7 @@
     .plain-link{ color: inherit; text-decoration:none; }
     .plain-link:hover{ text-decoration:underline; }
 
+    /* Reveal */
     .reveal{
       opacity:0;
       transform: translateY(18px);
@@ -739,7 +715,6 @@
       html{ scroll-behavior:auto; }
       .grain, .blob, .mark::after, .btn.primary::after{ animation:none !important; }
       .reveal{ transition:none; opacity:1; transform:none; }
-      .halo, .halo.big{ display:none; }
       .liquid-layer{ display:none; }
     }
   </style>
@@ -752,11 +727,6 @@
     <div class="blob b3"></div>
   </div>
   <div class="grain" aria-hidden="true"></div>
-
-  <div class="cursor-halo" aria-hidden="true">
-    <div class="halo big" id="haloBig"></div>
-    <div class="halo" id="haloSmall"></div>
-  </div>
 
   <div class="wrap">
     <header>
@@ -1134,19 +1104,6 @@
       const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const DPR = Math.min(2, window.devicePixelRatio || 1);
 
-      const haloSmall = document.getElementById("haloSmall");
-      const haloBig = document.getElementById("haloBig");
-      if (!prefersReduced && haloSmall && haloBig) {
-        haloSmall.style.opacity = "1";
-        haloBig.style.opacity = "1";
-        window.addEventListener("pointermove", (e) => {
-          haloSmall.style.left = e.clientX + "px";
-          haloSmall.style.top = e.clientY + "px";
-          haloBig.style.left = e.clientX + "px";
-          haloBig.style.top = e.clientY + "px";
-        }, { passive: true });
-      }
-
       const reveals = Array.from(document.querySelectorAll(".reveal"));
       if (!prefersReduced && "IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
@@ -1407,6 +1364,7 @@
         });
       }
 
+      /* Skill Map */
       const canvas = document.getElementById("sphere");
       if (!canvas) return;
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -1509,7 +1467,6 @@
 
         state.rx += (state.targetRx - state.rx) * 0.08;
         state.ry += (state.targetRy - state.ry) * 0.08;
-
         state.zoom += (state.targetZoom - state.zoom) * 0.22;
 
         state.ry += 0.0011;
