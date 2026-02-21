@@ -40,22 +40,13 @@
     }
 
     /* =========================
-       Cursor FX layer
+       Cursor halo (no trailing)
        ========================= */
     .cursor-halo{
       position: fixed;
       inset: 0;
       pointer-events:none;
       z-index: 9999;
-    }
-    #cursorFxCanvas{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      pointer-events:none;
-      z-index: 9998;
-      mix-blend-mode: screen;
     }
     .halo{
       position:absolute;
@@ -379,6 +370,50 @@
       width:8px; height:8px; border-radius:999px;
       background: rgba(255,255,255,.35);
       box-shadow: 0 0 0 6px rgba(255,255,255,.08);
+    }
+
+    /* App Store badge button */
+    .appstore-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.6rem;
+      padding:.66rem .95rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      text-decoration:none;
+      color: var(--text-primary);
+      box-shadow: 0 14px 44px rgba(0,0,0,.30);
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+      user-select:none;
+      will-change: transform;
+    }
+    .appstore-badge:hover{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+      transform: translateY(-1px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.24);
+    }
+    .appstore-badge svg{
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      opacity: .95;
+    }
+    .appstore-badge .txt{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .appstore-badge .txt .top{
+      font-size: .70rem;
+      color: rgba(243,244,246,.80);
+      letter-spacing:.15px;
+    }
+    .appstore-badge .txt .bottom{
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing:.1px;
     }
 
     /* AI Sphere card */
@@ -925,7 +960,6 @@
       .reveal{ transition:none; opacity:1; transform:none; }
       .carousel-slide{ transition:none; }
       .halo, .halo.big{ display:none; }
-      #cursorFxCanvas{ display:none; }
       .liquid-layer{ display:none; }
     }
   </style>
@@ -939,7 +973,6 @@
   </div>
   <div class="grain" aria-hidden="true"></div>
 
-  <canvas id="cursorFxCanvas" aria-hidden="true"></canvas>
   <div class="cursor-halo" aria-hidden="true">
     <div class="halo big" id="haloBig"></div>
     <div class="halo" id="haloSmall"></div>
@@ -1060,7 +1093,18 @@
                   <span class="tag">Android</span>
                 </div>
                 <div class="actions">
-                  <a class="chip primary magnet" href="https://apps.apple.com/se/app/happy-steps/id6755143766" target="_blank" rel="noreferrer"> App Store</a>
+                  <a class="appstore-badge magnet"
+                     href="https://apps.apple.com/se/app/happy-steps/id6755143766"
+                     target="_blank" rel="noreferrer"
+                     aria-label="Download Happy Steps on the App Store">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path fill="currentColor" d="M16.62 13.35c.02 2.2 1.94 2.93 1.96 2.94-.01.05-.3 1.03-.98 2.04-.59.88-1.2 1.75-2.17 1.77-.95.02-1.25-.56-2.34-.56-1.09 0-1.42.54-2.32.58-.94.04-1.65-.95-2.24-1.82-1.22-1.78-2.15-5.04-.9-7.25.62-1.1 1.73-1.8 2.94-1.82.92-.02 1.78.62 2.34.62.56 0 1.62-.77 2.73-.66.46.02 1.75.19 2.58 1.41-.07.04-1.54.9-1.53 2.75zM14.84 5.2c.5-.6.84-1.44.75-2.28-.72.03-1.59.48-2.1 1.08-.46.53-.87 1.39-.76 2.2.8.06 1.6-.41 2.11-1z"/>
+                    </svg>
+                    <span class="txt">
+                      <span class="top">Download on the</span>
+                      <span class="bottom">App Store</span>
+                    </span>
+                  </a>
                 </div>
               </div>
 
@@ -1120,7 +1164,18 @@
                 </div>
 
                 <div class="actions">
-                  <a class="chip primary magnet" href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB" target="_blank" rel="noreferrer"> App Store</a>
+                  <a class="appstore-badge magnet"
+                     href="https://apps.apple.com/se/app/commuvia/id6758559634?l=en-GB"
+                     target="_blank" rel="noreferrer"
+                     aria-label="Download Commuvia on the App Store">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path fill="currentColor" d="M16.62 13.35c.02 2.2 1.94 2.93 1.96 2.94-.01.05-.3 1.03-.98 2.04-.59.88-1.2 1.75-2.17 1.77-.95.02-1.25-.56-2.34-.56-1.09 0-1.42.54-2.32.58-.94.04-1.65-.95-2.24-1.82-1.22-1.78-2.15-5.04-.9-7.25.62-1.1 1.73-1.8 2.94-1.82.92-.02 1.78.62 2.34.62.56 0 1.62-.77 2.73-.66.46.02 1.75.19 2.58 1.41-.07.04-1.54.9-1.53 2.75zM14.84 5.2c.5-.6.84-1.44.75-2.28-.72.03-1.59.48-2.1 1.08-.46.53-.87 1.39-.76 2.2.8.06 1.6-.41 2.11-1z"/>
+                    </svg>
+                    <span class="txt">
+                      <span class="top">Download on the</span>
+                      <span class="bottom">App Store</span>
+                    </span>
+                  </a>
                 </div>
               </div>
 
@@ -1159,7 +1214,11 @@
             <div class="project">
               <div class="reveal tilt">
                 <h3>Triple Treat</h3>
-                <p>Cloud kitchen management app focusing on orders, inventory, and kitchen workflows.</p>
+                <p>
+                  TripleTreat is a smart kitchen management app for cloud kitchens and small restaurants.
+                  It helps manage orders, inventory, menus, and staff in one secure platform.
+                  Real-time updates and role-based access keep daily operations organized and efficient.
+                </p>
                 <div class="tags">
                   <span class="tag">Swift</span>
                   <span class="tag">Firebase</span>
@@ -1280,11 +1339,8 @@
     (function () {
       const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-
       const haloSmall = document.getElementById("haloSmall");
       const haloBig = document.getElementById("haloBig");
-      const fxCanvas = document.getElementById("cursorFxCanvas");
-      const fx = fxCanvas ? fxCanvas.getContext("2d", { alpha: true }) : null;
 
       let hx = window.innerWidth * 0.5;
       let hy = window.innerHeight * 0.5;
@@ -1293,62 +1349,9 @@
 
       const DPR = Math.min(2, window.devicePixelRatio || 1);
 
-      function resizeFx() {
-        if (!fxCanvas) return;
-        fxCanvas.width = Math.floor(window.innerWidth * DPR);
-        fxCanvas.height = Math.floor(window.innerHeight * DPR);
-      }
-      resizeFx();
-      window.addEventListener("resize", resizeFx, { passive: true });
-
-      const particles = [];
-      function addParticle(x, y, power) {
-        particles.push({
-          x, y,
-          vx: (Math.random() - 0.5) * (0.8 + power) * DPR,
-          vy: (Math.random() - 0.5) * (0.8 + power) * DPR,
-          life: 1.0,
-          r: (2.0 + Math.random() * 3.2 + power) * DPR,
-          hue: 210 + Math.random() * 120
-        });
-        if (particles.length > 160) particles.splice(0, particles.length - 160);
-      }
-
-      function drawParticles() {
-        if (!fx || prefersReduced) return;
-
-        fx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
-
-        for (let i = particles.length - 1; i >= 0; i--) {
-          const p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vx *= 0.96;
-          p.vy *= 0.96;
-          p.life *= 0.93;
-
-          const a = Math.max(0, p.life);
-          if (a < 0.03) {
-            particles.splice(i, 1);
-            continue;
-          }
-
-          fx.save();
-          fx.globalCompositeOperation = "screen";
-          const g = fx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4.2);
-          g.addColorStop(0, "hsla(" + p.hue + ", 90%, 65%, " + (a * 0.28) + ")");
-          g.addColorStop(0.35, "hsla(" + (p.hue + 40) + ", 90%, 60%, " + (a * 0.18) + ")");
-          g.addColorStop(1, "hsla(" + (p.hue + 90) + ", 90%, 55%, 0)");
-          fx.fillStyle = g;
-          fx.beginPath();
-          fx.arc(p.x, p.y, p.r * 4.2, 0, Math.PI * 2);
-          fx.fill();
-          fx.restore();
-        }
-
-        requestAnimationFrame(drawParticles);
-      }
-
+      /* =========================
+         Cursor halo (no trailing)
+         ========================= */
       if (!prefersReduced && haloSmall && haloBig) {
         haloSmall.style.opacity = "1";
         haloBig.style.opacity = "1";
@@ -1356,18 +1359,11 @@
         window.addEventListener("pointermove", (e) => {
           hx = e.clientX;
           hy = e.clientY;
-
-          if (fx) addParticle(hx * DPR, hy * DPR, 0.0);
         }, { passive: true });
 
-        window.addEventListener("pointerdown", (e) => {
-          if (!fx) return;
-          for (let i = 0; i < 22; i++) addParticle(e.clientX * DPR, e.clientY * DPR, 2.0);
-        });
-
         function animateHalo() {
-          bx += (hx - bx) * 0.12;
-          by += (hy - by) * 0.12;
+          bx = hx;
+          by = hy;
 
           haloSmall.style.left = hx + "px";
           haloSmall.style.top = hy + "px";
@@ -1377,9 +1373,11 @@
           requestAnimationFrame(animateHalo);
         }
         requestAnimationFrame(animateHalo);
-        requestAnimationFrame(drawParticles);
       }
 
+      /* =========================
+         Reveal on scroll
+         ========================= */
       const reveals = Array.from(document.querySelectorAll(".reveal"));
       if (!prefersReduced && "IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
@@ -1430,7 +1428,9 @@
         document.querySelectorAll(".magnet").forEach(initMagnet);
       }
 
-  
+      /* =========================
+         Tilt effect
+         ========================= */
       function initTilt(el) {
         let rect = null;
         const max = 9;
@@ -1464,6 +1464,9 @@
         document.querySelectorAll(".tilt").forEach(initTilt);
       }
 
+      /* =========================
+         Carousel
+         ========================= */
       function pad2(n) {
         const s = String(n);
         return s.length === 1 ? "0" + s : s;
@@ -1595,6 +1598,9 @@
 
       document.querySelectorAll("[data-carousel]").forEach(initCarousel);
 
+      /* =========================
+         Liquid veil (hero canvas)
+         ========================= */
       const liquidCanvas = document.getElementById("liquidCanvas");
       const lctx = liquidCanvas ? liquidCanvas.getContext("2d", { alpha: true }) : null;
 
@@ -1611,14 +1617,12 @@
         const w = liquidCanvas.width;
         const h = liquidCanvas.height;
 
-        // Refill layer (very low alpha) to "heal" cleared paths over time
         lctx.save();
         lctx.globalCompositeOperation = "source-over";
         lctx.fillStyle = "rgba(0,0,0,0.08)";
         lctx.fillRect(0, 0, w, h);
         lctx.restore();
 
-        // Add colorful wave field
         lctx.save();
         lctx.globalCompositeOperation = "screen";
 
@@ -1650,7 +1654,6 @@
 
         lctx.restore();
 
-        // Subtle vignette to keep edges clean
         lctx.save();
         lctx.globalCompositeOperation = "multiply";
         const vg = lctx.createRadialGradient(w * 0.5, h * 0.5, h * 0.1, w * 0.5, h * 0.5, h * 0.65);
@@ -1686,18 +1689,15 @@
         resizeLiquid();
         window.addEventListener("resize", resizeLiquid, { passive: true });
 
-        // Initialize with a filled field
         lctx.fillStyle = "rgba(0,0,0,0)";
         lctx.fillRect(0, 0, liquidCanvas.width, liquidCanvas.height);
 
-        let t0 = performance.now();
         function loop(t) {
           drawLiquidBase(t);
           requestAnimationFrame(loop);
         }
         requestAnimationFrame(loop);
 
-        // Mouse interaction (maps viewport to liquid canvas space)
         function mapToLiquid(e) {
           const rect = liquidCanvas.getBoundingClientRect();
           const dpr = liquidCanvas.width / rect.width;
@@ -1714,7 +1714,6 @@
 
         window.addEventListener("pointerdown", (e) => {
           const p = mapToLiquid(e);
-          // Click ripple: several punches outward
           const base = 56 * DPR;
           punchLiquid(p.x, p.y, base);
           punchLiquid(p.x + 22 * DPR, p.y - 10 * DPR, base * 0.75);
@@ -1846,7 +1845,6 @@
 
         proj.sort((a, b) => a.z - b.z);
 
-        // Connections
         ctx.save();
         ctx.lineWidth = 1 * DPR;
         for (let i = 0; i < proj.length; i++) {
@@ -1873,7 +1871,6 @@
         }
         ctx.restore();
 
-        // Aura ring
         ctx.save();
         ctx.globalCompositeOperation = "screen";
         const grad = ctx.createRadialGradient(cx, cy, baseRadius * 0.25, cx, cy, baseRadius * 1.08);
@@ -1887,7 +1884,6 @@
         ctx.fill();
         ctx.restore();
 
-        // Points
         for (const p of proj) {
           const r = p.c[0], g = p.c[1], b = p.c[2];
           const radius = (p.r + p.depth * 1.6) * DPR * (0.9 + state.pulse * 0.25);
