@@ -340,6 +340,15 @@
       box-shadow: 0 18px 60px rgba(0,0,0,.24);
       filter: brightness(1.03);
     }
+    .store-badge__text{
+      display:block;
+      padding: 0 18px;
+      line-height: 44px;
+      color:#fff;
+      font-weight:600;
+      font-size:.95rem;
+      white-space:nowrap;
+    }
     .store-badge img{
       display:block;
       height: 44px;
@@ -814,7 +823,7 @@
           <div class="panel">
             <h2 class="section-title reveal">Projects</h2>
             <p class="section-note reveal" data-delay="1">
-              Selected work with an emphasis on mobile UX, clean architecture, and Firebase-backed features.
+              Selected work with an emphasis on mobile UX, clean architecture, on-device AI and Firebase-backed features.
             </p>
 
             <div class="project">
@@ -906,6 +915,64 @@
                       <div class="device-frame__slide"><img src="images/commuvia2.jpeg" alt="Commuvia screenshot 2" loading="lazy"></div>
                       <div class="device-frame__slide"><img src="images/commuvia3.jpeg" alt="Commuvia screenshot 3" loading="lazy"></div>
                       <div class="device-frame__slide"><img src="images/commuvia4.jpeg" alt="Commuvia screenshot 4" loading="lazy"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="project">
+              <div class="reveal tilt">
+                <h3>SortSmart-SE</h3>
+                <p>Android app that helps people in Sweden sort household waste correctly. Scan an item with the camera or search by name to see which bin it goes in and how to prepare it.</p>
+
+                <details class="details">
+                  <summary>AI scanner, offline-first and privacy</summary>
+                  <div class="content">
+                    SortSmart-SE uses on-device AI (Google ML Kit object detection and image labeling with CameraX) to recognise waste items in real time. My own sorting logic filters out irrelevant labels, hides results under 45% confidence, and maps AI labels to Swedish waste categories.
+                    <br/><br/>
+                    All waste data is stored locally in a Room database, so the app works fully offline. It follows an MVVM + Repository architecture with Kotlin Flow, and includes hazardous waste warnings, favourites, history, eco tips and an impact tracker. Rules follow local Malm&ouml; standards, with support for five Swedish municipalities.
+                    <br/><br/>
+                    No account, no tracking: all scanning happens on the device, and the app collects no personal data. I designed, built and published the app on my own.
+                  </div>
+                </details>
+
+                <div class="tags" style="margin-top:1rem;">
+                  <span class="tag">Kotlin</span>
+                  <span class="tag">Jetpack Compose</span>
+                  <span class="tag">ML Kit</span>
+                  <span class="tag">CameraX</span>
+                  <span class="tag">Room</span>
+                  <span class="tag">Android</span>
+                </div>
+
+                <div class="store-badges">
+                  <a class="store-badge magnet"
+                     href="https://play.google.com/store/apps/details?id=com.priya.sortsmartse"
+                     target="_blank" rel="noreferrer"
+                     aria-label="Get SortSmart-SE on Google Play">
+                    <span class="store-badge__text">&#9654;&nbsp; Get it on Google Play</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="reveal" data-delay="1">
+                <div class="device-frame"
+                     style="--screen-top: 8.6%; --screen-right: 8.25%; --screen-bottom: 8.9%; --screen-left: 8.25%; --screen-radius: 34px;"
+                     data-iphone-carousel
+                     data-autoplay="true"
+                     data-interval="5200"
+                     aria-label="SortSmart-SE screenshots"
+                     tabindex="0">
+                  <img class="device-frame__img" src="images/iPhone 17 Pro Max - Cosmic Orange - Portrait.png" alt="" aria-hidden="true" loading="lazy">
+                  <div class="device-frame__screen">
+                    <div class="device-frame__stage">
+                      <div class="device-frame__slide is-active"><img src="images/sortsmart1.png" alt="SortSmart-SE screenshot 1" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/sortsmart2.png" alt="SortSmart-SE screenshot 2" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/sortsmart3.png" alt="SortSmart-SE screenshot 3" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/sortsmart4.png" alt="SortSmart-SE screenshot 4" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/sortsmart5.png" alt="SortSmart-SE screenshot 5" loading="lazy"></div>
+                      <div class="device-frame__slide"><img src="images/sortsmart6.png" alt="SortSmart-SE screenshot 6" loading="lazy"></div>
                     </div>
                   </div>
                 </div>
